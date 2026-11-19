@@ -91,6 +91,7 @@ nonaktif. Pemeriksaan checklist keamanan lain tetap dijalankan pada fase terkait
 - [ ] `admin/pengguna_form.php`: tambah/ubah + reset password.
 - [ ] Aktif/nonaktifkan pengguna.
 - [ ] `admin/rekap.php`: rekap sederhana.
+- [x] Buat kerangka file halaman Admin yang ditautkan di sidebar; isi CRUD pengguna dan rekap masih placeholder.
 
 **Selesai bila:** Admin dapat mengelola 2 sekolah dan seluruh akun, serta angka
 dashboard berubah sesuai data. Dashboard dan pengelolaan sekolah sudah dibuat;
@@ -102,6 +103,7 @@ pengelolaan akun dan halaman rekap masih menyusul.
 - [ ] `guru_bk/index.php`: dashboard nyata untuk sekolah sendiri.
 - [ ] `guru_bk/catatan.php`: daftar catatan yang dibagikan.
 - [ ] `guru_bk/catatan_detail.php`: detail + penandaan dibaca.
+- [x] Buat kerangka halaman daftar dan detail sesuai tautan sidebar.
 - [ ] Form tindak lanjut + riwayat.
 - [ ] Cetak ringkasan.
 
@@ -121,6 +123,7 @@ tindak lanjut tersimpan.
 - [ ] `siswa/konsultasi.php` + bagikan ke Guru BK.
 - [ ] `siswa/tips.php` (statis).
 - [ ] `profil.php`: profil & ganti password.
+- [x] Buat kerangka semua halaman siswa dan profil bersama; formulir/konten dinamis masih placeholder.
 
 **Selesai bila:** data siswa bertahan setelah logout/refresh dan muncul di
 dashboard Guru BK setelah dibagikan.
