@@ -3,8 +3,10 @@
 Database: **`karvia_db`** (MySQL/MariaDB, InnoDB, `utf8mb4`, `utf8mb4_unicode_ci`).
 Semua waktu memakai zona **Asia/Jakarta**.
 
-Dokumen ini adalah rancangan. File SQL belum dibuat. Setiap perubahan saat
-implementasi **wajib** memperbarui dokumen ini.
+File `database/database.sql` sudah dibuat dan berhasil diuji impor pada MySQL
+8.0.30. Semua 11 tabel dan 13 foreign key berhasil dibuat; data contoh terisi
+sesuai rancangan. Setiap perubahan skema saat implementasi **wajib** memperbarui
+dokumen ini.
 
 ---
 
@@ -377,7 +379,7 @@ ganti semua password. Hash disimpan di database, bukan teks biasa.
 
 - Profesi: 4 profesi dari prototipe (Dokter, Software Engineer, Guru BK, Advokat)
   + 4 tambahan agar filter terasa hidup.
-- Ahmad: refleksi + perbandingan + rencana + 1 jurnal + sudah membagikan catatan
+- Ahmad: refleksi + perbandingan + rencana + 2 jurnal + sudah membagikan catatan
   (status `baru`) → agar dashboard Guru BK langsung ada isinya.
 - Siti: sudah mengisi data tetapi **belum** membagikan → untuk menunjukkan privasi.
 - Raka & Nabila: akun aktif tanpa data → untuk empty state.
@@ -388,8 +390,8 @@ Urutan insert:
 
 1. `sekolah` — 2 baris.
 2. `pengguna` — 1 admin, 2 Guru BK, 4 siswa (password sudah di-hash).
-3. `profesi` — 4–8 baris.
-4. Data karier demo — refleksi, perbandingan, rencana, jurnal, dan satu
+3. `profesi` — 8 baris.
+4. Data karier demo — refleksi, perbandingan, rencana, jurnal, bookmark, dan satu
    `berbagi_catatan` untuk Ahmad; data Siti tanpa berbagi.
 
 Bagian B harus **aman dijalankan pada database kosong** setelah bagian A. Jangan
