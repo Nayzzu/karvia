@@ -1,0 +1,2000 @@
+<!doctype html>
+<html lang="id" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      KARVIA (Career Vision & Action) - Media Digital Bimbingan Karier
+    </title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              karvia: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                500: "#22c55e",
+                600: "#16a34a",
+                700: "#15803d",
+                800: "#166534",
+                900: "#14532d",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Font Inter & FontAwesome Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="h-full bg-slate-50 text-slate-800 antialiased flex flex-col">
+    <!-- MODAL NOTIFIKASI CUSTOM (Pengganti alert) -->
+    <div
+      id="customModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 max-w-sm w-full mx-4 shadow-2xl transform transition-all text-center"
+      >
+        <div
+          id="modalIcon"
+          class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl"
+        ></div>
+        <h3 id="modalTitle" class="text-lg font-extrabold text-slate-900 mb-2">
+          Notifikasi KARVIA
+        </h3>
+        <p
+          id="modalMessage"
+          class="text-sm text-slate-600 mb-6 leading-relaxed"
+        ></p>
+        <button
+          onclick="closeModal()"
+          class="w-full py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-lg transition duration-200"
+        >
+          Mengerti / Lanjutkan
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. HALAMAN LOGIN PERTAMA (ROLE & PASSWORD) -->
+    <!-- ========================================== -->
+    <div
+      id="loginPage"
+      class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-br from-karvia-900 via-emerald-800 to-slate-900 flex-grow"
+    >
+      <div class="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-3xl shadow-xl mb-4"
+        >
+          <i class="fa-solid fa-compass text-emerald-400"></i>
+        </div>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">
+          KARVIA
+        </h2>
+        <p
+          class="text-xs font-semibold uppercase tracking-wider text-emerald-300 mt-1"
+        >
+          Career Vision & Action
+        </p>
+        <p class="mt-2 text-xs text-emerald-100/90 leading-relaxed">
+          Pengembangan Media Digital Bimbingan Karier (Langkah Karierku)<br />
+          <span class="text-emerald-300"
+            >UIN Raden Intan Lampung (Chindy Theresia - 2411080092)</span
+          >
+        </p>
+      </div>
+
+      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
+        <div
+          class="bg-white/95 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-3xl sm:px-10 border border-white/50"
+        >
+          <!-- Pilih Peran -->
+          <div class="mb-6">
+            <label
+              class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2"
+              >Pilih Peran Masuk</label
+            >
+            <div class="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                id="roleSiswaBtn"
+                onclick="setLoginRole('siswa')"
+                class="flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-karvia-600 bg-karvia-50 text-karvia-700 shadow-sm"
+              >
+                <i class="fa-solid fa-user-graduate mr-2"></i> Siswa SMA/MA
+              </button>
+              <button
+                type="button"
+                id="roleGuruBtn"
+                onclick="setLoginRole('guru')"
+                class="flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+              >
+                <i class="fa-solid fa-chalkboard-user mr-2"></i> Guru BK
+              </button>
+            </div>
+          </div>
+
+          <form onsubmit="handleLogin(event)" class="space-y-5">
+            <input type="hidden" id="selectedRole" value="siswa" />
+
+            <div id="fieldNamaContainer">
+              <label
+                class="block text-sm font-medium text-slate-700 mb-1"
+                id="labelNama"
+                >Nama Lengkap Siswa</label
+              >
+              <div class="relative">
+                <span
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"
+                >
+                  <i class="fa-solid fa-user"></i>
+                </span>
+                <input
+                  type="text"
+                  id="loginNama"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-karvia-500 focus:border-karvia-500"
+                  placeholder="Contoh: Ahmad Fauzan"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1"
+                >Password / Kode Akses</label
+              >
+              <div class="relative">
+                <span
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"
+                >
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-karvia-500 focus:border-karvia-500"
+                  placeholder="Masukkan password (cth: siswa / guru)"
+                />
+              </div>
+              <p class="text-xs text-slate-500 mt-1" id="loginHint">
+                Petunjuk: Siswa ketik
+                <code
+                  class="bg-slate-100 px-1.5 py-0.5 rounded text-karvia-700 font-semibold"
+                  >siswa123</code
+                >
+                atau bebas.
+              </p>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-karvia-600 hover:bg-karvia-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-karvia-500 transition-all"
+              >
+                Masuk ke KARVIA
+                <i class="fa-solid fa-arrow-right ml-2 mt-0.5"></i>
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 border-t border-slate-200 pt-4 text-center">
+            <p class="text-xs text-slate-500">
+              <i class="fa-solid fa-shield-halved text-karvia-600 mr-1"></i>
+              Data eksplorasi aman, dijaga kerahasiaannya, & digunakan untuk
+              bimbingan karier.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. DASHBOARD UTAMA (SISWA & GURU BK) -->
+    <!-- ========================================== -->
+    <div id="mainDashboard" class="flex flex-col h-full hidden flex-grow">
+      <!-- Top Navbar -->
+      <header
+        class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex items-center space-x-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-karvia-600 text-white flex items-center justify-center shadow-md"
+              >
+                <i class="fa-solid fa-compass text-lg"></i>
+              </div>
+              <div>
+                <h1 class="font-extrabold text-slate-900 leading-tight">
+                  KARVIA
+                </h1>
+                <p class="text-xs text-slate-500" id="navSubTitle">
+                  Career Vision & Action (Langkah Karierku)
+                </p>
+              </div>
+            </div>
+
+            <!-- User Profile & Logout -->
+            <div class="flex items-center space-x-4">
+              <div class="text-right hidden sm:block">
+                <div
+                  class="text-sm font-semibold text-slate-800"
+                  id="userDisplayName"
+                >
+                  Nama Pengguna
+                </div>
+                <div
+                  class="text-xs px-2 py-0.5 rounded-full inline-block font-medium"
+                  id="userRoleBadge"
+                >
+                  Siswa
+                </div>
+              </div>
+              <button
+                onclick="logout()"
+                class="p-2.5 rounded-xl bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-600 transition-colors"
+                title="Keluar Akun"
+              >
+                <i class="fa-solid fa-right-from-bracket"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Container Body: Sidebar & Content (Untuk Siswa) -->
+      <div
+        id="siswaLayout"
+        class="flex-grow flex flex-col md:flex-row overflow-hidden"
+      >
+        <!-- Sidebar Nav Siswa -->
+        <aside
+          class="w-full md:w-64 bg-white border-r border-slate-200 p-4 flex md:flex-col space-y-1 overflow-x-auto md:overflow-y-auto shrink-0"
+        >
+          <div
+            class="text-xs font-semibold text-slate-600 uppercase tracking-wider px-3 py-2 hidden md:block"
+          >
+            Menu Eksplorasi
+          </div>
+
+          <button
+            onclick="switchTab('beranda')"
+            id="tab-beranda"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left bg-karvia-50 text-karvia-700 transition-all"
+          >
+            <i class="fa-solid fa-house w-5 text-center"></i>
+            <span>Beranda & Pengantar</span>
+          </button>
+          <button
+            onclick="switchTab('kenaliDiri')"
+            id="tab-kenaliDiri"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-user-check w-5 text-center"></i>
+            <span>1. Kenali Diriku</span>
+          </button>
+          <button
+            onclick="switchTab('jelajahProfesi')"
+            id="tab-jelajahProfesi"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-briefcase w-5 text-center"></i>
+            <span>2. Jelajah Profesi</span>
+          </button>
+          <button
+            onclick="switchTab('jalurLulus')"
+            id="tab-jalurLulus"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-graduation-cap w-5 text-center"></i>
+            <span>Jalur Setelah Lulus</span>
+          </button>
+          <button
+            onclick="switchTab('bandingkan')"
+            id="tab-bandingkan"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-scale-balanced w-5 text-center"></i>
+            <span>3. Bandingkan Pilihan</span>
+          </button>
+          <button
+            onclick="switchTab('rencana')"
+            id="tab-rencana"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-list-check w-5 text-center"></i>
+            <span>4. Rencana Langkahku</span>
+          </button>
+          <button
+            onclick="switchTab('refleksi')"
+            id="tab-refleksi"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-book-bookmark w-5 text-center"></i>
+            <span>5. Jurnal Refleksi</span>
+          </button>
+          <button
+            onclick="switchTab('konsultasi')"
+            id="tab-konsultasi"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-comments w-5 text-center"></i>
+            <span>Ruang Konsultasi BK</span>
+          </button>
+          <button
+            onclick="switchTab('tips')"
+            id="tab-tips"
+            class="nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all"
+          >
+            <i class="fa-solid fa-lightbulb w-5 text-center"></i>
+            <span>Tips & Edukasi Karier</span>
+          </button>
+        </aside>
+
+        <!-- Main Content Area Siswa -->
+        <main class="flex-grow overflow-y-auto p-4 sm:p-8 bg-slate-50">
+          <!-- TAB 1: BERANDA & PENGANTAR -->
+          <div id="content-beranda" class="tab-content fade-in space-y-6">
+            <div
+              class="bg-gradient-to-r from-karvia-900 to-emerald-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden"
+            >
+              <div
+                class="absolute right-0 bottom-0 opacity-10 transform translate-x-10 translate-y-10"
+              >
+                <i class="fa-solid fa-compass text-[220px]"></i>
+              </div>
+              <div class="relative z-10 max-w-2xl">
+                <span
+                  class="bg-emerald-500/30 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3 border border-emerald-400/30"
+                >
+                  KARVIA (Career Vision & Action) - Langkah Karierku
+                </span>
+                <h2
+                  class="text-3xl sm:text-4xl font-extrabold mb-3 leading-tight"
+                >
+                  "Kenali diri, jelajahi pilihan, mulai dari satu langkah."
+                </h2>
+                <p
+                  class="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6"
+                >
+                  Selamat datang di aplikasi <strong>KARVIA</strong>! Platform
+                  digital bimbingan karier untuk peserta didik SMA/MA. Temukan
+                  visi masa depanmu, eksplorasi potensi diri, bandingkan pilihan
+                  secara terstruktur, dan rancang langkah konkret bersama Guru
+                  BK.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                  <button
+                    onclick="switchTab('kenaliDiri')"
+                    class="px-6 py-3 bg-white text-karvia-900 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition duration-200"
+                  >
+                    Mulai Eksplorasi
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                  </button>
+                  <button
+                    onclick="switchTab('konsultasi')"
+                    class="px-6 py-3 bg-emerald-900/50 hover:bg-emerald-900/80 text-white font-semibold rounded-xl border border-emerald-500/30 transition duration-200"
+                  >
+                    <i class="fa-solid fa-chalkboard-user mr-2"></i> Konsultasi
+                    Guru BK
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Peringatan Psikopedagogis Sesuai Proposal -->
+            <div
+              class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-2xl shadow-sm"
+            >
+              <div class="flex items-start">
+                <div class="text-amber-500 text-xl mr-3 mt-0.5">
+                  <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-amber-900 text-sm">
+                    Landasan & Batasan Produk (Psikopedagogis):
+                  </h4>
+                  <p class="text-xs text-amber-800 mt-1 leading-relaxed">
+                    KARVIA dirancang sebagai
+                    <strong>media pendukung layanan bimbingan karier</strong>,
+                    bukan alat tes psikologis mutlak, bukan vonis penentu
+                    jurusan otomatis, dan bukan pengganti konselor. Catatan
+                    eksplorasi bersifat personal dan dapat didiskusikan dengan
+                    Guru BK.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 Langkah Utama Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div
+                onclick="switchTab('kenaliDiri')"
+                class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:border-karvia-500 cursor-pointer transition group"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-karvia-50 text-karvia-600 flex items-center justify-center text-xl mb-4 group-hover:bg-karvia-600 group-hover:text-white transition"
+                >
+                  <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h4 class="font-bold text-slate-800 mb-1">1. Kenali Diriku</h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Refleksi minat, kekuatan, & nilai pribadi (Holland RIASEC).
+                </p>
+              </div>
+              <div
+                onclick="switchTab('jelajahProfesi')"
+                class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:border-karvia-500 cursor-pointer transition group"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition"
+                >
+                  <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <h4 class="font-bold text-slate-800 mb-1">
+                  2. Jelajah Profesi
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Kartu profesi interaktif dengan tugas & jalur pendidikan.
+                </p>
+              </div>
+              <div
+                onclick="switchTab('bandingkan')"
+                class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:border-karvia-500 cursor-pointer transition group"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition"
+                >
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <h4 class="font-bold text-slate-800 mb-1">3. Bandingkan</h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Timbang 2 pilihan karier berdasarkan kriteria Anda sendiri.
+                </p>
+              </div>
+              <div
+                onclick="switchTab('rencana')"
+                class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:border-karvia-500 cursor-pointer transition group"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:bg-amber-600 group-hover:text-white transition"
+                >
+                  <i class="fa-solid fa-list-check"></i>
+                </div>
+                <h4 class="font-bold text-slate-800 mb-1">4. Rencana Aksi</h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Susun target dan langkah kecil konkret mingguan.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: KENALI DIRIKU (RIASEC & KEVALEN) -->
+          <div id="content-kenaliDiri" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <span
+                  class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                  >Langkah 1 dari 5 (Proposal Chindy Theresia)</span
+                >
+                <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                  <i class="fa-solid fa-user-check mr-2 text-karvia-600"></i>
+                  Refleksi Kenali Diriku
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Kenali mata pelajaran favorit, kekuatan diri, dan tipe minat
+                  (pendekatan RIASEC Holland & Super) untuk pemantik diskusi
+                  dengan Guru BK.
+                </p>
+              </div>
+
+              <form onsubmit="saveKenaliDiri(event)" class="space-y-6">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-2"
+                    >1. Mata Pelajaran atau Bidang Belajar yang Paling
+                    Disukai:</label
+                  >
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="mapel"
+                        value="Matematika & Sains (Realistic/Investigative)"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Matematika & Sains</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="mapel"
+                        value="Bahasa & Sastra (Artistic/Social)"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Bahasa & Sastra</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="mapel"
+                        value="Ilmu Sosial & Keagamaan (Social)"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Ilmu Sosial & Agama</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="mapel"
+                        value="Teknologi & Kewirausahaan (Enterprising)"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Teknologi & Wirausaha</span
+                      >
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-2"
+                    >2. Kekuatan Diri & Keterampilan Utama (Pilih yang
+                    sesuai):</label
+                  >
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Komunikasi & Berdiskusi"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Komunikasi & Berdiskusi</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Analitis & Memecahkan Masalah"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Analitis & Memecahkan Masalah</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Kreatif & Desain Visual"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Kreatif & Desain Visual</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Kepemimpinan & Organisasi"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Kepemimpinan & Organisasi</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Empati & Membantu Sesama"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Empati & Membantu Sesama</span
+                      >
+                    </label>
+                    <label
+                      class="flex items-center space-x-2 p-3 border rounded-xl hover:bg-slate-50 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        name="kekuatan"
+                        value="Teliti & Terstruktur (Conventional)"
+                        class="rounded text-karvia-600 focus:ring-karvia-500"
+                      />
+                      <span class="text-xs font-medium text-slate-700"
+                        >Teliti & Terstruktur</span
+                      >
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1"
+                    >3. Tuliskan Minat atau Bayangan Karier Anda Saat
+                    Ini:</label
+                  >
+                  <textarea
+                    id="catatanMinatDiri"
+                    rows="3"
+                    class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-karvia-500 focus:outline-none"
+                    placeholder="Contoh: Saya tertarik dengan bidang kesehatan atau teknologi karena ingin menciptakan inovasi bermanfaat..."
+                  ></textarea>
+                </div>
+
+                <div class="flex justify-end">
+                  <button
+                    type="submit"
+                    class="px-6 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-md transition"
+                  >
+                    Simpan & Lanjut ke Jelajah Profesi
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- TAB 3: JELAJAH PROFESI -->
+          <div id="content-jelajahProfesi" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div
+                class="border-b border-slate-100 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+              >
+                <div>
+                  <span
+                    class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                    >Langkah 2 dari 5</span
+                  >
+                  <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                    <i class="fa-solid fa-briefcase mr-2 text-karvia-600"></i>
+                    Jelajah Kartu Profesi
+                  </h2>
+                  <p class="text-sm text-slate-500 mt-1">
+                    Eksplorasi tugas utama, kemampuan yang dibutuhkan, dan jalur
+                    pendidikan (O*NET & Kemnaker RI).
+                  </p>
+                </div>
+                <!-- Filter Kategori -->
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    onclick="filterProfesi('all')"
+                    class="profesi-filter px-3 py-1.5 rounded-lg text-xs font-bold bg-karvia-600 text-white transition"
+                  >
+                    Semua
+                  </button>
+                  <button
+                    onclick="filterProfesi('kesehatan')"
+                    class="profesi-filter px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+                  >
+                    Kesehatan
+                  </button>
+                  <button
+                    onclick="filterProfesi('teknologi')"
+                    class="profesi-filter px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+                  >
+                    Teknologi
+                  </button>
+                  <button
+                    onclick="filterProfesi('pendidikan')"
+                    class="profesi-filter px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+                  >
+                    Pendidikan & Agama
+                  </button>
+                  <button
+                    onclick="filterProfesi('bisnis')"
+                    class="profesi-filter px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+                  >
+                    Bisnis & Hukum
+                  </button>
+                </div>
+              </div>
+
+              <!-- Grid Kartu Profesi -->
+              <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                id="gridProfesi"
+              >
+                <!-- Profesi 1 -->
+                <div
+                  class="profesi-card border border-slate-200 rounded-2xl p-5 hover:border-karvia-500 transition bg-slate-50/50 flex flex-col justify-between"
+                  data-category="kesehatan"
+                >
+                  <div>
+                    <div class="flex justify-between items-start mb-3">
+                      <span
+                        class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-md"
+                        >Kesehatan & Medis</span
+                      >
+                      <span class="text-xs text-slate-400"
+                        ><i
+                          class="fa-solid fa-bookmark cursor-pointer hover:text-karvia-600"
+                          onclick="simpanProfesi('Dokter / Tenaga Medis')"
+                        ></i
+                      ></span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">
+                      Dokter / Tenaga Medis
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                      Memeriksa, mendiagnosis, merawat pasien, serta
+                      mempromosikan kesehatan masyarakat.
+                    </p>
+                    <div
+                      class="text-xs space-y-1 mb-4 text-slate-500 bg-white p-3 rounded-xl border border-slate-100"
+                    >
+                      <div>
+                        <strong class="text-slate-700">Kemampuan:</strong>
+                        Sains, Empati, Analitis (Investigative)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Jalur:</strong> S1
+                        Kedokteran & Profesi (PTU)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Sumber Rujukan:</strong>
+                        O*NET OnLine / Kemnaker RI
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onclick="
+                      tambahKeBandingkan(
+                        'Dokter / Tenaga Medis',
+                        'S1 Kedokteran (PTU)',
+                      )
+                    "
+                    class="w-full py-2 bg-white border border-karvia-600 text-karvia-700 font-semibold text-xs rounded-xl hover:bg-karvia-50 transition"
+                  >
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> Pilih untuk
+                    Bandingkan
+                  </button>
+                </div>
+
+                <!-- Profesi 2 -->
+                <div
+                  class="profesi-card border border-slate-200 rounded-2xl p-5 hover:border-karvia-500 transition bg-slate-50/50 flex flex-col justify-between"
+                  data-category="teknologi"
+                >
+                  <div>
+                    <div class="flex justify-between items-start mb-3">
+                      <span
+                        class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md"
+                        >Teknologi & IT</span
+                      >
+                      <span class="text-xs text-slate-400"
+                        ><i
+                          class="fa-solid fa-bookmark cursor-pointer hover:text-karvia-600"
+                          onclick="
+                            simpanProfesi('Software Engineer / Programmer')
+                          "
+                        ></i
+                      ></span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">
+                      Software Engineer / Programmer
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                      Merancang, membangun, dan menguji perangkat lunak atau
+                      aplikasi web/mobile.
+                    </p>
+                    <div
+                      class="text-xs space-y-1 mb-4 text-slate-500 bg-white p-3 rounded-xl border border-slate-100"
+                    >
+                      <div>
+                        <strong class="text-slate-700">Kemampuan:</strong>
+                        Logika, Algoritma, Pemrograman
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Jalur:</strong> S1
+                        Informatika / Vokasi IT (PTU/Mandiri)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Sumber Rujukan:</strong>
+                        O*NET OnLine / Kemnaker RI
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onclick="
+                      tambahKeBandingkan(
+                        'Software Engineer',
+                        'S1 Informatika (PTU)',
+                      )
+                    "
+                    class="w-full py-2 bg-white border border-karvia-600 text-karvia-700 font-semibold text-xs rounded-xl hover:bg-karvia-50 transition"
+                  >
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> Pilih untuk
+                    Bandingkan
+                  </button>
+                </div>
+
+                <!-- Profesi 3 -->
+                <div
+                  class="profesi-card border border-slate-200 rounded-2xl p-5 hover:border-karvia-500 transition bg-slate-50/50 flex flex-col justify-between"
+                  data-category="pendidikan"
+                >
+                  <div>
+                    <div class="flex justify-between items-start mb-3">
+                      <span
+                        class="bg-purple-100 text-purple-800 text-xs font-bold px-2.5 py-1 rounded-md"
+                        >Pendidikan & Agama</span
+                      >
+                      <span class="text-xs text-slate-400"
+                        ><i
+                          class="fa-solid fa-bookmark cursor-pointer hover:text-karvia-600"
+                          onclick="simpanProfesi('Guru BK / Konselor Sekolah')"
+                        ></i
+                      ></span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">
+                      Guru BK / Konselor Sekolah
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                      Mendampingi perkembangan pribadi, sosial, belajar, dan
+                      karier peserta didik di madrasah/sekolah.
+                    </p>
+                    <div
+                      class="text-xs space-y-1 mb-4 text-slate-500 bg-white p-3 rounded-xl border border-slate-100"
+                    >
+                      <div>
+                        <strong class="text-slate-700">Kemampuan:</strong>
+                        Empati, Komunikasi, Konseling (Social)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Jalur:</strong> S1
+                        Bimbingan dan Konseling (PTKIN / PTU)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Sumber Rujukan:</strong>
+                        Permendikbud No. 111 Tahun 2014
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onclick="
+                      tambahKeBandingkan(
+                        'Guru BK',
+                        'S1 Bimbingan Konseling (PTKIN/PTU)',
+                      )
+                    "
+                    class="w-full py-2 bg-white border border-karvia-600 text-karvia-700 font-semibold text-xs rounded-xl hover:bg-karvia-50 transition"
+                  >
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> Pilih untuk
+                    Bandingkan
+                  </button>
+                </div>
+
+                <!-- Profesi 4 -->
+                <div
+                  class="profesi-card border border-slate-200 rounded-2xl p-5 hover:border-karvia-500 transition bg-slate-50/50 flex flex-col justify-between"
+                  data-category="bisnis"
+                >
+                  <div>
+                    <div class="flex justify-between items-start mb-3">
+                      <span
+                        class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md"
+                        >Bisnis & Hukum</span
+                      >
+                      <span class="text-xs text-slate-400"
+                        ><i
+                          class="fa-solid fa-bookmark cursor-pointer hover:text-karvia-600"
+                          onclick="simpanProfesi('Advokat / Praktisi Hukum')"
+                        ></i
+                      ></span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">
+                      Advokat / Praktisi Hukum
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                      Memberikan bantuan hukum, membela klien, dan menegakkan
+                      keadilan di peradilan.
+                    </p>
+                    <div
+                      class="text-xs space-y-1 mb-4 text-slate-500 bg-white p-3 rounded-xl border border-slate-100"
+                    >
+                      <div>
+                        <strong class="text-slate-700">Kemampuan:</strong>
+                        Argumen, Analisis, Komunikasi (Enterprising)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Jalur:</strong> S1 Ilmu
+                        Hukum & PKPA (PTU / PTKIN)
+                      </div>
+                      <div>
+                        <strong class="text-slate-700">Sumber Rujukan:</strong>
+                        O*NET OnLine / Kemnaker RI
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onclick="
+                      tambahKeBandingkan(
+                        'Advokat / Hukum',
+                        'S1 Ilmu Hukum (PTU/PTKIN)',
+                      )
+                    "
+                    class="w-full py-2 bg-white border border-karvia-600 text-karvia-700 font-semibold text-xs rounded-xl hover:bg-karvia-50 transition"
+                  >
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> Pilih untuk
+                    Bandingkan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3.5: JALUR SETELAH LULUS -->
+          <div id="content-jalurLulus" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <span
+                  class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                  >Eksplorasi Pendidikan & Karier</span
+                >
+                <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                  <i
+                    class="fa-solid fa-graduation-cap mr-2 text-karvia-600"
+                  ></i>
+                  Jalur Setelah Lulus SMA / MA
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Kenali berbagai pilihan jalur kelanjutan studi dan karier yang
+                  tersedia bagi lulusan SMA/MA.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-slate-50 p-5 rounded-2xl border">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3"
+                  >
+                    <i class="fa-solid fa-university"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">
+                    PTU / PTKIN (Universitas)
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Perguruan Tinggi Negeri/Swasta (SNBP/SNBT) atau Perguruan
+                    Tinggi Keagamaan Islam Negeri (UIN/IAIN/STAIN via SPAN-PTKIN
+                    & UM-PTKIN).
+                  </p>
+                  <span
+                    class="text-xs font-semibold text-karvia-700 bg-emerald-50 px-2 py-1 rounded"
+                    >Akademik & Riset</span
+                  >
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3"
+                  >
+                    <i class="fa-solid fa-gear"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">
+                    Pendidikan Vokasi (Diploma)
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Politeknik atau Diploma (D3/D4) yang berfokus pada keahlian
+                    praktik kerja langsung dan penguasaan keterampilan spesifik.
+                  </p>
+                  <span
+                    class="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-1 rounded"
+                    >Keahlian Praktis</span
+                  >
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3"
+                  >
+                    <i class="fa-solid fa-briefcase"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">
+                    Dunia Kerja Profesional
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Memasuki dunia kerja melalui bursa kerja khusus (BKK)
+                    sekolah, pelatihan kerja (LPK), atau instansi resmi.
+                  </p>
+                  <span
+                    class="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded"
+                    >Kemandirian Finansial</span
+                  >
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-3"
+                  >
+                    <i class="fa-solid fa-lightbulb"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">
+                    Wirausaha Mandiri
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Merintis usaha kreatif atau rintisan digital (startup)
+                    dengan memanfaatkan pelatihan dan inkubator bisnis muda.
+                  </p>
+                  <span
+                    class="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded"
+                    >Inovasi & Bisnis</span
+                  >
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border">
+                  <div
+                    class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold mb-3"
+                  >
+                    <i class="fa-solid fa-certificate"></i>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">
+                    Kursus & Sertifikasi Profesi
+                  </h3>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Mengambil pelatihan sertifikasi keterampilan khusus (IT,
+                    desain, bahasa, kejuruan) untuk percepatan karier.
+                  </p>
+                  <span
+                    class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-1 rounded"
+                    >Sertifikasi Cepat</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: BANDINGKAN PILIHAN -->
+          <div id="content-bandingkan" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <span
+                  class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                  >Langkah 3 dari 5</span
+                >
+                <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                  <i
+                    class="fa-solid fa-scale-balanced mr-2 text-karvia-600"
+                  ></i>
+                  Bandingkan Pilihan Karier / Jurusan
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Bandingkan 2 opsi pilihan berdasarkan kriteria pribadimu
+                  (minat, biaya, lokasi, peluang kerja).
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <label
+                    class="block text-xs font-bold uppercase text-slate-600 mb-2"
+                    >Pilihan A</label
+                  >
+                  <input
+                    type="text"
+                    id="pilihanA_nama"
+                    value="Dokter / Tenaga Medis"
+                    class="w-full p-3 border rounded-xl font-semibold text-sm mb-3 bg-white"
+                  />
+                  <textarea
+                    id="pilihanA_catatan"
+                    rows="3"
+                    class="w-full p-3 border rounded-xl text-xs bg-white"
+                    placeholder="Kelebihan / Tantangan Pilihan A..."
+                  >
+Kelebihan: Pengabdian mulia & dibutuhkan. Tantangan: Kuliah panjang & biaya tinggi.</textarea
+                  >
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <label
+                    class="block text-xs font-bold uppercase text-slate-600 mb-2"
+                    >Pilihan B</label
+                  >
+                  <input
+                    type="text"
+                    id="pilihanB_nama"
+                    value="Software Engineer"
+                    class="w-full p-3 border rounded-xl font-semibold text-sm mb-3 bg-white"
+                  />
+                  <textarea
+                    id="pilihanB_catatan"
+                    rows="3"
+                    class="w-full p-3 border rounded-xl text-xs bg-white"
+                    placeholder="Kelebihan / Tantangan Pilihan B..."
+                  >
+Kelebihan: Fleksibel & prospek digital tinggi. Tantangan: Harus terus belajar teknologi baru.</textarea
+                  >
+                </div>
+              </div>
+
+              <div
+                class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200 mb-6"
+              >
+                <h4 class="font-bold text-emerald-900 text-sm mb-2">
+                  <i class="fa-solid fa-lightbulb text-emerald-600 mr-2"></i>
+                  Kriteria Pertimbangan Utama Anda:
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <label
+                    class="flex items-center space-x-2 bg-white p-2.5 rounded-lg border"
+                  >
+                    <input type="checkbox" checked class="text-karvia-600" />
+                    <span>Kesesuaian Minat</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 bg-white p-2.5 rounded-lg border"
+                  >
+                    <input type="checkbox" checked class="text-karvia-600" />
+                    <span>Peluang Kerja / Prospek</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 bg-white p-2.5 rounded-lg border"
+                  >
+                    <input type="checkbox" checked class="text-karvia-600" />
+                    <span>Biaya & Durasi Studi</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 bg-white p-2.5 rounded-lg border"
+                  >
+                    <input type="checkbox" checked class="text-karvia-600" />
+                    <span>Restu Orang Tua</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button
+                  onclick="simpanPerbandingan()"
+                  class="px-6 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-md transition"
+                >
+                  Simpan Analisis Perbandingan
+                  <i class="fa-solid fa-check ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: RENCANA LANGKAHKU -->
+          <div id="content-rencana" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <span
+                  class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                  >Langkah 4 dari 5 (Action)</span
+                >
+                <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                  <i class="fa-solid fa-list-check mr-2 text-karvia-600"></i>
+                  Rencana Langkahku
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Ubah visi karier menjadi tujuan sementara dan minimal 2
+                  langkah kecil konkret yang dapat dikerjakan minggu ini.
+                </p>
+              </div>
+
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1"
+                    >Tujuan Karier / Pilihan Sementara Saat Ini:</label
+                  >
+                  <input
+                    type="text"
+                    id="tujuanSementara"
+                    class="w-full p-3 border rounded-xl text-sm font-medium bg-slate-50"
+                    value="Mendaftar kuliah di PTU atau PTKIN pada jurusan impian"
+                  />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="bg-slate-50 p-4 rounded-2xl border">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-xs font-bold text-karvia-700 uppercase"
+                        >Langkah Kecil 1 (Minggu Ini)</span
+                      >
+                      <span class="text-xs text-slate-400">Target: 3 Hari</span>
+                    </div>
+                    <input
+                      type="text"
+                      id="langkah1"
+                      class="w-full p-3 border rounded-xl text-xs bg-white"
+                      value="Mencari informasi akreditasi dan syarat masuk PTU / PTKIN secara online."
+                    />
+                  </div>
+                  <div class="bg-slate-50 p-4 rounded-2xl border">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-xs font-bold text-karvia-700 uppercase"
+                        >Langkah Kecil 2 (Minggu Ini)</span
+                      >
+                      <span class="text-xs text-slate-400">Target: 7 Hari</span>
+                    </div>
+                    <input
+                      type="text"
+                      id="langkah2"
+                      class="w-full p-3 border rounded-xl text-xs bg-white"
+                      value="Berkonsultasi langsung dengan Guru BK sekolah terkait pilihan jurusan."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button
+                  onclick="simpanRencanaLangkah()"
+                  class="px-6 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-md transition"
+                >
+                  Simpan Rencana Aksi <i class="fa-solid fa-check ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 6: JURNAL REFLEKSI -->
+          <div id="content-refleksi" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <span
+                  class="text-xs font-bold text-karvia-600 uppercase tracking-wider"
+                  >Langkah 5 dari 5</span
+                >
+                <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                  <i class="fa-solid fa-book-bookmark mr-2 text-karvia-600"></i>
+                  Jurnal Refleksi Karier
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Catat apa yang baru saja dipelajari, hambatan yang dirasakan,
+                  dukungan, dan target perbaikan.
+                </p>
+              </div>
+
+              <form onsubmit="simpanJurnal(event)" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1"
+                    >1. Hal baru apa yang paling berharga kamu temukan hari
+                    ini?</label
+                  >
+                  <textarea
+                    id="jurnalBaru"
+                    rows="2"
+                    class="w-full p-3 border rounded-xl text-sm"
+                    placeholder="Saya menyadari bahwa perencanaan karier memerlukan eksplorasi minat yang sungguh-sungguh..."
+                  ></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1"
+                    >2. Hambatan atau kebingungan apa yang sedang kamu
+                    rasakan?</label
+                  >
+                  <textarea
+                    id="jurnalHambatan"
+                    rows="2"
+                    class="w-full p-3 border rounded-xl text-sm"
+                    placeholder="Masih menimbang antara kuliah di PTKIN atau universitas umum..."
+                  ></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1"
+                    >3. Siapa atau sumber apa yang bisa memberimu
+                    dukungan?</label
+                  >
+                  <textarea
+                    id="jurnalDukungan"
+                    rows="2"
+                    class="w-full p-3 border rounded-xl text-sm"
+                    placeholder="Orang tua, wali kelas, dan Guru BK di madrasah/sekolah..."
+                  ></textarea>
+                </div>
+
+                <div class="flex justify-end">
+                  <button
+                    type="submit"
+                    class="px-6 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-md transition"
+                  >
+                    Simpan Jurnal Refleksi
+                    <i class="fa-solid fa-floppy-disk ml-2"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- TAB 7: RUANG KONSULTASI BK -->
+          <div id="content-konsultasi" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">
+                  <i class="fa-solid fa-comments mr-2 text-karvia-600"></i>
+                  Ruang Konsultasi & Ringkasan untuk Guru BK
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Pilih catatan eksplorasi karier Anda untuk dibawa berdiskusi
+                  langsung dalam sesi konseling dengan Guru BK.
+                </p>
+              </div>
+
+              <div
+                class="bg-emerald-50 p-6 rounded-2xl border border-emerald-200 mb-6"
+              >
+                <h3 class="font-bold text-emerald-900 text-base mb-2">
+                  <i class="fa-solid fa-file-lines text-emerald-600 mr-2"></i>
+                  Ringkasan Rekap Catatan Karier Anda:
+                </h3>
+                <div
+                  id="ringkasanKonsultasiBox"
+                  class="text-xs text-slate-700 space-y-2 bg-white p-4 rounded-xl border border-emerald-100"
+                >
+                  <p>
+                    <strong>Nama:</strong> <span id="ringkasanNama">-</span>
+                  </p>
+                  <p>
+                    <strong>Minat / Kekuatan:</strong>
+                    <span id="ringkasanMinat">Belum diisi di Step 1</span>
+                  </p>
+                  <p>
+                    <strong>Pilihan & Perbandingan:</strong>
+                    <span id="ringkasanPilihan">Belum diisi di Step 3</span>
+                  </p>
+                  <p>
+                    <strong>Rencana Langkah:</strong>
+                    <span id="ringkasanRencana">Belum diisi di Step 4</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-3">
+                <button
+                  onclick="kirimKeGuruBK()"
+                  class="px-6 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold rounded-xl shadow-md transition"
+                >
+                  <i class="fa-solid fa-paper-plane mr-2"></i> Bagikan Catatan
+                  ke Dashboard Guru BK
+                </button>
+                <button
+                  onclick="window.print()"
+                  class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition"
+                >
+                  <i class="fa-solid fa-print mr-2"></i> Cetak / Simpan PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 8: TIPS & EDUKASI KARIER -->
+          <div id="content-tips" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200"
+            >
+              <div class="border-b border-slate-100 pb-4 mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">
+                  <i class="fa-solid fa-lightbulb mr-2 text-karvia-600"></i>
+                  Tips & Panduan Praktis Eksplorasi Karier
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                  Panduan singkat untuk membantumu mengambil keputusan karier
+                  yang bijak.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <div class="font-bold text-slate-900 text-sm mb-1">
+                    1. Minat Dapat Berkembang
+                  </div>
+                  <p class="text-slate-600">
+                    Pilihan hari ini tidak harus final. Terbukalah pada
+                    pengalaman belajar baru selama di SMA/MA.
+                  </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <div class="font-bold text-slate-900 text-sm mb-1">
+                    2. Cari Informasi dari Berbagai Sumber
+                  </div>
+                  <p class="text-slate-600">
+                    Jangan hanya mengandalkan satu sumber. Gunakan situs resmi
+                    seperti O*NET, Kemnaker, atau tanya alumni.
+                  </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <div class="font-bold text-slate-900 text-sm mb-1">
+                    3. Diskusikan dengan Orang Dewasa Tepercaya
+                  </div>
+                  <p class="text-slate-600">
+                    Orang tua, wali kelas, dan Guru BK adalah mitra terbaik
+                    untuk mendiskusikan rencana masa depanmu.
+                  </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border">
+                  <div class="font-bold text-slate-900 text-sm mb-1">
+                    4. Fokus pada Langkah Kecil
+                  </div>
+                  <p class="text-slate-600">
+                    Masa depan terasa besar jika dipikirkan sekaligus. Pecah
+                    menjadi langkah-langkah kecil minggu ini.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- DASHBOARD GURU BK (KHUSUS GURU) -->
+      <!-- ========================================== -->
+      <div
+        id="guruLayout"
+        class="flex-grow overflow-y-auto p-4 sm:p-8 bg-slate-50 hidden"
+      >
+        <div class="max-w-7xl mx-auto space-y-6">
+          <!-- Welcome Banner Guru -->
+          <div
+            class="bg-gradient-to-r from-slate-900 to-karvia-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+          >
+            <div>
+              <span
+                class="bg-karvia-500/30 text-karvia-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2 border border-karvia-400/30"
+              >
+                Dashboard Khusus Guru Bimbingan dan Konseling
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold">
+                KARVIA - Panel Guru BK
+              </h2>
+              <p class="text-slate-300 text-xs sm:text-sm mt-1">
+                Pantau rekapitulasi eksplorasi peserta didik, catatan refleksi,
+                dan kelola layanan bimbingan karier.
+              </p>
+            </div>
+            <button
+              onclick="bukaModalPengumuman()"
+              class="px-5 py-3 bg-karvia-600 hover:bg-karvia-700 text-white font-bold text-xs rounded-xl shadow-lg transition whitespace-nowrap"
+            >
+              <i class="fa-solid fa-bullhorn mr-2"></i> Siarkan Pesan /
+              Pengumuman Karier
+            </button>
+          </div>
+
+          <!-- Statistik Ringkas -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div
+              class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"
+            >
+              <div class="text-slate-400 text-xs font-semibold uppercase">
+                Total Siswa Aktif
+              </div>
+              <div class="text-2xl font-extrabold text-slate-900 mt-1">
+                32 Siswa
+              </div>
+              <div class="text-xs text-emerald-600 font-medium mt-1">
+                <i class="fa-solid fa-arrow-up mr-1"></i> Kelas X - XII SMA/MA
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"
+            >
+              <div class="text-slate-400 text-xs font-semibold uppercase">
+                Catatan Masuk / Dibagikan
+              </div>
+              <div
+                class="text-2xl font-extrabold text-karvia-600 mt-1"
+                id="statCatatanMasuk"
+              >
+                14 Siswa
+              </div>
+              <div class="text-xs text-slate-500 font-medium mt-1">
+                Siap untuk sesi konseling
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"
+            >
+              <div class="text-slate-400 text-xs font-semibold uppercase">
+                Jadwal Konsultasi
+              </div>
+              <div class="text-2xl font-extrabold text-blue-600 mt-1">
+                6 Permintaan
+              </div>
+              <div class="text-xs text-slate-500 font-medium mt-1">
+                Minggu ini
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"
+            >
+              <div class="text-slate-400 text-xs font-semibold uppercase">
+                Status Sistem
+              </div>
+              <div class="text-2xl font-extrabold text-emerald-600 mt-1">
+                Aktif 100%
+              </div>
+              <div class="text-xs text-slate-500 font-medium mt-1">
+                Sesuai Proposal Chindy
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabel Aktivitas Siswa -->
+          <div
+            class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden"
+          >
+            <div
+              class="p-6 border-b border-slate-100 flex justify-between items-center"
+            >
+              <div>
+                <h3 class="font-bold text-slate-900 text-lg">
+                  Rekapitulasi Aktivitas & Catatan Eksplorasi Siswa
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  Daftar siswa yang telah mengisi refleksi dan membagikan
+                  catatan karier ke Guru BK.
+                </p>
+              </div>
+              <button
+                onclick="refreshDataGuru()"
+                class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition"
+              >
+                <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr
+                    class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider border-b border-slate-200"
+                  >
+                    <th class="p-4">Nama Siswa</th>
+                    <th class="p-4">Minat / Mata Pelajaran</th>
+                    <th class="p-4">Pilihan Karier</th>
+                    <th class="p-4">Rencana Langkah</th>
+                    <th class="p-4 text-center">Tindakan / Konseling</th>
+                  </tr>
+                </thead>
+                <tbody id="tabelSiswaBody" class="divide-y divide-slate-100">
+                  <tr class="hover:bg-slate-50 transition">
+                    <td class="p-4 font-semibold text-slate-900">
+                      Ahmad Fauzan (X MIA 1)
+                    </td>
+                    <td class="p-4 text-slate-600">Matematika & Sains</td>
+                    <td class="p-4 text-slate-600">Dokter / Tenaga Medis</td>
+                    <td class="p-4 text-slate-600">Mencari syarat masuk PTU</td>
+                    <td class="p-4 text-center">
+                      <button
+                        onclick="
+                          lihatDetailSiswa(
+                            'Ahmad Fauzan',
+                            'Matematika & Sains',
+                            'Dokter / Tenaga Medis',
+                            'Mencari syarat masuk PTU',
+                          )
+                        "
+                        class="px-3 py-1.5 bg-karvia-50 text-karvia-700 hover:bg-karvia-100 font-semibold rounded-lg transition"
+                      >
+                        <i class="fa-solid fa-eye mr-1"></i> Detail Catatan
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 transition">
+                    <td class="p-4 font-semibold text-slate-900">
+                      Siti Rahma (XI IIS 2)
+                    </td>
+                    <td class="p-4 text-slate-600">Ilmu Sosial & Agama</td>
+                    <td class="p-4 text-slate-600">Guru BK / Konselor</td>
+                    <td class="p-4 text-slate-600">Konsultasi PTKIN / UIN</td>
+                    <td class="p-4 text-center">
+                      <button
+                        onclick="
+                          lihatDetailSiswa(
+                            'Siti Rahma',
+                            'Ilmu Sosial & Agama',
+                            'Guru BK / Konselor',
+                            'Konsultasi PTKIN / UIN',
+                          )
+                        "
+                        class="px-3 py-1.5 bg-karvia-50 text-karvia-700 hover:bg-karvia-100 font-semibold rounded-lg transition"
+                      >
+                        <i class="fa-solid fa-eye mr-1"></i> Detail Catatan
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC KARVIA -->
+    <!-- ========================================== -->
+    <script>
+      // State Global Aplikasi
+      let currentUser = {
+        role: "siswa",
+        name: "Ahmad Fauzan",
+      };
+
+      let studentDataStore = {
+        minat: "Belum diisi",
+        kekuatan: [],
+        pilihanBanding: "Dokter vs Software Engineer",
+        rencana: "Mencari info kuliah",
+        jurnal: "Belum diisi",
+      };
+
+      // Fungsi Pilih Peran di Halaman Login
+      function setLoginRole(role) {
+        const siswaBtn = document.getElementById("roleSiswaBtn");
+        const guruBtn = document.getElementById("roleGuruBtn");
+        const hiddenRole = document.getElementById("selectedRole");
+        const labelNama = document.getElementById("labelNama");
+        const inputNama = document.getElementById("loginNama");
+        const loginHint = document.getElementById("loginHint");
+        const fieldNama = document.getElementById("fieldNamaContainer");
+
+        hiddenRole.value = role;
+
+        if (role === "siswa") {
+          siswaBtn.className =
+            "flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-karvia-600 bg-karvia-50 text-karvia-700 shadow-sm";
+          guruBtn.className =
+            "flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300";
+          labelNama.innerText = "Nama Lengkap Siswa";
+          inputNama.placeholder = "Contoh: Ahmad Fauzan";
+          inputNama.value = "Ahmad Fauzan";
+          fieldNama.style.display = "block";
+          loginHint.innerHTML =
+            'Petunjuk: Siswa ketik <code class="bg-slate-100 px-1.5 py-0.5 rounded text-karvia-700 font-semibold">siswa123</code> atau bebas.';
+        } else {
+          guruBtn.className =
+            "flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-karvia-600 bg-karvia-50 text-karvia-700 shadow-sm";
+          siswaBtn.className =
+            "flex items-center justify-center py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300";
+          labelNama.innerText = "Nama Guru BK / Konselor";
+          inputNama.placeholder = "Contoh: Mega Aria Monica, M.Pd.";
+          inputNama.value = "Mega Aria Monica, M.Pd.";
+          fieldNama.style.display = "block";
+          loginHint.innerHTML =
+            'Petunjuk: Guru ketik <code class="bg-slate-100 px-1.5 py-0.5 rounded text-karvia-700 font-semibold">guru123</code> atau bebas.';
+        }
+      }
+
+      // Handle Proses Login
+      function handleLogin(event) {
+        event.preventDefault();
+        const role = document.getElementById("selectedRole").value;
+        const name = document.getElementById("loginNama").value;
+        const pass = document.getElementById("loginPassword").value;
+
+        if (!pass) {
+          showModal(
+            "Peringatan",
+            "Silakan masukkan password terlebih dahulu.",
+            "warning",
+          );
+          return;
+        }
+
+        currentUser.role = role;
+        currentUser.name = name;
+
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainDashboard").style.display = "flex";
+
+        document.getElementById("userDisplayName").innerText = name;
+
+        if (role === "siswa") {
+          document.getElementById("userRoleBadge").innerText = "Siswa SMA/MA";
+          document.getElementById("userRoleBadge").className =
+            "text-xs px-2.5 py-0.5 rounded-full inline-block font-medium bg-emerald-100 text-emerald-800";
+          document.getElementById("siswaLayout").style.display = "flex";
+          document.getElementById("guruLayout").style.display = "none";
+          document.getElementById("navSubTitle").innerText =
+            "Career Vision & Action (Langkah Karierku)";
+          switchTab("beranda");
+        } else {
+          document.getElementById("userRoleBadge").innerText =
+            "Guru BK / Konselor";
+          document.getElementById("userRoleBadge").className =
+            "text-xs px-2.5 py-0.5 rounded-full inline-block font-medium bg-purple-100 text-purple-800";
+          document.getElementById("siswaLayout").style.display = "none";
+          document.getElementById("guruLayout").style.display = "block";
+          document.getElementById("navSubTitle").innerText =
+            "Panel Rekapitulasi & Layanan BK";
+        }
+
+        showModal(
+          "Berhasil Masuk!",
+          `Selamat datang di KARVIA, ${name}. Anda masuk sebagai ${role === "siswa" ? "Siswa SMA/MA" : "Guru BK"}.`,
+          "success",
+        );
+      }
+
+      // Fungsi Logout
+      function logout() {
+        document.getElementById("mainDashboard").style.display = "none";
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("loginPassword").value = "";
+      }
+
+      // Switch Tab Navigasi Siswa
+      function switchTab(tabId) {
+        const tabs = [
+          "beranda",
+          "kenaliDiri",
+          "jelajahProfesi",
+          "jalurLulus",
+          "bandingkan",
+          "rencana",
+          "refleksi",
+          "konsultasi",
+          "tips",
+        ];
+        tabs.forEach((t) => {
+          const content = document.getElementById(`content-${t}`);
+          const btn = document.getElementById(`tab-${t}`);
+          if (content) content.classList.add("hidden");
+          if (btn) {
+            btn.className =
+              "nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left text-slate-600 hover:bg-slate-100 transition-all";
+          }
+        });
+
+        const activeContent = document.getElementById(`content-${tabId}`);
+        const activeBtn = document.getElementById(`tab-${tabId}`);
+        if (activeContent) activeContent.classList.remove("hidden");
+        if (activeBtn) {
+          activeBtn.className =
+            "nav-btn flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium w-full text-left bg-karvia-50 text-karvia-700 transition-all shadow-sm";
+        }
+
+        if (tabId === "konsultasi") {
+          updateRingkasanKonsultasi();
+        }
+      }
+
+      // Filter Profesi
+      function filterProfesi(category) {
+        const cards = document.querySelectorAll(".profesi-card");
+        const buttons = document.querySelectorAll(".profesi-filter");
+
+        buttons.forEach((b) => {
+          b.className =
+            "profesi-filter px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition";
+        });
+        event.target.className =
+          "profesi-filter px-3 py-1.5 rounded-lg text-xs font-bold bg-karvia-600 text-white transition";
+
+        cards.forEach((card) => {
+          if (category === "all" || card.dataset.category === category) {
+            card.style.display = "flex";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      // Simpan Profesi / Bookmark
+      function simpanProfesi(namaProfesi) {
+        showModal(
+          "Profesi Disimpan",
+          `Profesi "${namaProfesi}" berhasil disimpan ke daftar eksplorasi pribadi Anda!`,
+          "success",
+        );
+      }
+
+      // Tambah ke Bandingkan
+      function tambahKeBandingkan(profesi, jalur) {
+        document.getElementById("pilihanA_nama").value = profesi;
+        document.getElementById("pilihanA_catatan").value =
+          `Jalur: ${jalur}. Sesuai dengan minat dan potensi diri.`;
+        switchTab("bandingkan");
+        showModal(
+          "Berhasil Dimasukkan",
+          `Pilihan ${profesi} dimasukkan ke menu Bandingkan Pilihan.`,
+          "success",
+        );
+      }
+
+      // Simpan Form Kenali Diri (Step 1)
+      function saveKenaliDiri(e) {
+        e.preventDefault();
+        const catatan = document.getElementById("catatanMinatDiri").value;
+        studentDataStore.minat = catatan || "Sains & Teknologi / Sosial";
+        showModal(
+          "Berhasil Disimpan!",
+          "Refleksi 'Kenali Diriku' berhasil disimpan. Mari lanjutkan ke Jelajah Profesi.",
+          "success",
+        );
+        switchTab("jelajahProfesi");
+      }
+
+      // Simpan Perbandingan (Step 3)
+      function simpanPerbandingan() {
+        const pA = document.getElementById("pilihanA_nama").value;
+        const pB = document.getElementById("pilihanB_nama").value;
+        studentDataStore.pilihanBanding = `${pA} vs ${pB}`;
+        showModal(
+          "Analisis Disimpan",
+          "Analisis perbandingan pilihan karier berhasil disimpan.",
+          "success",
+        );
+        switchTab("rencana");
+      }
+
+      // Simpan Rencana Langkah (Step 4)
+      function simpanRencanaLangkah() {
+        const tujuan = document.getElementById("tujuanSementara").value;
+        const l1 = document.getElementById("langkah1").value;
+        studentDataStore.rencana = `${tujuan} (${l1})`;
+        showModal(
+          "Rencana Aksi Disimpan",
+          "Rencana langkah kecil minggu ini berhasil disimpan!",
+          "success",
+        );
+        switchTab("refleksi");
+      }
+
+      // Simpan Jurnal Refleksi (Step 5)
+      function simpanJurnal(e) {
+        e.preventDefault();
+        const baru = document.getElementById("jurnalBaru").value;
+        studentDataStore.jurnal = baru || "Menemukan kejelasan pilihan";
+        showModal(
+          "Jurnal Tersimpan",
+          "Jurnal refleksi karier Anda telah tersimpan dengan aman.",
+          "success",
+        );
+        switchTab("konsultasi");
+      }
+
+      // Update Ringkasan Konsultasi
+      function updateRingkasanKonsultasi() {
+        document.getElementById("ringkasanNama").innerText = currentUser.name;
+        document.getElementById("ringkasanMinat").innerText =
+          studentDataStore.minat;
+        document.getElementById("ringkasanPilihan").innerText =
+          studentDataStore.pilihanBanding;
+        document.getElementById("ringkasanRencana").innerText =
+          studentDataStore.rencana;
+      }
+
+      // Kirim ke Guru BK
+      function kirimKeGuruBK() {
+        showModal(
+          "Berhasil Dikirim!",
+          "Catatan eksplorasi karier Anda telah dibagikan ke dashboard Guru BK untuk sesi konseling.",
+          "success",
+        );
+      }
+
+      // Fitur Guru BK: Lihat Detail Siswa
+      function lihatDetailSiswa(nama, minat, pilihan, rencana) {
+        showModal(
+          `Catatan Siswa: ${nama}`,
+          `Minat/Mapel: ${minat}\nPilihan Karier: ${pilihan}\nRencana Aksi: ${rencana}\n\nStatus: Siap untuk sesi konseling bimbingan karier.`,
+          "info",
+        );
+      }
+
+      // Modal Pengumuman Guru BK
+      function bukaModalPengumuman() {
+        showModal(
+          "Kirim Pengumuman",
+          "Fitur siaran pengumuman bimbingan karier berhasil diaktifkan. Pesan motivasi akan disiarkan ke seluruh siswa.",
+          "success",
+        );
+      }
+
+      function refreshDataGuru() {
+        showModal(
+          "Data Diperbarui",
+          "Rekapitulasi aktivitas siswa berhasil disinkronkan secara real-time.",
+          "success",
+        );
+      }
+
+      // Fungsi Tampilkan Modal Custom (Pengganti alert)
+      function showModal(title, message, type = "success") {
+        const modal = document.getElementById("customModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalMessage = document.getElementById("modalMessage");
+        const modalIcon = document.getElementById("modalIcon");
+
+        modalTitle.innerText = title;
+        modalMessage.innerText = message;
+
+        if (type === "success") {
+          modalIcon.className =
+            "w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl";
+          modalIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+        } else if (type === "warning") {
+          modalIcon.className =
+            "w-16 h-16 mx-auto mb-4 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl";
+          modalIcon.innerHTML =
+            '<i class="fa-solid fa-triangle-exclamation"></i>';
+        } else {
+          modalIcon.className =
+            "w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl";
+          modalIcon.innerHTML = '<i class="fa-solid fa-info"></i>';
+        }
+
+        modal.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("customModal").classList.add("hidden");
+      }
+    </script>
+  </body>
+</html>
