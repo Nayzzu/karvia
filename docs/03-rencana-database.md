@@ -4,9 +4,11 @@ Database: **`karvia_db`** (MySQL/MariaDB, InnoDB, `utf8mb4`, `utf8mb4_unicode_ci
 Semua waktu memakai zona **Asia/Jakarta**.
 
 File `database/database.sql` sudah dibuat dan berhasil diuji impor pada MySQL
-8.0.30. Semua 11 tabel dan 13 foreign key berhasil dibuat; data contoh terisi
-sesuai rancangan. Setiap perubahan skema saat implementasi **wajib** memperbarui
-dokumen ini.
+8.0.30. Struktur awal terdiri dari 11 tabel dan 13 foreign key. Bagian data contoh
+kemudian diringkas menjadi data demo fiktif (2 sekolah, 6 akun, 4 profesi, dan
+skenario data siswa terbatas). File SQL yang diperbarui perlu diimpor ulang ke
+database lokal kosong agar data contoh aktifnya sama dengan isi file. Setiap
+perubahan skema saat implementasi **wajib** memperbarui dokumen ini.
 
 ---
 
@@ -350,54 +352,69 @@ dapat bentrok. Jika ingin mengulang dari awal, hapus database lalu buat ulang.
 
 ## 8. Rencana data contoh (bagian B `database.sql`)
 
-Data contoh bertujuan agar demo Rabu bisa langsung berjalan. Nama sekolah dibuat
-fiktif/contoh; bukan klaim afiliasi sekolah nyata.
+Data demo bertujuan menguji alur dasar dan tampilan dengan jumlah kecil. Semua
+nama sekolah, nama akun, dan isi catatan bersifat fiktif; bukan klaim afiliasi
+atau identitas orang nyata.
 
-### 8.1 Dua sekolah
+### 8.1 Dua sekolah demo
+
+Nama dan lokasi berikut sengaja generik/fiktif, tanpa NPSN, dan bukan afiliasi
+sekolah nyata.
 
 | Nama | Jenjang | Kota | Provinsi |
 |------|---------|------|----------|
-| SMA Nusantara 1 Bandar Lampung | SMA | Bandar Lampung | Lampung |
-| MA Al-Hikmah Bandar Lampung | MA | Bandar Lampung | Lampung |
+| Sekolah Demo KARVIA Utara | SMA | Kota Contoh | Provinsi Contoh |
+| Sekolah Demo KARVIA Selatan | MA | Kota Contoh | Provinsi Contoh |
 
-### 8.2 Akun contoh
+### 8.2 Akun demo
 
-| Peran | Nama | Username | Password awal | Sekolah |
-|-------|------|----------|---------------|---------|
-| Admin | Administrator KARVIA | `admin` | `Admin123!` | — |
-| Guru BK | Mega Aria Monica, M.Pd. | `guru.nusantara` | `Guru123!` | SMA Nusantara 1 |
-| Guru BK | Rina Kurniasih, S.Pd. | `guru.alhikmah` | `Guru123!` | MA Al-Hikmah |
-| Siswa | Ahmad Fauzan | `siswa.ahmad` | `Siswa123!` | SMA Nusantara 1 |
-| Siswa | Siti Rahma | `siswa.siti` | `Siswa123!` | SMA Nusantara 1 |
-| Siswa | Raka Pratama | `siswa.raka` | `Siswa123!` | MA Al-Hikmah |
-| Siswa | Nabila Putri | `siswa.nabila` | `Siswa123!` | MA Al-Hikmah |
+Semua nama pengguna adalah label fiktif untuk pengujian, bukan identitas orang.
 
-**Wajib:** password di atas hanya untuk demo lokal. Sebelum dipakai sekolah nyata,
-ganti semua password. Hash disimpan di database, bukan teks biasa.
+| Peran | Nama demo | Username | Password demo | Sekolah |
+|-------|-----------|----------|---------------|---------|
+| Admin | Admin Demo KARVIA | `demo.admin` | `Admin123!` | — |
+| Guru BK | Guru Demo Utara | `demo.guru1` | `Guru123!` | Sekolah Demo KARVIA Utara |
+| Guru BK | Guru Demo Selatan | `demo.guru2` | `Guru123!` | Sekolah Demo KARVIA Selatan |
+| Siswa | Siswa Demo Berbagi | `demo.siswa1` | `Siswa123!` | Sekolah Demo KARVIA Utara |
+| Siswa | Siswa Demo Privat | `demo.siswa2` | `Siswa123!` | Sekolah Demo KARVIA Utara |
+| Siswa | Siswa Demo Kosong | `demo.siswa3` | `Siswa123!` | Sekolah Demo KARVIA Selatan |
 
-### 8.3 Data demo opsional
+**Penting:** akun dan kata sandi ini hanya untuk demo lokal. Ganti/hapus sebelum
+pemakaian nyata. Database hanya menyimpan hash kata sandi. Semua `last_login_at`
+dibiarkan `NULL` dan `login_count` bernilai `0` agar tidak menggambarkan aktivitas
+login fiktif.
 
-- Profesi: 4 profesi dari prototipe (Dokter, Software Engineer, Guru BK, Advokat)
-  + 4 tambahan agar filter terasa hidup.
-- Ahmad: refleksi + perbandingan + rencana + 2 jurnal + sudah membagikan catatan
-  (status `baru`) → agar dashboard Guru BK langsung ada isinya.
-- Siti: sudah mengisi data tetapi **belum** membagikan → untuk menunjukkan privasi.
-- Raka & Nabila: akun aktif tanpa data → untuk empty state.
+### 8.3 Data demo dalam Bagian B
 
-### 8.4 Isi bagian B
+- Katalog berisi 4 profesi inti dari prototipe: Dokter, Software Engineer, Guru BK,
+  dan Advokat.
+- Siswa Demo Berbagi: satu refleksi, satu perbandingan, satu rencana, satu jurnal,
+  satu bookmark, dan satu berbagi berstatus `baru`.
+- Siswa Demo Privat: refleksi tersedia, tetapi belum dibagikan untuk menguji privasi.
+- Siswa Demo Kosong: tidak memiliki data eksplorasi untuk menguji empty state.
+- Semua isi eksplorasi ditandai sebagai data fiktif/demo; jumlahnya sengaja dibatasi.
+
+### 8.4 Isi bagian B dan verifikasi lokal
 
 Urutan insert:
 
-1. `sekolah` — 2 baris.
-2. `pengguna` — 1 admin, 2 Guru BK, 4 siswa (password sudah di-hash).
-3. `profesi` — 8 baris.
-4. Data karier demo — refleksi, perbandingan, rencana, jurnal, bookmark, dan satu
-   `berbagi_catatan` untuk Ahmad; data Siti tanpa berbagi.
+1. `sekolah` — 2 baris fiktif.
+2. `pengguna` — 1 Admin, 2 Guru BK, 3 siswa (password sudah di-hash; aktivitas login kosong).
+3. `profesi` — 4 profesi inti.
+4. Data karier demo terbatas — satu siswa berbagi, satu siswa belum berbagi, dan
+   satu siswa tanpa data eksplorasi.
 
-Bagian B harus **aman dijalankan pada database kosong** setelah bagian A. Jangan
-menimpakan data contoh ke database yang sudah dipakai sekolah nyata. Jika ingin
-demo bersih, hapus database lalu import ulang `database.sql`. Sebelum pemakaian
-nyata, hapus bagian B (data contoh) dan ganti semua password akun.
+File SQL ini sudah diuji ulang pada MySQL 8.0.30 dengan hasil: 11 tabel, 13
+foreign key, 2 sekolah, 6 pengguna, 4 profesi, masing-masing satu refleksi,
+perbandingan, rencana, jurnal, bookmark, dan berbagi; belum ada tindak lanjut atau
+log aktivitas. Semua akun memiliki `last_login_at = NULL` dan `login_count = 0`.
+
+Bagian B harus dijalankan pada database kosong setelah bagian A. File SQL tidak
+menjalankan `TRUNCATE` atau menghapus data yang sudah ada. Untuk memperbarui
+instalasi demo yang sudah pernah diimpor, ekspor/backup bila perlu, lalu kosongkan
+atau buat ulang database `karvia_db` secara sengaja sebelum mengimpor ulang file.
+Jangan menjalankan ulang pada database sekolah nyata. Sebelum pemakaian nyata,
+hapus bagian B dan ganti semua password akun.
 
 ---
 
