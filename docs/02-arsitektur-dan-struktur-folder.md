@@ -85,33 +85,31 @@ di-zip; boleh diabaikan.
 
 ## 3. Rencana isi file
 
-Bagian ini menjelaskan fungsi file sesuai target aplikasi. Saat ini halaman PHP
-awal (`index.php`, `login.php`, dan dashboard di tiap folder peran) sudah memiliki
-tampilan statis yang mengadaptasi prototipe. Belum ada autentikasi, koneksi data,
-proses form, atau pemeriksaan hak akses yang berfungsi.
+Bagian ini menjelaskan fungsi file sesuai target aplikasi. Landing, autentikasi,
+layout bersama, dan dashboard awal kini sudah tersambung ke backend. Halaman fitur
+peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
 
 ### 3.1 File di akar
 
 | File | Fungsi |
 |------|--------|
-| `index.php` | Target: belum login → `login.php`; sudah login → dashboard sesuai peran. Versi saat ini berupa landing statis dengan tautan masuk. |
-| `login.php` | Tampilan form username + password tersedia; verifikasi belum dihubungkan. Target berikutnya: memproses login nyata. |
+| `index.php` | Belum login → landing publik; sudah login → dashboard sesuai peran. |
+| `login.php` | Form dan proses login username/password, CSRF, pesan gagal, serta pengalihan sesuai peran. |
 | `logout.php` | Menghapus session, menghancurkan cookie, kembali ke login |
 | `README.md` | Petunjuk singkat struktur dan cara menjalankan |
 | `.htaccess` | *(tambahan, dibuat saat fase keamanan)* melindungi folder sensitif dan mematikan daftar folder |
 
 ### 3.2 Halaman per peran
 
-File `index.php` di setiap folder peran sudah berisi tampilan dashboard awal
-statis. Halaman peran lainnya **dibuat saat fase fitur terkait** — belum dibuat
-pada tahap tampilan awal ini.
+Dashboard tiap peran sudah menggunakan autentikasi dan data database dasar.
+Halaman peran lainnya dibuat bertahap saat fase fitur terkait.
 
 | Folder | Rencana file | Keterangan |
 |--------|--------------|------------|
 | `admin/` | `index.php` | Dashboard + 4 kartu statistik + rekap per sekolah |
-| | `sekolah.php` | Daftar sekolah + pencarian |
+| | `sekolah.php` | Daftar sekolah + pencarian + aktif/nonaktif |
 | | `sekolah_form.php` | Tambah/ubah sekolah |
-| | `sekolah_detail.php` | Detail sekolah + daftar akun |
+| | `sekolah_detail.php` | Detail sekolah + jumlah siswa/guru + daftar akun |
 | | `pengguna.php` | Daftar pengguna + filter |
 | | `pengguna_form.php` | Tambah/ubah pengguna + reset password |
 | | `rekap.php` | Rekap ringkas semua sekolah |
@@ -159,9 +157,8 @@ require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/footer.php';
 ```
 
-Target implementasi: halaman `login.php` dan `index.php` (landing) memakai
-`function.php` langsung, tanpa `header.php`, karena belum ada sidebar/peran.
-Versi tampilan statis saat ini belum memuat helper tersebut.
+Halaman publik `login.php` dan `index.php` memakai `function.php` langsung,
+tanpa `header.php`, karena tidak memerlukan sidebar peran.
 
 ### 3.4 Config
 
