@@ -13,7 +13,7 @@ Dokumen ini adalah **aturan main** saat melanjutkan proyek. Baca bersama
 | `index.php` | ✅ ada, masih placeholder tanpa logika |
 | Dokumentasi | ✅ lengkap (folder `docs/`) |
 | File HTML prototipe | ✅ utuh, **jangan diubah** |
-| Database | ⬜ belum dibuat; rencana satu file `database/database.sql` |
+| Database | ✅ `database/database.sql` diimpor dan diverifikasi (11 tabel, 13 FK, data contoh) |
 | Kode aplikasi | ⬜ belum ditulis |
 
 Jangan menganggap fitur apa pun sudah jadi hanya karena dokumennya ada.
@@ -62,10 +62,11 @@ Kerjakan berurutan. Jangan melompat ke tampilan sebelum fondasi data siap.
 
 ### Fase 1 — Fondasi (P0)
 
-- [ ] Buat database `karvia_db`.
-- [ ] Tulis `database/database.sql` sesuai `03`: bagian A (struktur, index,
+- [x] Buat database `karvia_db`.
+- [x] Tulis `database/database.sql` sesuai `03`: bagian A (struktur, index,
   foreign key) + bagian B (2 sekolah, 7 akun, profesi, data contoh).
-- [ ] Import `database/database.sql`; pastikan relasi berjalan.
+- [x] Import `database/database.sql`; verifikasi 11 tabel, 13 foreign key,
+  InnoDB, `utf8mb4_unicode_ci`, dan jumlah data contoh.
 - [ ] Buat `config/koneksi.php` (konstanta aplikasi + koneksi PDO).
 - [ ] Buat `includes/function.php`: koneksi, escape, flash, CSRF, auth, validasi,
   format tanggal, redirect.
@@ -365,7 +366,7 @@ Perbarui tabel ini setiap menyelesaikan fase.
 | Fase | Status | Tanggal | Catatan |
 |------|--------|---------|---------|
 | 0 — Dokumentasi & kerangka | ✅ selesai | 19 Nov 2026 | Folder & docs dibuat |
-| 1 — Fondasi & login | ⬜ belum | | |
+| 1 — Fondasi & login | 🟡 berjalan | 19 Nov 2026 | Database diimpor & diverifikasi; koneksi dan auth belum dibuat |
 | 2 — Admin | ⬜ belum | | |
 | 3 — Guru BK | ⬜ belum | | |
 | 4 — Siswa | ⬜ belum | | |

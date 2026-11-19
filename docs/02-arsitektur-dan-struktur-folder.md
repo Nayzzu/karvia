@@ -41,7 +41,7 @@ karvia/                          ← root aplikasi (nama folder bebas)
 │   └── koneksi.php              ← konfigurasi aplikasi + koneksi PDO
 │
 ├── database/
-│   └── database.sql             ← struktur + data contoh (belum dibuat)
+│   └── database.sql             ← struktur + data contoh
 │
 ├── guru_bk/
 │   └── index.php                ← dashboard Guru BK
@@ -74,9 +74,9 @@ itu hanya **contoh penamaan folder bertingkat**; isi di dalamnya tetap sama
 seperti pohon di atas. Saat folder dipindah, yang perlu disesuaikan hanya
 `BASE_URL` di `config/koneksi.php` (lihat bagian 10).
 
-Folder `assets/css/`, `assets/js/`, `assets/images/`, dan `database/` berisi file
-`.gitkeep` selama masih kosong. File itu hanya penanda agar folder tidak hilang
-saat proyek di-zip; boleh diabaikan.
+Folder `assets/css/`, `assets/js/`, dan `assets/images/` memiliki file `.gitkeep`
+selama masih kosong. File itu hanya penanda agar folder tidak hilang saat proyek
+di-zip; boleh diabaikan.
 
 > **Tidak boleh diakses langsung lewat browser:** `config/`, `database/`,
 > `includes/`, dan `docs/`. Perlindungannya dibahas di bagian 7.
