@@ -1,5 +1,7 @@
 <?php
-define('KARVIA_APP', true);
+if (!defined('KARVIA_APP')) {
+    define('KARVIA_APP', true);
+}
 require_once __DIR__ . '/function.php';
 
 if (!isset($peran_halaman) || !in_array($peran_halaman, ['admin', 'guru_bk', 'siswa'], true)) {

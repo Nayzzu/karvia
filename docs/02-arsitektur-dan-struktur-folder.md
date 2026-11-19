@@ -125,7 +125,7 @@ Halaman peran lainnya dibuat bertahap saat fase fitur terkait.
 | | `jurnal.php` | Langkah 5 + riwayat |
 | | `konsultasi.php` | Ringkasan + bagikan ke Guru BK + cetak |
 | | `tips.php` | Tips & edukasi (statis) |
-| Akar (semua peran) | `profil.php` | Profil + ganti password; dibuat saat fase penyempurnaan |
+| Akar (semua peran) | `profil.php` | Kerangka profil + ganti password; fitur perubahan belum tersedia |
 
 Aturan:
 
