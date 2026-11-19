@@ -85,23 +85,26 @@ di-zip; boleh diabaikan.
 
 ## 3. Rencana isi file
 
-Bagian ini adalah **rencana**. File yang sudah ada baru berupa placeholder
-(berisi komentar, belum ada logika).
+Bagian ini menjelaskan fungsi file sesuai target aplikasi. Saat ini halaman PHP
+awal (`index.php`, `login.php`, dan dashboard di tiap folder peran) sudah memiliki
+tampilan statis yang mengadaptasi prototipe. Belum ada autentikasi, koneksi data,
+proses form, atau pemeriksaan hak akses yang berfungsi.
 
 ### 3.1 File di akar
 
 | File | Fungsi |
 |------|--------|
-| `index.php` | Landing page: belum login → `login.php`; sudah login → dashboard sesuai peran |
-| `login.php` | Menampilkan form login dan memproses verifikasi username + password |
+| `index.php` | Target: belum login → `login.php`; sudah login → dashboard sesuai peran. Versi saat ini berupa landing statis dengan tautan masuk. |
+| `login.php` | Tampilan form username + password tersedia; verifikasi belum dihubungkan. Target berikutnya: memproses login nyata. |
 | `logout.php` | Menghapus session, menghancurkan cookie, kembali ke login |
 | `README.md` | Petunjuk singkat struktur dan cara menjalankan |
 | `.htaccess` | *(tambahan, dibuat saat fase keamanan)* melindungi folder sensitif dan mematikan daftar folder |
 
 ### 3.2 Halaman per peran
 
-File `index.php` di setiap folder peran sudah disiapkan sebagai placeholder.
-Halaman lain **dibuat saat fase fitur terkait** — tidak dibuat sekarang.
+File `index.php` di setiap folder peran sudah berisi tampilan dashboard awal
+statis. Halaman peran lainnya **dibuat saat fase fitur terkait** — belum dibuat
+pada tahap tampilan awal ini.
 
 | Folder | Rencana file | Keterangan |
 |--------|--------------|------------|
@@ -156,8 +159,9 @@ require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/footer.php';
 ```
 
-Halaman `login.php` dan `index.php` (landing) memakai `function.php` langsung,
-tanpa `header.php`, karena belum ada sidebar/peran.
+Target implementasi: halaman `login.php` dan `index.php` (landing) memakai
+`function.php` langsung, tanpa `header.php`, karena belum ada sidebar/peran.
+Versi tampilan statis saat ini belum memuat helper tersebut.
 
 ### 3.4 Config
 
@@ -188,8 +192,9 @@ impor cukup satu langkah. Rincian tabel ada di
 | `assets/js/app.js` | Toggle sidebar, konfirmasi, tampil/sembunyi field |
 | `assets/images/` | Logo KARVIA bila ada |
 
-MVP boleh memakai CDN seperti prototipe (Tailwind, FontAwesome). Jika internet
-di sekolah tidak stabil, CDN dapat diganti ke file lokal di `assets/`.
+Halaman awal yang sudah dibuat memakai CDN seperti prototipe (Tailwind, FontAwesome,
+Google Fonts Inter). Ini memerlukan internet saat halaman dibuka; jika koneksi sekolah
+tidak stabil, aset dapat dipindahkan ke `assets/` pada tahap UI.
 
 ---
 

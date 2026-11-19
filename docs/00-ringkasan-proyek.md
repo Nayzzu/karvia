@@ -10,7 +10,7 @@
 | Pengembang awal | Chindy Theresia (2411080092) — UIN Raden Intan Lampung |
 | Pengguna sistem | Admin, Guru BK, Siswa SMA/MA |
 | Cakupan | Multi-sekolah (dimulai dari 2 sekolah contoh) |
-| Status | Membangun ulang dari prototipe HTML menjadi aplikasi PHP + database |
+| Status | Membangun ulang dari prototipe HTML menjadi aplikasi PHP + database; prototipe tetap menjadi acuan visual, sementara halaman PHP awal baru berupa tampilan |
 
 > KARVIA adalah **media pendukung bimbingan karier**, bukan tes psikologis dan bukan
 > alat yang otomatis memvonis pilihan siswa. Pesan ini harus tetap tampil di aplikasi.
@@ -116,7 +116,7 @@ Membangun aplikasi KARVIA yang:
 
 - Cindy bukan dari bidang komputer; istilah teknis harus dijelaskan.
 - Target indikatif: **Rabu, 25 November 2026** (dihitung dari Kamis, 19 November 2026).
-- Data awal boleh kosong; cukup 2 sekolah sebagai kerangka.
+- Untuk demo lokal tersedia data contoh yang sedikit dan jelas ditandai sebagai fiktif: 2 sekolah, 1 Admin, 2 Guru BK, 3 siswa, 4 profesi, serta data eksplorasi terbatas untuk pengujian privasi dan tampilan. Aktivitas login contoh tidak diisi. Untuk pemakaian nyata, data contoh harus dihapus dan diganti data yang sah.
 - Sistem harus terasa “benar-benar dipakai”, bukan sekadar tampilan.
 
 ---

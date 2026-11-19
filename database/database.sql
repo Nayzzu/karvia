@@ -285,68 +285,66 @@ CREATE TABLE `log_aktivitas` (
   COLLATE = utf8mb4_unicode_ci;
 
 -- =====================================================================
--- BAGIAN B — DATA CONTOH
--- Boleh dihapus sebelum pemakaian nyata.
+-- BAGIAN B — DATA CONTOH / DEMO
+-- Semua nama dan institusi di bagian ini bersifat fiktif.
+-- Jangan gunakan akun atau isi berikut untuk pemakaian sekolah nyata.
 -- Password contoh HANYA untuk demo lokal:
---   admin          / Admin123!
---   guru.nusantara / Guru123!
---   guru.alhikmah  / Guru123!
---   siswa.*        / Siswa123!
+--   demo.admin  / Admin123!
+--   demo.guru1  / Guru123!
+--   demo.guru2  / Guru123!
+--   demo.siswa1, demo.siswa2, demo.siswa3 / Siswa123!
+-- Aktivitas login awal sengaja kosong (NULL/0), bukan aktivitas nyata.
 -- =====================================================================
 
--- 2 sekolah contoh (nama fiktif, bukan afiliasi sekolah nyata)
+-- Dua sekolah fiktif: cukup untuk menguji pemisahan data antar-sekolah.
 INSERT INTO `sekolah`
   (`id`, `nama`, `npsn`, `jenjang`, `alamat`, `kota`, `provinsi`, `status`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
-  (1, 'SMA Nusantara 1 Bandar Lampung', '10800001', 'SMA',
-   'Jl. Contoh Pendidikan No. 1', 'Bandar Lampung', 'Lampung', 'aktif',
+  (1, 'Sekolah Demo KARVIA Utara', NULL, 'SMA',
+   'Alamat fiktif untuk data demo', 'Kota Contoh', 'Provinsi Contoh', 'aktif',
    '2026-11-19 08:00:00', NULL),
-  (2, 'MA Al-Hikmah Bandar Lampung', '10800002', 'MA',
-   'Jl. Contoh Keagamaan No. 2', 'Bandar Lampung', 'Lampung', 'aktif',
+  (2, 'Sekolah Demo KARVIA Selatan', NULL, 'MA',
+   'Alamat fiktif untuk data demo', 'Kota Contoh', 'Provinsi Contoh', 'aktif',
    '2026-11-19 08:00:00', NULL);
 
--- 7 akun contoh (hash dibuat dengan password_hash(), bukan teks biasa)
+-- Enam akun fiktif: 1 Admin, 2 Guru BK, dan 3 siswa.
+-- Hash dibuat dengan password_hash(); last_login_at/login_count tidak dipalsukan.
 INSERT INTO `pengguna`
   (`id`, `sekolah_id`, `nama_lengkap`, `username`, `password_hash`, `role`, `status`,
    `nisn`, `nip`, `kelas`, `jurusan`, `no_telepon`, `last_login_at`, `login_count`,
    `dibuat_oleh`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
-  (1, NULL, 'Administrator KARVIA', 'admin',
+  (1, NULL, 'Admin Demo KARVIA', 'demo.admin',
    '$2y$10$vINplh3hI7eVmV68TI4d4ugayAVv5WsBep6.RODvrRoqm4pQHCbk2',
    'admin', 'aktif', NULL, NULL, NULL, NULL, NULL,
-   '2026-11-18 08:30:00', 12, NULL, '2026-11-19 08:05:00', NULL),
+   NULL, 0, NULL, '2026-11-19 08:05:00', NULL),
 
-  (2, 1, 'Mega Aria Monica, M.Pd.', 'guru.nusantara',
+  (2, 1, 'Guru Demo Utara', 'demo.guru1',
    '$2y$10$AByhEf1LpBOgc4oGg1QVQu0n6p5DawZntitkwMqWWJ4yXMXFkc9d2',
-   'guru_bk', 'aktif', NULL, '198501012010011001', NULL, NULL,
-   '0812-0000-0001', '2026-11-18 10:00:00', 8, 1, '2026-11-19 08:05:00', NULL),
+   'guru_bk', 'aktif', NULL, NULL, NULL, NULL, NULL,
+   NULL, 0, 1, '2026-11-19 08:05:00', NULL),
 
-  (3, 2, 'Rina Kurniasih, S.Pd.', 'guru.alhikmah',
+  (3, 2, 'Guru Demo Selatan', 'demo.guru2',
    '$2y$10$AByhEf1LpBOgc4oGg1QVQu0n6p5DawZntitkwMqWWJ4yXMXFkc9d2',
-   'guru_bk', 'aktif', NULL, '199002022015012002', NULL, NULL,
-   '0812-0000-0002', '2026-11-17 13:20:00', 4, 1, '2026-11-19 08:05:00', NULL),
+   'guru_bk', 'aktif', NULL, NULL, NULL, NULL, NULL,
+   NULL, 0, 1, '2026-11-19 08:05:00', NULL),
 
-  (4, 1, 'Ahmad Fauzan', 'siswa.ahmad',
+  (4, 1, 'Siswa Demo Berbagi', 'demo.siswa1',
    '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
-   'siswa', 'aktif', '0071234567', NULL, 'XI MIPA 1', 'MIPA',
-   '0813-0000-0001', '2026-11-19 07:45:00', 6, 1, '2026-11-19 08:05:00', NULL),
+   'siswa', 'aktif', NULL, NULL, 'XI Demo', 'Contoh', NULL,
+   NULL, 0, 1, '2026-11-19 08:05:00', NULL),
 
-  (5, 1, 'Siti Rahma', 'siswa.siti',
+  (5, 1, 'Siswa Demo Privat', 'demo.siswa2',
    '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
-   'siswa', 'aktif', '0071234568', NULL, 'X IPS 1', 'IPS',
-   '0813-0000-0002', '2026-11-19 08:10:00', 3, 1, '2026-11-19 08:05:00', NULL),
+   'siswa', 'aktif', NULL, NULL, 'X Demo', 'Contoh', NULL,
+   NULL, 0, 1, '2026-11-19 08:05:00', NULL),
 
-  (6, 2, 'Raka Pratama', 'siswa.raka',
+  (6, 2, 'Siswa Demo Kosong', 'demo.siswa3',
    '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
-   'siswa', 'aktif', '0071234569', NULL, 'XI MIPA 2', 'MIPA',
-   NULL, NULL, 0, 1, '2026-11-19 08:05:00', NULL),
+   'siswa', 'aktif', NULL, NULL, 'XI Demo', 'Contoh', NULL,
+   NULL, 0, 1, '2026-11-19 08:05:00', NULL);
 
-  (7, 2, 'Nabila Putri', 'siswa.nabila',
-   '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
-   'siswa', 'aktif', '0071234570', NULL, 'X MIPA 1', 'MIPA',
-   NULL, NULL, 0, 1, '2026-11-19 08:05:00', NULL);
-
--- 8 profesi untuk Jelajah Profesi
+-- Empat profesi inti yang ada di prototipe; bukan katalog produksi lengkap.
 INSERT INTO `profesi`
   (`id`, `nama`, `kategori`, `deskripsi`, `kemampuan`, `jalur_pendidikan`, `sumber`, `urutan`, `status`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
@@ -354,154 +352,67 @@ VALUES
    'Memeriksa pasien, menegakkan diagnosis, dan memberi pengobatan atau rujukan.',
    'Analitis, teliti, empati, komunikasi, dan mengambil keputusan cepat.',
    'S1 Kedokteran, profesi dokter, spesialis (opsional)',
-   'Prototipe KARVIA', 1, 'aktif', '2026-11-19 08:10:00', NULL),
-
+   'Data demo berdasarkan prototipe KARVIA', 1, 'aktif', '2026-11-19 08:10:00', NULL),
   (2, 'Software Engineer', 'teknologi',
    'Merancang dan menulis program, memperbaiki bug, serta membangun aplikasi.',
    'Logika, pemecahan masalah, ketekunan, dan kerja sama tim.',
    'S1 Informatika/Teknik Komputer, bootcamp, sertifikasi',
-   'Prototipe KARVIA', 2, 'aktif', '2026-11-19 08:10:00', NULL),
-
+   'Data demo berdasarkan prototipe KARVIA', 2, 'aktif', '2026-11-19 08:10:00', NULL),
   (3, 'Guru BK', 'pendidikan',
    'Membantu siswa mengenali diri, memilih arah karier, dan mengatasi hambatan belajar.',
    'Empati, mendengarkan, komunikasi, dan menjaga kerahasiaan.',
    'S1 Bimbingan dan Konseling, PPG',
-   'Prototipe KARVIA', 3, 'aktif', '2026-11-19 08:10:00', NULL),
-
+   'Data demo berdasarkan prototipe KARVIA', 3, 'aktif', '2026-11-19 08:10:00', NULL),
   (4, 'Advokat', 'lainnya',
    'Mendampingi klien, menyusun argumen hukum, dan menyelesaikan sengketa.',
    'Membaca, menulis, berargumen, negosiasi, dan etika profesi.',
    'S1 Hukum, pendidikan advokat',
-   'Prototipe KARVIA', 4, 'aktif', '2026-11-19 08:10:00', NULL),
+   'Data demo berdasarkan prototipe KARVIA', 4, 'aktif', '2026-11-19 08:10:00', NULL);
 
-  (5, 'Perawat', 'kesehatan',
-   'Merawat pasien, memantau kondisi, dan membantu proses penyembuhan.',
-   'Teliti, sabar, empati, dan siap bekerja dalam tim.',
-   'D3/S1 Keperawatan, uji kompetensi',
-   'Data contoh KARVIA', 5, 'aktif', '2026-11-19 08:10:00', NULL),
-
-  (6, 'Analis Data', 'teknologi',
-   'Mengolah data menjadi informasi yang membantu pengambilan keputusan.',
-   'Statistika, logika, ketelitian, dan visualisasi data.',
-   'S1 Statistika/Ilmu Data, sertifikasi analisis data',
-   'Data contoh KARVIA', 6, 'aktif', '2026-11-19 08:10:00', NULL),
-
-  (7, 'Wirausaha Digital', 'bisnis',
-   'Membangun dan mengelola usaha berbasis internet.',
-   'Kreativitas, komunikasi, pengelolaan keuangan, dan keberanian mengambil risiko.',
-   'S1 Bisnis/Manajemen, pelatihan kewirausahaan',
-   'Data contoh KARVIA', 7, 'aktif', '2026-11-19 08:10:00', NULL),
-
-  (8, 'Dosen', 'pendidikan',
-   'Mengajar, meneliti, dan membimbing mahasiswa di perguruan tinggi.',
-   'Penguasaan bidang ilmu, komunikasi, menulis, dan penelitian.',
-   'S2/S3 sesuai bidang, publikasi ilmiah',
-   'Data contoh KARVIA', 8, 'aktif', '2026-11-19 08:10:00', NULL);
-
--- Ahmad (id 4) — data langkah 1-5 + berbagi ke Guru BK
+-- Siswa Demo Berbagi: data eksplorasi secukupnya dan sudah membagikan ke Guru BK.
 INSERT INTO `refleksi_diri`
   (`id`, `siswa_id`, `mapel_favorit`, `kekuatan`, `catatan_minat`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
   (1, 4,
-   '["Matematika & Sains", "Teknologi & Kewirausahaan"]',
-   '["Analitis & Memecahkan Masalah", "Teliti & Terstruktur"]',
-   'Tertarik pada teknologi kesehatan dan ingin tahu cara kerja alat medis.',
+   '["Matematika & Sains"]',
+   '["Analitis & Memecahkan Masalah"]',
+   'Data fiktif demo: tertarik pada bidang kesehatan dan teknologi.',
    '2026-11-19 08:20:00', NULL);
 
 INSERT INTO `pilihan_banding`
   (`id`, `siswa_id`, `opsi_a`, `catatan_a`, `opsi_b`, `catatan_b`, `kriteria`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
-  (1, 4,
-   'Dokter',
-   'Sesuai minat pada sains dan kesehatan, tetapi masa studi panjang dan biaya besar.',
-   'Software Engineer',
-   'Cepat mendapat pengalaman kerja dan banyak peluang, tetapi perlu terus belajar teknologi baru.',
-   '["Kesesuaian Minat", "Biaya & Durasi Studi", "Peluang Kerja"]',
-   '2026-11-19 08:25:00', NULL);
+  (1, 4, 'Dokter', 'Data fiktif demo: minat pada sains dan kesehatan.',
+   'Software Engineer', 'Data fiktif demo: tertarik membangun teknologi.',
+   '["Kesesuaian Minat", "Peluang Belajar"]', '2026-11-19 08:25:00', NULL);
 
 INSERT INTO `rencana_karier`
   (`id`, `siswa_id`, `tujuan`, `langkah_1`, `langkah_2`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
-  (1, 4,
-   'Masuk jurusan Kedokteran di PTN pilihan.',
-   'Belajar Biologi 30 menit setiap hari.',
-   'Mengikuti try out UTBK bulan depan.',
+  (1, 4, 'Contoh tujuan karier untuk pengujian tampilan.',
+   'Mencari informasi bidang yang diminati.', 'Berdiskusi dengan Guru BK.',
    '2026-11-19 08:30:00', NULL);
 
 INSERT INTO `jurnal_refleksi`
   (`id`, `siswa_id`, `hal_baru`, `hambatan`, `dukungan`, `dibuat_pada`)
 VALUES
-  (1, 4,
-   'Saya baru tahu bahwa kedokteran dan teknologi bisa bertemu di bidang kesehatan digital.',
-   'Sulit membagi waktu antara belajar Biologi dan latihan coding.',
-   'Orang tua mendukung selama saya bisa menjelaskan rencananya.',
-   '2026-11-18 19:10:00'),
-  (2, 4,
-   'Saya belajar membandingkan pilihan dengan kriteria, bukan hanya mengikuti teman.',
-   'Masih ragu antara dua pilihan yang sama-sama menarik.',
-   'Guru BK bersedia mendengarkan rencana saya.',
-   '2026-11-19 07:50:00');
+  (1, 4, 'Data fiktif demo: saya belajar membandingkan beberapa pilihan.',
+   'Contoh hambatan untuk pengujian.', 'Contoh dukungan untuk pengujian.',
+   '2026-11-19 08:35:00');
 
 INSERT INTO `profesi_disimpan`
   (`id`, `siswa_id`, `profesi_id`, `dibuat_pada`)
 VALUES
-  (1, 4, 1, '2026-11-19 08:22:00'),
-  (2, 4, 2, '2026-11-19 08:23:00');
+  (1, 4, 1, '2026-11-19 08:22:00');
 
 INSERT INTO `berbagi_catatan`
   (`id`, `siswa_id`, `sekolah_id`, `pesan_siswa`, `status`, `dibagikan_pada`, `dibaca_pada`, `diperbarui_pada`)
 VALUES
-  (1, 4, 1,
-   'Saya ingin mendiskusikan pilihan antara kedokteran dan teknologi.',
-   'baru', '2026-11-19 08:35:00', NULL, NULL);
+  (1, 4, 1, 'Data fiktif demo: saya ingin mendiskusikan pilihan karier.',
+   'baru', '2026-11-19 08:40:00', NULL, NULL);
 
--- Siti (id 5) — sudah mengisi data, tetapi BELUM membagikan (contoh privasi)
-INSERT INTO `refleksi_diri`
-  (`id`, `siswa_id`, `mapel_favorit`, `kekuatan`, `catatan_minat`, `dibuat_pada`, `diperbarui_pada`)
-VALUES
-  (2, 5,
-   '["Ilmu Sosial & Keagamaan", "Bahasa & Sastra"]',
-   '["Empati & Membantu Sesama", "Komunikasi & Berdiskusi"]',
-   'Ingin menjadi guru atau konselor yang bisa membantu teman.',
-   '2026-11-19 08:40:00', NULL);
-
-INSERT INTO `pilihan_banding`
-  (`id`, `siswa_id`, `opsi_a`, `catatan_a`, `opsi_b`, `catatan_b`, `kriteria`, `dibuat_pada`, `diperbarui_pada`)
-VALUES
-  (2, 5,
-   'Guru BK',
-   'Bisa mendampingi siswa, tetapi perlu belajar mendengarkan dan menjaga rahasia.',
-   'Psikolog',
-   'Pendalaman ilmu lebih dalam, tetapi masa studi dan praktik lebih panjang.',
-   '["Kesesuaian Minat", "Peluang Kerja"]',
-   '2026-11-19 08:42:00', NULL);
-
-INSERT INTO `rencana_karier`
-  (`id`, `siswa_id`, `tujuan`, `langkah_1`, `langkah_2`, `dibuat_pada`, `diperbarui_pada`)
-VALUES
-  (2, 5,
-   'Mengenal profesi bimbingan dan konseling lebih dekat.',
-   'Mewawancarai Guru BK di sekolah.',
-   'Membaca satu artikel tentang psikologi pendidikan.',
-   '2026-11-19 08:45:00', NULL);
-
-INSERT INTO `jurnal_refleksi`
-  (`id`, `siswa_id`, `hal_baru`, `hambatan`, `dukungan`, `dibuat_pada`)
-VALUES
-  (3, 5,
-   'Saya baru sadar bahwa mendengarkan juga butuh latihan.',
-   'Kadang saya terlalu cepat memberi saran.',
-   'Teman-teman senang bercerita, jadi saya bisa berlatih.',
-   '2026-11-19 08:15:00');
-
-INSERT INTO `profesi_disimpan`
-  (`id`, `siswa_id`, `profesi_id`, `dibuat_pada`)
-VALUES
-  (3, 5, 3, '2026-11-19 08:43:00'),
-  (4, 5, 8, '2026-11-19 08:44:00');
-
--- Raka (id 6) dan Nabila (id 7) sengaja dibiarkan tanpa data
--- agar empty state di halaman siswa dan Guru BK bisa diuji.
+-- Siswa Demo Privat: mempunyai refleksi, tetapi belum membagikannya.
+-- Siswa Demo Kosong: sengaja tanpa data eksplorasi untuk menguji empty state.
 
 -- =====================================================================
 -- SELESAI

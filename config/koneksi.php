@@ -1,14 +1,16 @@
 <?php
-/**
- * KARVIA - Konfigurasi aplikasi dan koneksi database (PDO).
- *
- * Rencana isi:
- * - konstanta aplikasi: BASE_URL, zona waktu, nama session;
- * - kredensial database Laragon (host, nama database, user, password);
- * - fungsi koneksi PDO.
- *
- * Jangan menaruh kredensial asli di dokumen atau membagikannya.
- * Rencana lengkap ada di docs/02 bagian 3.4 dan docs/03.
- *
- * Belum diisi.
- */
+defined('KARVIA_APP') or exit('Akses langsung tidak diizinkan.');
+
+// Konfigurasi lokal KARVIA. Sesuaikan BASE_URL jika folder aplikasi berubah.
+const BASE_URL = '/karvia';
+const NAMA_APLIKASI = 'KARVIA';
+const ZONA_WAKTU = 'Asia/Jakarta';
+const NAMA_SESSION = 'karvia_session';
+const MODE_DEBUG = false;
+const DB_HOST = '127.0.0.1';
+const DB_NAMA = 'karvia_db';
+const DB_USER = 'root';
+const DB_PASSWORD = '';
+const BATAS_SESSION_DETIK = 7200;
+
+date_default_timezone_set(ZONA_WAKTU);
