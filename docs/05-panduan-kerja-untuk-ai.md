@@ -82,18 +82,19 @@ nonaktif. Pemeriksaan checklist keamanan lain tetap dijalankan pada fase terkait
 
 ### Fase 2 — Admin (P0)
 
-- [ ] Sidebar Admin di `includes/header.php`.
-- [ ] `admin/index.php`: dashboard dengan statistik & rekap nyata.
-- [ ] `admin/sekolah.php`: daftar + pencarian.
-- [ ] `admin/sekolah_form.php`: tambah/ubah sekolah.
-- [ ] `admin/sekolah_detail.php`: detail + jumlah siswa/guru.
+- [x] Sidebar Admin di `includes/header.php`.
+- [x] `admin/index.php`: dashboard dengan statistik & rekap nyata.
+- [x] `admin/sekolah.php`: daftar + pencarian + aktif/nonaktif.
+- [x] `admin/sekolah_form.php`: tambah/ubah sekolah.
+- [x] `admin/sekolah_detail.php`: detail + jumlah siswa/guru.
 - [ ] `admin/pengguna.php`: daftar pengguna + filter.
 - [ ] `admin/pengguna_form.php`: tambah/ubah + reset password.
 - [ ] Aktif/nonaktifkan pengguna.
 - [ ] `admin/rekap.php`: rekap sederhana.
 
 **Selesai bila:** Admin dapat mengelola 2 sekolah dan seluruh akun, serta angka
-dashboard berubah sesuai data.
+dashboard berubah sesuai data. Dashboard dan pengelolaan sekolah sudah dibuat;
+pengelolaan akun dan halaman rekap masih menyusul.
 
 ### Fase 3 — Guru BK (P0)
 
@@ -362,13 +363,13 @@ Cindy adalah pendidik, bukan programmer. Saat menyerahkan hasil:
 
 ## 12. Progres
 
-Perbarui tabel ini setiap menyelesaikan fase.
+Perbarui tabel ini setiap menyelesaikan fase atau bagian yang dapat diuji dan dikirim dalam branch terpisah.
 
 | Fase | Status | Tanggal | Catatan |
 |------|--------|---------|---------|
 | 0 — Dokumentasi & kerangka | ✅ selesai | 19 Nov 2026 | Folder & docs dibuat |
-| 1 — Fondasi & login | 🟡 berjalan | 19 Nov 2026 | PDO, helper, login/logout, layout per peran dan ringkasan awal sudah ditulis; uji alur web, otorisasi, CSRF, dan akun nonaktif masih perlu dilengkapi |
-| 2 — Admin | ⬜ belum | | |
+| 1 — Fondasi & login | ✅ selesai | 20 Nov 2026 | HTTP test lokal: login/logout tiga peran, akun nonaktif, CSRF invalid dan akses salah peran; branch `feat/foundation-auth` telah dipush |
+| 2 — Admin | 🟡 berjalan | 20 Nov 2026 | Dashboard dan kelola sekolah (daftar, pencarian, tambah/ubah, detail, aktif/nonaktif) dikerjakan pada branch `feat/admin-schools`; pengelolaan pengguna dan rekap masih menyusul |
 | 3 — Guru BK | ⬜ belum | | |
 | 4 — Siswa | ⬜ belum | | |
 | 5 — Penyempurnaan & demo | ⬜ belum | | |

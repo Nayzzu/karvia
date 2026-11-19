@@ -135,6 +135,10 @@ untuk mulai.” Jangan menampilkan angka palsu.
 
 ### 3.2 Daftar sekolah (`admin/sekolah.php`)
 
+Status implementasi per 20 November 2026: daftar, pencarian, jumlah akun, ubah
+status aktif/nonaktif (POST + CSRF + konfirmasi), dan tautan ke form/detail sudah
+dibuat pada branch `feat/admin-schools`.
+
 Kolom tabel:
 
 | Kolom | Isi |
@@ -154,6 +158,10 @@ Fitur:
 
 ### 3.3 Form sekolah (`admin/sekolah_form.php`)
 
+Status implementasi per 20 November 2026: tambah/ubah dengan validasi server,
+pemeriksaan NPSN unik, CSRF, prepared statement, flash, dan Post/Redirect/Get
+sudah dibuat pada branch `feat/admin-schools`.
+
 Field:
 
 | Field | Wajib | Validasi |
@@ -170,6 +178,9 @@ Aksi: Simpan, Batal. Setelah simpan → kembali ke daftar dengan flash.
 Ubah sekolah tidak boleh mengubah data historis siswa.
 
 ### 3.4 Detail sekolah (`admin/sekolah_detail.php`)
+
+Status implementasi per 20 November 2026: profil, jumlah siswa/Guru BK/catatan,
+dan daftar akun terkait tanpa isi jurnal sudah dibuat pada branch `feat/admin-schools`.
 
 - Kartu profil sekolah.
 - Tiga angka: siswa, Guru BK, catatan dibagikan.
