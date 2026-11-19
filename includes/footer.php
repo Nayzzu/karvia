@@ -1,8 +1,9 @@
 <?php
-/**
- * KARVIA - Bagian bawah semua halaman.
- *
- * Rencana isi: penutup tag, pemuatan assets/js/app.js, dan penutup halaman.
- *
- * Belum diisi. Rencana ada di docs/02 bagian 3.3.
- */
+defined('KARVIA_APP') or exit('Akses langsung tidak diizinkan.');
+?>
+    </main>
+  </div>
+  <footer class="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-500">KARVIA — Media pendukung bimbingan karier</footer>
+  <script src="<?= e(url('assets/js/app.js')) ?>"></script>
+</body>
+</html>

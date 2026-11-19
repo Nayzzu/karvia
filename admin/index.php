@@ -1,38 +1,45 @@
 <?php
-/** Tampilan dashboard Admin; angka belum dihubungkan ke database. */
+define('KARVIA_APP', true);
+$peran_halaman = 'admin';
+$halaman_aktif = 'index';
+$judul_halaman = 'Dashboard Admin';
+require_once __DIR__ . '/../includes/header.php';
+
+$pdo = db();
+$stat = $pdo->query(
+    "SELECT
+       (SELECT COUNT(*) FROM sekolah WHERE status = 'aktif') AS sekolah_aktif,
+       (SELECT COUNT(*) FROM pengguna) AS total_akun,
+       (SELECT COUNT(*) FROM pengguna WHERE role = 'siswa') AS total_siswa,
+       (SELECT COUNT(*) FROM pengguna WHERE role = 'guru_bk') AS total_guru,
+       (SELECT COUNT(*) FROM pengguna WHERE last_login_at IS NOT NULL) AS pernah_login,
+       (SELECT COUNT(*) FROM pengguna WHERE last_login_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)) AS aktif_30_hari"
+)->fetch();
+$sekolah = $pdo->query(
+    "SELECT s.id, s.nama, s.jenjang, s.kota, s.status,
+       SUM(CASE WHEN p.role = 'siswa' THEN 1 ELSE 0 END) AS jumlah_siswa,
+       SUM(CASE WHEN p.role = 'guru_bk' THEN 1 ELSE 0 END) AS jumlah_guru,
+       (SELECT COUNT(*) FROM berbagi_catatan b WHERE b.sekolah_id = s.id) AS jumlah_catatan,
+       (SELECT MAX(p2.last_login_at) FROM pengguna p2 WHERE p2.sekolah_id = s.id) AS aktivitas_terakhir
+     FROM sekolah s LEFT JOIN pengguna p ON p.sekolah_id = s.id
+     GROUP BY s.id, s.nama, s.jenjang, s.kota, s.status ORDER BY s.nama"
+)->fetchAll();
 ?>
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Admin — KARVIA</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{karvia:{50:'#f0fdf4',100:'#dcfce7',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d'}}}}};</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>body{font-family:Inter,sans-serif}</style>
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="../index.php" class="flex items-center gap-3"><span class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-md"><i class="fa-solid fa-compass text-lg"></i></span><span><strong class="block leading-tight">KARVIA</strong><small class="text-xs text-slate-500">Panel Administrasi</small></span></a>
-      <div class="flex items-center gap-3"><div class="text-right hidden sm:block"><div class="text-sm font-semibold">Administrator</div><span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-white">Admin</span></div><a href="../logout.php" class="p-2.5 rounded-xl bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-600" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></a></div>
-    </div>
-  </header>
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-    <section class="bg-gradient-to-r from-slate-900 to-slate-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl"><span class="bg-white/10 text-slate-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2 border border-white/20">Administrasi KARVIA</span><h1 class="text-2xl sm:text-3xl font-extrabold">Panel Admin</h1><p class="text-slate-300 text-sm mt-2 max-w-2xl">Pantau sekolah dan akun pengguna KARVIA. Informasi yang ditampilkan di panel ini berupa data akun dan rekap, bukan isi jurnal pribadi siswa.</p></section>
-    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4" aria-label="Ringkasan sistem">
-      <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="flex justify-between"><span class="text-slate-400 text-xs font-semibold uppercase">Sekolah Aktif</span><i class="fa-solid fa-school text-emerald-600"></i></div><div class="text-2xl font-extrabold text-slate-900 mt-2">—</div><p class="text-xs text-slate-500 mt-1">Akan dihitung dari database.</p></article>
-      <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="flex justify-between"><span class="text-slate-400 text-xs font-semibold uppercase">Akun Terdaftar</span><i class="fa-solid fa-users text-blue-600"></i></div><div class="text-2xl font-extrabold text-slate-900 mt-2">—</div><p class="text-xs text-slate-500 mt-1">Rincian siswa dan Guru BK.</p></article>
-      <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="flex justify-between"><span class="text-slate-400 text-xs font-semibold uppercase">Pernah Masuk</span><i class="fa-solid fa-right-to-bracket text-purple-600"></i></div><div class="text-2xl font-extrabold text-slate-900 mt-2">—</div><p class="text-xs text-slate-500 mt-1">Akun yang pernah login.</p></article>
-      <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="flex justify-between"><span class="text-slate-400 text-xs font-semibold uppercase">Aktif 30 Hari</span><i class="fa-solid fa-chart-line text-amber-600"></i></div><div class="text-2xl font-extrabold text-slate-900 mt-2">—</div><p class="text-xs text-slate-500 mt-1">Akan dihitung dari aktivitas login.</p></article>
-    </section>
-    <section class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="p-6 border-b border-slate-100"><h2 class="font-bold text-slate-900 text-lg">Rekap per Sekolah</h2><p class="text-xs text-slate-500 mt-1">Ringkasan akun dan aktivitas, tanpa menampilkan isi refleksi atau jurnal siswa.</p></div>
-      <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead><tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200"><th class="p-4">Nama Sekolah</th><th class="p-4">Jenjang / Kota</th><th class="p-4">Siswa</th><th class="p-4">Guru BK</th><th class="p-4">Catatan Dibagikan</th><th class="p-4">Aktivitas Terakhir</th></tr></thead><tbody><tr><td colspan="6" class="p-10 text-center"><div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-xl"><i class="fa-solid fa-school"></i></div><p class="font-semibold text-slate-700">Rekap sekolah akan tampil di sini</p><p class="text-xs text-slate-500 mt-1">Data belum dimuat karena tampilan ini belum terhubung ke database.</p></td></tr></tbody></table></div>
-    </section>
-    <p class="text-xs text-slate-400 text-center">Tampilan dashboard saja — angka dan rekap belum mengambil data nyata.</p>
-  </main>
-</body>
-</html>
+<section class="mb-6 rounded-3xl bg-gradient-to-r from-slate-900 to-slate-700 p-6 text-white shadow-xl sm:p-8">
+  <span class="mb-2 inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-200">Administrasi KARVIA</span>
+  <h1 class="text-2xl font-extrabold sm:text-3xl">Panel Admin</h1>
+  <p class="mt-2 max-w-2xl text-sm text-slate-300">Pantau sekolah dan akun pengguna. Panel ini menampilkan data akun dan rekap, bukan isi jurnal pribadi siswa.</p>
+</section>
+<section class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Ringkasan sistem">
+  <?php foreach ([['Sekolah Aktif', $stat['sekolah_aktif']], ['Akun Terdaftar', $stat['total_akun'], $stat['total_siswa'] . ' siswa · ' . $stat['total_guru'] . ' Guru BK'], ['Pernah Masuk', $stat['pernah_login']], ['Aktif 30 Hari', $stat['aktif_30_hari']]] as $kartu): ?>
+    <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><span class="text-xs font-semibold uppercase text-slate-400"><?= e($kartu[0]) ?></span><div class="mt-2 text-2xl font-extrabold text-slate-900"><?= e($kartu[1]) ?></div><?php if (isset($kartu[2])): ?><p class="mt-1 text-xs text-slate-500"><?= e($kartu[2]) ?></p><?php endif; ?></article>
+  <?php endforeach; ?>
+</section>
+<section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+  <div class="border-b border-slate-100 p-6"><h2 class="text-lg font-bold text-slate-900">Rekap per Sekolah</h2><p class="mt-1 text-xs text-slate-500">Ringkasan akun, catatan berbagi, dan login terakhir.</p></div>
+  <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-600"><tr><th class="p-4">Nama Sekolah</th><th class="p-4">Jenjang / Kota</th><th class="p-4">Siswa</th><th class="p-4">Guru BK</th><th class="p-4">Catatan Dibagikan</th><th class="p-4">Aktivitas Terakhir</th></tr></thead><tbody>
+  <?php if (!$sekolah): ?><tr><td colspan="6" class="p-10 text-center text-slate-500">Belum ada sekolah yang terdaftar.</td></tr><?php else: foreach ($sekolah as $baris): ?>
+    <tr class="border-b border-slate-100"><td class="p-4 font-semibold"><?= e($baris['nama']) ?></td><td class="p-4"><?= e($baris['jenjang'] . ' / ' . ($baris['kota'] ?: '—')) ?></td><td class="p-4"><?= e($baris['jumlah_siswa']) ?></td><td class="p-4"><?= e($baris['jumlah_guru']) ?></td><td class="p-4"><?= e($baris['jumlah_catatan']) ?></td><td class="p-4"><?= e(tanggal_id($baris['aktivitas_terakhir'], true)) ?></td></tr>
+  <?php endforeach; endif; ?></tbody></table></div>
+</section>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

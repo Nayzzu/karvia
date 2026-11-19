@@ -1,5 +1,11 @@
 <?php
-/** Halaman awal KARVIA; navigasi autentikasi akan ditambahkan kemudian. */
+define('KARVIA_APP', true);
+require_once __DIR__ . '/includes/function.php';
+
+$akun = auth_muat_ulang();
+if ($akun) {
+    auth_arahkan_dashboard($akun);
+}
 ?>
 <!doctype html>
 <html lang="id">

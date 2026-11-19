@@ -1,5 +1,26 @@
 <?php
-/** Tampilan login KARVIA; autentikasi belum dihubungkan. */
+define('KARVIA_APP', true);
+require_once __DIR__ . '/includes/function.php';
+
+if (auth_pengguna()) {
+    $akun = auth_muat_ulang();
+    if ($akun) {
+        auth_arahkan_dashboard($akun);
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_wajib();
+    $username = trim((string) ($_POST['username'] ?? ''));
+    $password = (string) ($_POST['password'] ?? '');
+    $hasil = auth_login($username, $password);
+    if ($hasil['berhasil']) {
+        auth_arahkan_dashboard(auth_pengguna());
+    }
+    flash_set('gagal', $hasil['pesan']);
+    redirect('login.php');
+}
+$flash = flash_ambil();
 ?>
 <!doctype html>
 <html lang="id">
@@ -32,7 +53,11 @@
           <h2 class="text-xl font-bold text-slate-900">Selamat datang</h2>
           <p class="text-sm text-slate-500 mt-1">Masuk menggunakan akun KARVIA Anda.</p>
         </div>
-        <form class="space-y-5" onsubmit="event.preventDefault(); document.getElementById('demoNote').classList.remove('hidden');">
+        <?php if ($flash): ?>
+          <div class="mb-5 rounded-xl border p-4 text-sm <?= $flash['tipe'] === 'peringatan' ? 'border-amber-300 bg-amber-50 text-amber-900' : 'border-rose-300 bg-rose-50 text-rose-900' ?>" role="alert"><?= e($flash['pesan']) ?></div>
+        <?php endif; ?>
+        <form class="space-y-5" method="post" action="<?= e(url('login.php')) ?>">
+          <?= csrf_field() ?>
           <div>
             <label for="username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
             <div class="relative">
@@ -50,7 +75,6 @@
           <button type="submit" class="w-full flex justify-center py-3.5 px-4 rounded-xl shadow-lg text-sm font-bold text-white bg-karvia-600 hover:bg-karvia-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-karvia-500 transition-all">
             Masuk ke KARVIA <i class="fa-solid fa-arrow-right ml-2 mt-0.5"></i>
           </button>
-          <p id="demoNote" class="hidden rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800" role="status">Ini masih tampilan prototipe. Login belum terhubung ke pemeriksaan akun.</p>
         </form>
         <div class="mt-6 border-t border-slate-200 pt-4 text-center">
           <p class="text-xs text-slate-500"><i class="fa-solid fa-shield-halved text-karvia-600 mr-1"></i>Data eksplorasi aman, dijaga kerahasiaannya, dan digunakan untuk bimbingan karier.</p>

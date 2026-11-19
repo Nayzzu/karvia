@@ -9,12 +9,11 @@ Dokumen ini adalah **aturan main** saat melanjutkan proyek. Baca bersama
 
 | Hal | Status |
 |-----|--------|
-| Kerangka folder | ✅ dibuat sesuai struktur final |
-| Tampilan awal | ✅ landing, login, dan dashboard Admin/Guru BK/Siswa dibuat statis dari konteks prototipe |
-| Dokumentasi | ✅ tersedia di folder `docs/` dan status implementasi diperbarui |
+| Kerangka folder dan database | ✅ tersedia; 11 tabel, 13 FK, data demo fiktif |
+| Landing, login, dashboard Admin/Guru BK/Siswa | 🟡 tampilan awal masih berbasis prototipe; login dan dashboard sudah mulai dihubungkan ke backend pada branch `feat/foundation-auth` |
+| Fondasi backend | 🟡 PDO, helper keamanan/session, autentikasi, sidebar bersama, dan dashboard berbasis data sedang dikerjakan; belum di-commit/push |
+| Halaman CRUD Admin, fitur Guru BK, fitur eksplorasi Siswa | ⬜ belum selesai; dikerjakan pada branch fitur terpisah setelah fondasi diuji |
 | File HTML prototipe | ✅ utuh, **jangan diubah** |
-| Database | ✅ `database/database.sql` diimpor dan diverifikasi (11 tabel, 13 FK, 2 sekolah, 6 akun, 4 profesi; aktivitas login kosong) |
-| Backend aplikasi | ⬜ belum dibuat: koneksi PDO, autentikasi, otorisasi, dan simpan data |
 
 Jangan menganggap fitur apa pun sudah jadi hanya karena dokumennya ada.
 
@@ -67,17 +66,19 @@ Kerjakan berurutan. Jangan melompat ke tampilan sebelum fondasi data siap.
   foreign key) + bagian B (data demo fiktif minimal).
 - [x] Import `database/database.sql`; verifikasi 11 tabel, 13 foreign key,
   InnoDB, `utf8mb4_unicode_ci`, jumlah data demo, dan aktivitas login contoh kosong.
-- [ ] Buat `config/koneksi.php` (konstanta aplikasi + koneksi PDO).
-- [ ] Buat `includes/function.php`: koneksi, escape, flash, CSRF, auth, validasi,
-  format tanggal, redirect.
-- [ ] Buat `includes/header.php` dan `includes/footer.php`.
-- [ ] Buat `index.php` (landing), `login.php`, `logout.php`.
-- [ ] Cek login & peran di `header.php` lewat `$peran_halaman`.
-- [ ] Uji login 3 peran + akun nonaktif.
+- [x] Buat `config/koneksi.php` (konstanta aplikasi + koneksi PDO).
+- [x] Buat `includes/function.php`: koneksi, escape, flash, CSRF, auth, sesi,
+  format tanggal, redirect, dan log aktivitas.
+- [x] Buat `includes/header.php` dan `includes/footer.php` dengan navigasi per peran.
+- [x] Hubungkan `index.php`, `login.php`, dan `logout.php` ke alur autentikasi.
+- [x] Cek login & peran di `header.php` lewat `$peran_halaman`.
+- [x] Uji HTTP login ketiga peran, akses salah peran, CSRF, logout, dan akun nonaktif.
 
 **Selesai bila:** ketiga peran bisa login/logout dan diarahkan ke dashboard
-masing-masing; akun nonaktif ditolak. Halaman yang belum dibuat cukup berupa
-placeholder dengan judul.
+masing-masing; akun nonaktif ditolak; akses lintas peran dibatasi. Halaman yang
+belum dibuat cukup berupa placeholder dengan judul. HTTP test lokal telah
+memverifikasi login/logout tiga peran, CSRF invalid, akses salah peran, dan akun
+nonaktif. Pemeriksaan checklist keamanan lain tetap dijalankan pada fase terkait.
 
 ### Fase 2 — Admin (P0)
 
@@ -218,8 +219,8 @@ Jangan mencampur logika data yang panjang dengan HTML. Letakkan fungsi query di
 - [ ] Guru BK tidak bisa membuka siswa sekolah lain (uji ubah ID di URL).
 - [ ] Siswa tidak bisa membuka data siswa lain.
 - [ ] Admin tidak bisa menonaktifkan dirinya sendiri.
-- [ ] Akun nonaktif tidak bisa login dan session aktifnya ditolak.
-- [ ] Folder `config/`, `includes/`, `database/`, `docs/` tidak bisa diakses via browser.
+- [x] Akun nonaktif tidak bisa login (uji HTTP); penolakan session aktif diperiksa pada setiap halaman internal lewat pemuatan ulang status akun.
+- [ ] Folder `config/`, `includes/`, `database/`, `docs/` tidak bisa diakses via browser (perlu aturan Apache `.htaccess` pada konfigurasi hosting; uji belum dilakukan).
 - [ ] Pesan error database tidak tampil ke pengguna.
 - [ ] File HTML prototipe masih utuh.
 - [ ] Tidak ada kredensial asli yang di-commit/dibagikan.
@@ -230,12 +231,12 @@ Jangan mencampur logika data yang panjang dengan HTML. Letakkan fungsi query di
 
 ### Autentikasi
 
-- [ ] Login admin benar → dashboard admin.
-- [ ] Login guru benar → dashboard guru.
-- [ ] Login siswa benar → beranda siswa.
+- [x] Login admin benar → dashboard admin (uji HTTP lokal).
+- [x] Login guru benar → dashboard guru (uji HTTP lokal).
+- [x] Login siswa benar → beranda siswa (uji HTTP lokal).
 - [ ] Password salah → pesan umum, tidak membocorkan username ada/tidak.
-- [ ] Akun nonaktif → pesan jelas, tidak masuk.
-- [ ] Logout → tidak bisa kembali dengan tombol Back (cache aman).
+- [x] Akun nonaktif → pesan jelas, tidak masuk (uji HTTP lokal).
+- [ ] Logout → tidak bisa kembali dengan tombol Back (cache aman; POST logout teruji).
 
 ### Admin
 
@@ -366,7 +367,7 @@ Perbarui tabel ini setiap menyelesaikan fase.
 | Fase | Status | Tanggal | Catatan |
 |------|--------|---------|---------|
 | 0 — Dokumentasi & kerangka | ✅ selesai | 19 Nov 2026 | Folder & docs dibuat |
-| 1 — Fondasi & login | 🟡 berjalan | 19 Nov 2026 | Database dan tampilan awal tersedia; koneksi PDO dan auth belum dibuat |
+| 1 — Fondasi & login | 🟡 berjalan | 19 Nov 2026 | PDO, helper, login/logout, layout per peran dan ringkasan awal sudah ditulis; uji alur web, otorisasi, CSRF, dan akun nonaktif masih perlu dilengkapi |
 | 2 — Admin | ⬜ belum | | |
 | 3 — Guru BK | ⬜ belum | | |
 | 4 — Siswa | ⬜ belum | | |
