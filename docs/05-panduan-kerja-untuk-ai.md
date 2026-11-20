@@ -14,7 +14,7 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
 | Keamanan server Apache | Lokal terverifikasi | Aturan `.htaccess` menolak akses ke `docs/`, `database/`, `config/`, `includes/`, root file sensitif, dan direktori upload (403) |
 | Dokumentasi/panduan | Diperbarui | `README.md` berisi setup lokal, akun demo, backup dan peringatan |
-| Rilis/commit | Belum | Working tree campuran. Jangan commit artikel/landing sebelum ditinjau dan disepakati |
+| Rilis/commit | Selesai pada branch fitur | Commit `2e1e0ce` mencakup alur Admin, Guru BK, Siswa, profil, artikel, dan `.htaccess`. Folder `teal-treasury-landing/` sengaja ditinggal terpisah |
 
 Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
 
@@ -63,10 +63,10 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `karv
 ### Data demo dan rilis
 - [ ] Backup database ke lokasi privat sebelum demo.
 - [ ] Bersihkan hanya data uji, pertahankan fixture demo yang disepakati.
-- [ ] Review `git status`, `git diff --check`, diff tiap file; biarkan landing/artikel belum siap terpisah.
-- [ ] Perbarui `docs/04` dan status dokumen ini berdasarkan tes nyata.
-- [ ] Commit per batas fitur yang disepakati; jangan commit backup/data nyata.
-- [ ] Jalankan smoke test lagi setelah commit.
+- [x] Review `git status`, diff tiap file; biarkan landing `teal-treasury-landing/` belum siap terpisah.
+- [x] Perbarui `docs/04` dan status dokumen ini berdasarkan tes nyata.
+- [x] Commit per batas fitur pada branch `feat/guru-articles` (`2e1e0ce`).
+- [x] Jalankan smoke test lagi setelah commit (14/14 lulus).
 
 ## 4. Jalankan proyek
 
