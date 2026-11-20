@@ -27,6 +27,7 @@ File tersebut jangan diubah, dipindah, atau dihapus.
 | 9 | [`08-keputusan-terbuka.md`](08-keputusan-terbuka.md) | Keputusan yang perlu dikonfirmasi |
 | 10 | [`09-pembagian-tugas-2-orang.md`](09-pembagian-tugas-2-orang.md) | Pembagian kepemilikan file |
 | 11 | [`10-rancangan-landing-page.md`](10-rancangan-landing-page.md) | Konteks, isi, dan rancangan UI landing page |
+| 12 | [`11-rancangan-landing-page-utuh.md`](11-rancangan-landing-page-utuh.md) | Rancangan landing page lengkap dari header sampai footer |
 
 ## Ringkasan produk
 
