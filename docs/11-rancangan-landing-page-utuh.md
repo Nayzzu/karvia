@@ -1,7 +1,7 @@
 # Rancangan Landing Page KARVIA — Utuh
 
 **Halaman:** `index.php`  
-**Status:** Adaptasi desain diterapkan di `index.php` pada `feat/landing-teal`; pemeriksaan sintaks PHP dan HTTP lulus
+**Status:** Implementasi saat ini ada di `index.php` pada branch `feat/landing-teal` (commit `23bdd0c`). Pemeriksaan sintaks PHP dan HTTP lulus. Penyesuaian desain lanjutan ditunda sesuai permintaan pengguna.
 **Cakupan:** halaman publik lengkap dari header sampai footer  
 **Acuan layout hero:** gambar referensi dari pengguna
 
@@ -42,20 +42,25 @@ Landing page memperkenalkan produk kepada siswa, Guru BK, dan pihak sekolah, lal
 - Jangan mengubah prototipe `karvia_career_vision_action.html`.
 - Pengguna yang sudah login tetap diarahkan ke dashboard sesuai peran oleh alur `index.php`.
 
-## 5. Rencana susunan section
+## 5. Susunan section saat ini
 
-| Urutan | Section | Tujuan | Isi inti |
-|---|---|---|---|
-| 1 | Header / navigasi | Identitas dan akses masuk | Logo/nama KARVIA, navigasi anchor, tombol Masuk |
-| 2 | Hero | Menjelaskan manfaat utama dan tindakan utama | Label, judul, deskripsi, tombol Masuk dan Lihat Tahapan |
-| 3 | Batasan dan privasi | Menjaga ekspektasi dan rasa aman | Bukan tes, bukan penentu otomatis, catatan hanya dibagikan atas tindakan siswa |
-| 4 | Mengapa eksplorasi karier? | Memberi konteks kebutuhan siswa | Pengantar bahwa pilihan karier dimulai dengan refleksi dan eksplorasi |
-| 5 | Tahapan KARVIA | Menjelaskan alur siswa | Lima langkah eksplorasi dengan deskripsi singkat |
-| 6 | Dukungan Guru BK | Menjelaskan sisi bimbingan | Catatan dapat dibagikan untuk diskusi; Guru BK bukan pengganti keputusan siswa |
-| 7 | Ajakan masuk | Mengulang tindakan utama setelah penjelasan | Pesan singkat dan tombol Masuk ke KARVIA |
-| 8 | Footer | Menutup halaman dan memberi identitas | Nama produk, institusi, navigasi ringkas bila tersedia |
+Urutan yang sudah diterapkan di `index.php`:
 
-## 6. Rencana isi section
+1. **Header sticky:** identitas KARVIA, navigasi anchor Tentang/Tahapan/Pendampingan/Privasi, tombol Masuk, dan garis progres scroll.
+2. **Hero:** label Langkah Karierku, judul dan deskripsi terpusat, tombol Masuk dan Kenali Tahapannya, keterangan batasan, serta mockup UI KARVIA.
+3. **Kenapa KARVIA:** pengantar eksplorasi karier dan tiga gagasan: kenali diri, jelajahi pilihan, ambil langkah kecil.
+4. **Privasi dan batasan produk:** KARVIA bukan tes psikologis/penentu otomatis; catatan hanya terlihat Guru BK setelah dibagikan siswa.
+5. **Tahapan eksplorasi:** lima langkah dalam kartu bernomor.
+6. **Dukungan Guru BK:** penjelasan diskusi dan kontrol siswa atas pembagian catatan.
+7. **FAQ:** empat pertanyaan tentang KARVIA, rekomendasi karier, privasi catatan, dan akun.
+8. **Ajakan masuk:** tombol menuju `login.php`.
+9. **Footer:** identitas KARVIA, UIN Raden Intan Lampung, tautan section dan FAQ.
+
+Urutan header-to-footer di atas adalah implementasi saat ini. Perubahan visual atau susunan berikutnya belum dikerjakan dan akan ditentukan pengguna kemudian.
+
+## 6. Isi acuan tiap section
+
+Bagian berikut menyimpan isi dan batasan produk yang menjadi acuan. Teks final yang tampil di halaman dapat berbeda; implementasi aktual dirangkum pada bagian 10.
 
 ### 6.1 Header / navigasi
 
@@ -163,7 +168,18 @@ Jangan menambahkan alamat kontak, akun media sosial, tahun hak cipta, atau tauta
 - Jangan mengubah halaman internal, skema database, atau hak akses.
 - Jangan menampilkan tautan fitur internal yang belum siap.
 
-## 9. Kriteria penerimaan
+## 9. Verifikasi implementasi
+
+Pada commit `23bdd0c` di branch `feat/landing-teal`:
+
+- `php -l index.php` lulus tanpa kesalahan sintaks.
+- Uji HTTP lokal mengembalikan `200`.
+- Header, hero, section manfaat, lima tahapan, privasi, FAQ, CTA, dan footer ditemukan pada hasil HTML.
+- Seluruh tautan anchor memiliki tujuan yang tersedia; tautan login menuju `login.php`.
+- Pemeriksaan memastikan teks template treasury/FDIC dan warning PHP tidak muncul.
+- Flow redirect pengguna login tetap ada sebelum HTML landing dirender.
+
+## 10. Kriteria penerimaan
 
 - Semua section yang direncanakan ada dalam urutan yang jelas, dari header sampai footer.
 - Hero mengikuti komposisi terpusat, tetap clean, serta mempertahankan warna KARVIA dan font Inter.
@@ -173,3 +189,7 @@ Jangan menambahkan alamat kontak, akun media sosial, tahun hak cipta, atau tauta
 - Landing nyaman digunakan pada desktop dan ponsel, dengan heading semantik, label tautan jelas, dan fokus keyboard terlihat.
 - Pengguna yang sudah login tetap diarahkan ke dashboard sesuai peran.
 - Tidak ada pendaftaran palsu, tombol mati, atau tautan ke halaman fitur yang belum tersedia.
+
+## 11. Perubahan desain berikutnya
+
+Pengguna menyatakan landing page saat ini sudah terlihat bagus, tetapi ingin menunda beberapa perubahan visual sampai tahap akhir. Jangan mengubah desain lagi tanpa arahan berikutnya. Catat masukan lanjutan di bagian ini saat pengguna memberikannya.
