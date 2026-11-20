@@ -10,6 +10,8 @@ Post/Redirect/Get) agar refresh tidak mengirim ulang data.
 
 ```
 Publik
+├── Landing dengan kartu artikel
+├── Baca artikel (`artikel.php`)
 └── Login
 
 Admin
@@ -29,6 +31,10 @@ Guru BK
 ├── Dashboard
 ├── Catatan siswa (yang dibagikan)
 │   └── Detail catatan + tindak lanjut
+├── Artikel edukasi
+│   ├── Daftar artikel milik sendiri
+│   ├── Buat / ubah artikel (judul, gambar, isi)
+│   └── Hapus artikel milik sendiri
 └── Profil & ganti password
 
 Siswa
@@ -45,6 +51,20 @@ Siswa
 ```
 
 ---
+
+### 1.1 Artikel publik
+
+- `index.php` menampilkan artikel terbaru lintas sekolah dalam kartu: gambar, judul, nama Guru BK, tanggal, potongan isi, dan tautan baca lengkap.
+- `artikel.php?id={id}` menampilkan artikel lengkap: gambar, judul, penulis, tanggal terbit, isi teks, dan navigasi kembali ke landing.
+- Artikel tidak memerlukan login untuk dibaca. ID tidak valid menghasilkan 404. Artikel yang telah diterbitkan tetap publik walau akun penulis kemudian dinonaktifkan.
+
+### 1.2 Pengelolaan artikel Guru BK
+
+- `guru_bk/artikel.php`: daftar artikel yang dimiliki Guru BK login, tautan buat/ubah, dan aksi hapus memakai POST + CSRF + konfirmasi.
+- `guru_bk/artikel_form.php`: judul, gambar, isi. Nama penulis diambil dari akun aktif, bukan input pengguna. Artikel baru langsung publik setelah disimpan.
+- Gambar JPG/PNG/WebP maksimum 2 MB; validasi MIME melalui `finfo`, dimensi/decoder gambar, nama penyimpanan acak, dan direktori upload tidak boleh menjalankan PHP.
+- Edit artikel mempertahankan gambar lama jika gambar baru tidak dipilih. Hapus file lama hanya setelah perubahan database berhasil; hapus artikel memakai transaksi/urutan aman agar gagal operasi tidak menghilangkan data tanpa sengaja.
+- Isi artikel berupa teks biasa dengan baris baru, semua output di-escape.
 
 ## 2. Login
 
@@ -194,6 +214,13 @@ dan daftar akun terkait tanpa isi jurnal sudah dibuat pada branch `feat/admin-sc
 
 ### 3.5 Daftar pengguna (`admin/pengguna.php`)
 
+Status implementasi: daftar/filter, ubah status via POST+CSRF, reset password sementara,
+konfirmasi aksi, larangan Admin menonaktifkan akunnya sendiri, dan escape output sudah
+tersedia. Uji HTTP membuktikan GET, CSRF invalid ditolak (403), XSS di-escape, payload
+SQL tidak merusak pencarian, reset tampil sekali dan password sementara dapat dipakai,
+password lama ditolak, aktivasi/nonaktifasi memblokir/mengizinkan login, serta Admin
+tidak dapat menonaktifkan dirinya.
+
 Filter:
 
 - Kata kunci (nama/username).
@@ -221,6 +248,12 @@ Aturan:
 - Sorting default: terbaru dibuat / nama.
 
 ### 3.6 Form pengguna (`admin/pengguna_form.php`)
+
+Status implementasi: tambah/ubah akun, validasi server, username unik, hash password,
+CSRF, prepared statement, dan peran immutable saat ubah sudah dibuat. Uji HTTP berhasil
+membuat/mengubah akun, mengabaikan percobaan ubah peran, menolak CSRF invalid, dan
+menampilkan input XSS sebagai teks. Login dengan password sementara berhasil; password
+lama ditolak dan password sementara hanya tampil satu kali.
 
 **Tambah:**
 
@@ -262,6 +295,9 @@ Aturan:
 
 ### 3.7 Rekap (`admin/rekap.php`)
 
+Status implementasi: ringkasan total dan rincian per sekolah tersedia dari database;
+halaman tidak menampilkan isi jurnal siswa. GET lolos uji HTTP lokal.
+
 - Ringkasan total: sekolah, siswa, guru BK, catatan.
 - Tabel per sekolah dengan kolom jumlah dan status akses.
 - Filter jenjang/kota (P1).
@@ -272,6 +308,10 @@ Aturan:
 ## 4. Guru BK
 
 ### 4.1 Dashboard (`guru_bk/index.php`)
+
+Status implementasi: empat statistik DB sekolah sendiri (siswa aktif, catatan baru,
+ditindaklanjuti, total dibagikan), tabel ringkas, dan tautan detail tersedia. Query
+membatasi sekolah catatan serta sekolah siswa.
 
 Banner: “Panel Guru BK — [Nama Sekolah]”.
 
@@ -295,6 +335,10 @@ Tabel “Catatan Siswa”:
 Filter status + pencarian nama.
 Empty state: “Belum ada siswa yang membagikan catatan karier.”
 
+Status implementasi: filter/pencarian, daftar hanya catatan yang dibagikan di sekolah
+Guru BK, jumlah tindak lanjut, dan tautan detail tersedia. Uji HTTP untuk sekolah
+terpisah menunjukkan daftar sekolah lain tidak mengungkap siswa sekolah pertama.
+
 **Dihapus dari prototipe:**
 
 - “32 Siswa Aktif” hardcoded.
@@ -303,6 +347,12 @@ Empty state: “Belum ada siswa yang membagikan catatan karier.”
 - Dua baris dummy Ahmad/Siti yang tidak berubah.
 
 ### 4.2 Detail catatan (`guru_bk/catatan_detail.php`)
+
+Status implementasi: data eksplorasi, jurnal, dan pesan hanya diambil setelah catatan
+terbukti dibagikan ke sekolah Guru BK dan siswa masih terdaftar di sekolah itu. Tindak
+lanjut tersimpan bersama perubahan status dalam transaksi. Uji HTTP lintas sekolah
+menghasilkan 404; CSRF invalid 403; XSS di-escape; tindak lanjut tersimpan dan status
+berubah. Cetak memakai `window.print()`.
 
 Saat dibuka:
 
@@ -341,6 +391,9 @@ Jika siswa belum mengisi sebagian data, tampilkan “Belum diisi”, bukan halam
 
 ### 5.1 Beranda (`siswa/index.php`)
 
+Status implementasi: sapaan, disclaimer, pintasan lima langkah, dan indikator berdasarkan
+keberadaan data DB tersedia. Ringkasan minat/rencana dan status berbagi belum tampil.
+
 - Sapaan: “Halo, [Nama] — [Kelas]”.
 - Penjelasan singkat KARVIA dan disclaimer “bukan tes psikologis”.
 - Lima kartu langkah dengan status “Sudah diisi / Belum”.
@@ -348,6 +401,9 @@ Jika siswa belum mengisi sebagian data, tampilkan “Belum diisi”, bukan halam
 - Ringkasan kecil: minat terakhir, rencana terakhir, status berbagi.
 
 ### 5.2 Kenali Diriku (`siswa/kenali_diri.php`)
+
+Status implementasi: formulir tersimpan dengan upsert per siswa, pilihan tervalidasi
+terhadap allowlist, catatan dibatasi 5.000 karakter, dan output di-escape.
 
 Field:
 
@@ -371,6 +427,9 @@ tombol “Lanjut ke Jelajah Profesi” agar siswa bisa memperbaiki.
 
 ### 5.3 Jelajah Profesi (`siswa/profesi.php`)
 
+Status implementasi: daftar dari DB, filter kategori, dan tambah/hapus bookmark via
+POST+CSRF tersedia.
+
 - Filter kategori: Semua, Kesehatan, Teknologi, Pendidikan, Bisnis.
 - Kartu profesi dari tabel `profesi` (hanya status aktif).
 - Tombol bookmark:
@@ -382,10 +441,15 @@ tombol “Lanjut ke Jelajah Profesi” agar siswa bisa memperbaiki.
 
 ### 5.4 Jalur Setelah Lulus (`siswa/jalur.php`)
 
+Status implementasi: halaman informasi statis sudah tersedia.
+
 Konten statis dari prototipe (PTU/PTKIN, vokasi, kerja, wirausaha, sertifikasi).
 Tidak perlu database pada MVP.
 
 ### 5.5 Bandingkan (`siswa/bandingkan.php`)
+
+Status implementasi: dua pilihan, catatan, kriteria allowlist, validasi panjang, dan
+upsert per siswa tersedia. Prefill opsi A dari profesi tersedia.
 
 Field:
 
@@ -398,12 +462,18 @@ pendidikannya. Simpan → upsert `pilihan_banding` → flash → arahkan ke Renc
 
 ### 5.6 Rencana Langkahku (`siswa/rencana.php`)
 
+Status implementasi: tujuan dan dua langkah wajib divalidasi, dibatasi 255 karakter,
+dan disimpan dengan upsert per siswa.
+
 - Tujuan sementara.
 - Langkah kecil 1.
 - Langkah kecil 2.
 - Simpan → upsert `rencana_karier` → flash → arahkan ke Jurnal.
 
 ### 5.7 Jurnal (`siswa/jurnal.php`)
+
+Status implementasi: form append dan riwayat pribadi terbaru tersedia; minimal satu
+bagian wajib terisi, tanpa edit/hapus.
 
 - Form: hal baru, hambatan, dukungan.
 - Simpan → **insert** baris baru di `jurnal_refleksi`.
@@ -412,6 +482,11 @@ pendidikannya. Simpan → upsert `pilihan_banding` → flash → arahkan ke Renc
 - Tidak ada edit/hapus pada MVP; jika perlu, tambahkan sebagai keputusan baru.
 
 ### 5.8 Konsultasi (`siswa/konsultasi.php`)
+
+Status implementasi: ringkasan data eksplorasi/jurnal dari DB, status berbagi,
+bagikan ulang, pesan opsional, CSRF, dan cetak `window.print()` tersedia. Uji HTTP
+menyimpan berbagi pada sekolah siswa dan Guru BK sekolah tersebut dapat membuka isi;
+output teks di-escape.
 
 - Ringkasan dari database:
   - Nama, kelas, sekolah
@@ -433,13 +508,15 @@ pendidikannya. Simpan → upsert `pilihan_banding` → flash → arahkan ke Renc
 
 ### 5.9 Tips (`siswa/tips.php`)
 
-Konten statis dari prototipe.
+Implementasi konten edukasi statis dasar tersedia, termasuk panduan informasi karier,
+diskusi dengan orang dewasa tepercaya, dan disclaimer bahwa KARVIA bukan tes psikologis.
+
 
 ### 5.10 Profil (`profil.php`)
 
-- Nama, username, sekolah, kelas (read-only kecuali nama?).
-- **Usulan:** siswa boleh mengubah nama dan no. telepon; sekolah/kelas hanya Admin.
-- Ganti password: password lama, password baru, konfirmasi.
+Status implementasi: semua peran dapat melihat profil, mengubah nama/telepon, serta
+mengganti password dengan verifikasi password lama, validasi konfirmasi, CSRF, dan
+hash password. Username, peran, sekolah, dan kelas tetap dikelola Admin.
 
 ---
 

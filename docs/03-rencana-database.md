@@ -3,12 +3,7 @@
 Database: **`karvia_db`** (MySQL/MariaDB, InnoDB, `utf8mb4`, `utf8mb4_unicode_ci`).
 Semua waktu memakai zona **Asia/Jakarta**.
 
-File `database/database.sql` sudah dibuat dan berhasil diuji impor pada MySQL
-8.0.30. Struktur awal terdiri dari 11 tabel dan 13 foreign key. Bagian data contoh
-kemudian diringkas menjadi data demo fiktif (2 sekolah, 6 akun, 4 profesi, dan
-skenario data siswa terbatas). File SQL yang diperbarui perlu diimpor ulang ke
-database lokal kosong agar data contoh aktifnya sama dengan isi file. Setiap
-perubahan skema saat implementasi **wajib** memperbarui dokumen ini.
+File `database/database.sql` berisi struktur dan data demo. Struktur terdiri dari 12 tabel; data demo tetap fiktif. File SQL ini dirancang untuk database kosong. Setiap perubahan skema **wajib** memperbarui dokumen ini.
 
 ---
 
@@ -74,6 +69,7 @@ Catatan:
 | 9 | `berbagi_catatan` | Bukti siswa membagikan catatan ke Guru BK |
 | 10 | `tindak_lanjut_bk` | Catatan tindak lanjut Guru BK |
 | 11 | `log_aktivitas` | Jejak aktivitas penting (login, kelola akun, bagikan) |
+| 12 | `artikel` | Artikel edukasi publik yang dibuat Guru BK |
 
 ---
 
@@ -260,6 +256,22 @@ Saat tindak lanjut disimpan, `berbagi_catatan.status` diubah menjadi
 Index: `(pengguna_id, dibuat_pada)`, `aksi`, `dibuat_pada`.
 Jangan pernah mencatat password, token, atau isi jurnal mentah di sini.
 
+### 4.12 `artikel`
+
+| Kolom | Tipe | Aturan | Keterangan |
+|-------|------|--------|------------|
+| `id` | BIGINT UNSIGNED | PK, AI | |
+| `guru_id` | BIGINT UNSIGNED | NOT NULL, FK → `pengguna.id` RESTRICT | Akun Guru BK pembuat |
+| `nama_penulis` | VARCHAR(150) | NOT NULL | Snapshot nama akun saat publikasi; tetap tersedia bila akun berubah/nonaktif |
+| `judul` | VARCHAR(200) | NOT NULL | Judul kartu dan halaman artikel |
+| `gambar` | VARCHAR(255) | NOT NULL | Nama file acak tersimpan di `uploads/artikel/`, bukan URL kiriman pengguna |
+| `isi` | MEDIUMTEXT | NOT NULL | Teks biasa; HTML tidak dirender |
+| `diterbitkan_pada` | DATETIME | NOT NULL | Waktu publikasi dari server |
+| `diperbarui_pada` | DATETIME | NULL | Waktu perubahan terakhir |
+
+Index: `(diterbitkan_pada)`, `(guru_id, diterbitkan_pada)`.
+Artikel langsung publik dan berlaku lintas sekolah. Guru BK hanya dapat mengubah/menghapus baris dengan `guru_id` sama dengan akun login. Penghapusan artikel milik sendiri permanen; penghapusan akun tidak menghapus artikel (FK RESTRICT juga melindungi riwayat penulis). Ringkasan landing dihasilkan dari `isi` saat dibaca, tidak disimpan terpisah.
+
 ---
 
 ## 5. Aturan integritas & penghapusan
@@ -334,6 +346,7 @@ Urutan pembuatan tabel **di bagian A `database.sql`** (agar foreign key valid):
 9. `berbagi_catatan`
 10. `tindak_lanjut_bk`
 11. `log_aktivitas`
+12. `artikel`
 
 Cara menjalankan (setelah database `karvia_db` dibuat):
 
@@ -354,7 +367,8 @@ dapat bentrok. Jika ingin mengulang dari awal, hapus database lalu buat ulang.
 
 Data demo bertujuan menguji alur dasar dan tampilan dengan jumlah kecil. Semua
 nama sekolah, nama akun, dan isi catatan bersifat fiktif; bukan klaim afiliasi
-atau identitas orang nyata.
+atau identitas orang nyata. Kombinasi sederhana `admin/admin`, `guru/guru`, dan
+`siswa/siswa` hanya untuk demo lokal; password tetap disimpan sebagai hash.
 
 ### 8.1 Dua sekolah demo
 
@@ -368,10 +382,13 @@ sekolah nyata.
 
 ### 8.2 Akun demo
 
-Semua nama pengguna adalah label fiktif untuk pengujian, bukan identitas orang.
+Semua nama pengguna adalah label fiktif untuk pengujian, bukan identitas orang. Password sederhana hanya untuk demo lokal; jangan gunakan pada pemakaian nyata.
 
 | Peran | Nama demo | Username | Password demo | Sekolah |
 |-------|-----------|----------|---------------|---------|
+| Admin | Admin KARVIA | `admin` | `admin` | — |
+| Guru BK | Guru BK KARVIA | `guru` | `guru` | Sekolah Demo KARVIA Utara |
+| Siswa | Siswa KARVIA | `siswa` | `siswa` | Sekolah Demo KARVIA Utara |
 | Admin | Admin Demo KARVIA | `demo.admin` | `Admin123!` | — |
 | Guru BK | Guru Demo Utara | `demo.guru1` | `Guru123!` | Sekolah Demo KARVIA Utara |
 | Guru BK | Guru Demo Selatan | `demo.guru2` | `Guru123!` | Sekolah Demo KARVIA Selatan |
@@ -399,15 +416,12 @@ login fiktif.
 Urutan insert:
 
 1. `sekolah` — 2 baris fiktif.
-2. `pengguna` — 1 Admin, 2 Guru BK, 3 siswa (password sudah di-hash; aktivitas login kosong).
+2. `pengguna` — 2 Admin, 3 Guru BK, 4 siswa (password sudah di-hash; aktivitas login kosong).
 3. `profesi` — 4 profesi inti.
 4. Data karier demo terbatas — satu siswa berbagi, satu siswa belum berbagi, dan
    satu siswa tanpa data eksplorasi.
 
-File SQL ini sudah diuji ulang pada MySQL 8.0.30 dengan hasil: 11 tabel, 13
-foreign key, 2 sekolah, 6 pengguna, 4 profesi, masing-masing satu refleksi,
-perbandingan, rencana, jurnal, bookmark, dan berbagi; belum ada tindak lanjut atau
-log aktivitas. Semua akun memiliki `last_login_at = NULL` dan `login_count = 0`.
+Skema dan data demo diuji pada MySQL 8.0.30 memakai database sementara kosong: 12 tabel, 14 foreign key, 2 sekolah, 9 pengguna, 4 profesi, dan 3 akun login singkat. Database lokal `karvia_db` yang sudah ada tidak diubah; untuk mencoba perubahan, backup lalu impor SQL pada database kosong. Semua akun memiliki `last_login_at = NULL` dan `login_count = 0`.
 
 Bagian B harus dijalankan pada database kosong setelah bagian A. File SQL tidak
 menjalankan `TRUNCATE` atau menghapus data yang sudah ada. Untuk memperbarui

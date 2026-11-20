@@ -4,10 +4,9 @@ Folder ini adalah sumber konteks utama untuk pengembangan KARVIA. Aturan produk,
 rencana database, dan urutan pengerjaan dicatat di sini agar pekerjaan dapat
 dilanjutkan bertahap.
 
-**Status:** fondasi backend/autentikasi telah dipush pada `feat/foundation-auth`.
-Pengelolaan sekolah Admin sedang dikerjakan pada `feat/admin-schools`. Fitur Admin
-lainnya, Guru BK, dan Siswa akan dilanjutkan pada branch fitur terpisah sesuai
-`docs/05`.
+**Status:** aplikasi PHP native sudah memiliki alur Admin, Guru BK, dan Siswa;
+lihat `docs/05` untuk status verifikasi terkini. Artikel Guru BK disetujui melalui
+D-29 dan perlu lulus uji pemilik/upload/publik sebelum dianggap siap rilis.
 
 **Prototipe acuan:** [`../karvia_career_vision_action.html`](../karvia_career_vision_action.html)
 File tersebut jangan diubah, dipindah, atau dihapus.
@@ -34,8 +33,8 @@ File tersebut jangan diubah, dipindah, atau dihapus.
 KARVIA adalah media pendukung bimbingan karier SMA/MA, bukan tes psikologis atau
 penentu pilihan otomatis. Aplikasi PHP native + MySQL menggunakan PDO dan session,
 dengan tiga peran: Admin, Guru BK, dan Siswa. Guru BK hanya melihat catatan yang
-dibagikan siswa di sekolahnya. Admin mengelola akun/sekolah dan melihat rekap,
-bukan isi jurnal pribadi.
+dibagikan siswa di sekolahnya, serta dapat menerbitkan artikel edukasi publik. Admin
+mengelola akun/sekolah dan melihat rekap, bukan isi jurnal pribadi.
 
 ## Aturan kerja
 

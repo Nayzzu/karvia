@@ -132,6 +132,8 @@ bisa mengaktifkan kembali. Hapus permanen tidak ditawarkan pada MVP.
 
 ## 4. Kebutuhan Guru BK
 
+Artikel edukasi adalah konten publik lintas sekolah. Ringkasan kartu dipotong otomatis dari isi; halaman baca menampilkan gambar, judul, nama penulis, tanggal terbit, dan isi teks. Isi artikel ditampilkan sebagai teks biasa yang di-escape, bukan HTML aktif.
+
 | ID | Kebutuhan | Prioritas |
 |----|-----------|:---------:|
 | GRU-01 | Dashboard hanya untuk sekolah sendiri | P0 |
@@ -146,6 +148,8 @@ bisa mengaktifkan kembali. Hapus permanen tidak ditawarkan pada MVP.
 | GRU-10 | Tidak dapat melihat siswa/guru sekolah lain | P0 |
 | GRU-11 | Tidak dapat membuat/menonaktifkan akun | P0 |
 | GRU-12 | Pengumuman/siaran pesan | P2 (belum MVP) |
+| GRU-13 | Membuat artikel edukasi dengan judul, gambar JPG/PNG/WebP maks. 2 MB, dan isi teks; nama penulis otomatis dari akun Guru BK | P1 (tambahan disetujui) |
+| GRU-14 | Artikel langsung terbit untuk publik seluruh sekolah; Guru BK hanya dapat mengubah/menghapus artikel sendiri | P1 (tambahan disetujui) |
 
 **Perubahan dari prototipe:** kartu “Jadwal Konsultasi 6 Permintaan” dan
 “Status Sistem Aktif 100%” **dihapus** karena tidak ada fitur jadwal dan angka itu

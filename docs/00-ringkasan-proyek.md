@@ -116,7 +116,7 @@ Membangun aplikasi KARVIA yang:
 
 - Cindy bukan dari bidang komputer; istilah teknis harus dijelaskan.
 - Target indikatif: **Rabu, 25 November 2026** (dihitung dari Kamis, 19 November 2026).
-- Untuk demo lokal tersedia data contoh yang sedikit dan jelas ditandai sebagai fiktif: 2 sekolah, 1 Admin, 2 Guru BK, 3 siswa, 4 profesi, serta data eksplorasi terbatas untuk pengujian privasi dan tampilan. Aktivitas login contoh tidak diisi. Untuk pemakaian nyata, data contoh harus dihapus dan diganti data yang sah.
+- Untuk demo lokal tersedia data contoh yang sedikit dan jelas ditandai sebagai fiktif: 2 sekolah, 2 Admin, 3 Guru BK, 4 siswa (termasuk login singkat `admin/admin`, `guru/guru`, `siswa/siswa`), 4 profesi, serta data eksplorasi terbatas untuk pengujian privasi dan tampilan. Aktivitas login contoh tidak diisi. Untuk pemakaian nyata, data contoh harus dihapus dan diganti data yang sah.
 - Sistem harus terasa “benar-benar dipakai”, bukan sekadar tampilan.
 
 ---

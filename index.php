@@ -6,6 +6,13 @@ $akun = auth_muat_ulang();
 if ($akun) {
     auth_arahkan_dashboard($akun);
 }
+try {
+    $stmt_artikel = db()->query('SELECT id, judul, gambar, isi, nama_penulis, diterbitkan_pada FROM artikel ORDER BY diterbitkan_pada DESC LIMIT 6');
+    $artikel_terbaru = $stmt_artikel->fetchAll();
+} catch (PDOException $kesalahan) {
+    error_log('KARVIA: artikel landing belum tersedia: ' . $kesalahan->getMessage());
+    $artikel_terbaru = [];
+}
 ?>
 <!doctype html>
 <html lang="id">
@@ -25,6 +32,7 @@ if ($akun) {
     .karvia-grain{background-image:radial-gradient(#14532d0b .7px,transparent .7px);background-size:8px 8px}
     .karvia-progress{height:2px;transform:scaleX(0);transform-origin:left;background:var(--karvia-green);transition:transform .08s linear}
     .karvia-dashboard{box-shadow:0 36px 90px -45px #14532d55,0 12px 35px -25px #172a1b66}
+    .artikel-isi{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
     .karvia-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
     .karvia-card:hover{transform:translateY(-4px);border-color:#bbd8c1;box-shadow:0 18px 38px -28px #14532d70}
     .karvia-faq summary::-webkit-details-marker{display:none}
@@ -177,6 +185,23 @@ if ($akun) {
           <h2 id="judul-guru-bk" class="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">Ruang untuk berdiskusi bersama Guru BK.</h2>
           <p class="mt-3 max-w-3xl leading-relaxed text-slate-600">Saat ingin berdiskusi, siswa dapat membagikan ringkasan eksplorasinya. Guru BK membantu meninjau pilihan dan langkah berikutnya; keputusan tetap berada pada siswa dengan dukungan orang dewasa yang dipercaya. Catatan pribadi tidak otomatis dibagikan.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="artikel" class="border-y border-slate-200 bg-white" aria-labelledby="judul-artikel">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4"><div><span class="text-xs font-bold uppercase tracking-[.18em] text-karvia-700">Wawasan KARVIA</span><h2 id="judul-artikel" class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Artikel untuk membuka wawasan.</h2><p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">Baca gagasan dan informasi karier dari Guru BK.</p></div><span class="text-sm font-semibold text-karvia-700">Dari Guru BK KARVIA</span></div>
+        <?php if (!$artikel_terbaru): ?>
+          <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center"><span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-karvia-700"><i class="fa-regular fa-newspaper" aria-hidden="true"></i></span><p class="mt-3 font-semibold text-slate-800">Artikel edukasi segera hadir.</p><p class="mt-1 text-sm text-slate-500">Guru BK akan membagikan wawasan karier di sini.</p></div>
+        <?php else: ?>
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <?php foreach ($artikel_terbaru as $artikel): $ringkasan = trim(preg_replace('/\\s+/u', ' ', strip_tags($artikel['isi']))); ?>
+              <article class="karvia-card overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                <a href="<?= e(url('artikel.php?id=' . (int) $artikel['id'])) ?>" class="block"><img src="<?= e(url('uploads/artikel/' . rawurlencode($artikel['gambar']))) ?>" alt="" loading="lazy" class="aspect-[16/10] w-full bg-slate-100 object-cover"><div class="p-5"><p class="text-xs font-medium text-slate-500"><?= e(tanggal_id($artikel['diterbitkan_pada'])) ?> <span class="mx-1">·</span> <?= e($artikel['nama_penulis']) ?></p><h3 class="mt-3 text-lg font-bold leading-snug text-slate-900"><?= e($artikel['judul']) ?></h3><p class="artikel-isi mt-2 text-sm leading-relaxed text-slate-600"><?= e($ringkasan) ?></p><span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-karvia-700">Baca selengkapnya <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></span></div></a>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
       </div>
     </section>
 

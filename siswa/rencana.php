@@ -1,9 +1,8 @@
 <?php
-define('KARVIA_APP', true);
-$peran_halaman = 'siswa';
-$halaman_aktif = 'rencana';
-$judul_halaman = 'Rencana Langkahku';
-require_once __DIR__ . '/../includes/header.php';
+define('KARVIA_APP', true);$peran_halaman='siswa';$halaman_aktif='rencana';$judul_halaman='Rencana Langkahku';require_once __DIR__.'/../includes/header.php';
+$pdo=db();$id=(int)auth_pengguna()['id'];$q=$pdo->prepare('SELECT tujuan,langkah_1,langkah_2 FROM rencana_karier WHERE siswa_id=:id');$q->execute(['id'=>$id]);$data=$q->fetch()?:['tujuan'=>'','langkah_1'=>'','langkah_2'=>''];$errors=[];
+if($_SERVER['REQUEST_METHOD']==='POST'){csrf_wajib();$data=['tujuan'=>trim((string)($_POST['tujuan']??'')),'langkah_1'=>trim((string)($_POST['langkah_1']??'')),'langkah_2'=>trim((string)($_POST['langkah_2']??''))];foreach($data as $v)if($v===''){$errors[]='Tujuan dan kedua langkah wajib diisi.';break;}foreach(['tujuan'=>255,'langkah_1'=>255,'langkah_2'=>255] as $k=>$m)if(mb_strlen($data[$k])>$m)$errors[]='Setiap isian maksimal 255 karakter.';if(!$errors){$q=$pdo->prepare('INSERT INTO rencana_karier (siswa_id,tujuan,langkah_1,langkah_2,dibuat_pada) VALUES (:id,:tujuan,:l1,:l2,NOW()) ON DUPLICATE KEY UPDATE tujuan=VALUES(tujuan),langkah_1=VALUES(langkah_1),langkah_2=VALUES(langkah_2),diperbarui_pada=NOW()');$q->execute(['id'=>$id,'tujuan'=>$data['tujuan'],'l1'=>$data['langkah_1'],'l2'=>$data['langkah_2']]);flash_set('sukses','Rencana karier berhasil disimpan.');redirect('siswa/rencana.php');}}
 ?>
-<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"><h1 class="text-2xl font-extrabold text-slate-900">Rencana Langkahku</h1><p class="mt-2 text-sm text-slate-600">Kerangka Langkah 4. Form tujuan dan langkah kecil belum tersedia.</p></section>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<div class="mb-6"><h1 class="text-2xl font-extrabold">Rencana Langkahku</h1><p class="mt-1 text-sm text-slate-600">Buat langkah kecil yang realistis. Rencana boleh berubah seiring waktu.</p></div><?php if($errors):?><div role="alert" class="mb-4 rounded-xl bg-rose-50 p-4 text-sm text-rose-800"><?php foreach($errors as $e):?><p><?=e($e)?></p><?php endforeach;?></div><?php endif;?>
+<form method="post" class="max-w-3xl space-y-4 rounded-2xl border bg-white p-6"><?=csrf_field()?><?php foreach(['tujuan'=>'Tujuan sementara','langkah_1'=>'Langkah kecil pertama','langkah_2'=>'Langkah kecil berikutnya'] as $k=>$label):?><div><label for="<?=$k?>" class="mb-1 block text-sm font-bold"><?=e($label)?></label><textarea id="<?=$k?>" name="<?=$k?>" required maxlength="255" rows="3" class="w-full rounded-xl border p-3"><?=e($data[$k])?></textarea></div><?php endforeach;?><button class="rounded-xl bg-emerald-700 px-5 py-2.5 font-bold text-white">Simpan Rencana</button></form>
+<?php require __DIR__.'/../includes/footer.php';?>
