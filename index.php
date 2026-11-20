@@ -30,19 +30,25 @@ if ($akun) {
     </div>
   </header>
   <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-    <section class="bg-gradient-to-r from-karvia-900 to-emerald-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
-      <div class="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10"><i class="fa-solid fa-compass text-[220px]"></i></div>
-      <div class="relative z-10 max-w-2xl">
-        <span class="bg-emerald-500/30 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3 border border-emerald-400/30">KARVIA · Langkah Karierku</span>
-        <h1 class="text-3xl sm:text-4xl font-extrabold mb-3 leading-tight">Kenali diri, jelajahi pilihan, mulai dari satu langkah.</h1>
-        <p class="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6">Media digital bimbingan karier untuk peserta didik SMA/MA. Temukan visi masa depanmu, eksplorasi potensi diri, bandingkan pilihan secara terstruktur, dan rancang langkah konkret bersama Guru BK.</p>
-        <a href="login.php" class="inline-flex items-center px-6 py-3 bg-white text-karvia-900 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition">Masuk ke KARVIA <i class="fa-solid fa-arrow-right ml-2"></i></a>
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-white via-karvia-50 to-emerald-100 px-6 py-14 text-center shadow-sm sm:px-10 sm:py-20" aria-labelledby="judul-hero">
+      <div class="mx-auto max-w-4xl">
+        <span class="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-wider text-karvia-800 shadow-sm">
+          <i class="fa-solid fa-compass" aria-hidden="true"></i>
+          KARVIA · Langkah Karierku
+        </span>
+        <h1 id="judul-hero" class="mx-auto max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-karvia-900 sm:text-5xl lg:text-6xl">Kenali dirimu. Temukan pilihanmu. Rencanakan langkah berikutnya.</h1>
+        <p class="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">KARVIA membantu siswa SMA/MA mengenali potensi diri, menjelajahi pilihan karier, dan menyusun langkah masa depan—dengan ruang untuk berdiskusi bersama Guru BK.</p>
+        <div class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <a href="login.php" class="inline-flex items-center justify-center rounded-xl bg-karvia-700 px-6 py-3 font-bold text-white shadow-sm transition hover:bg-karvia-800 focus:outline-none focus:ring-2 focus:ring-karvia-500 focus:ring-offset-2">Masuk ke KARVIA <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+          <a href="#tahapan-eksplorasi" class="inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-white px-6 py-3 font-bold text-karvia-800 transition hover:bg-karvia-50 focus:outline-none focus:ring-2 focus:ring-karvia-500 focus:ring-offset-2">Lihat Tahapan <i class="fa-solid fa-arrow-down ml-2" aria-hidden="true"></i></a>
+        </div>
+        <p class="mt-5 text-sm text-slate-500">Perjalanan karier dimulai dengan mengenali diri sendiri.</p>
       </div>
     </section>
     <section class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-2xl shadow-sm">
       <div class="flex items-start"><i class="fa-solid fa-circle-info text-amber-500 text-xl mr-3 mt-0.5"></i><div><h2 class="font-bold text-amber-900 text-sm">Landasan &amp; Batasan Produk</h2><p class="text-xs text-amber-800 mt-1 leading-relaxed">KARVIA adalah media pendukung layanan bimbingan karier, bukan alat tes psikologis, bukan penentu jurusan otomatis, dan bukan pengganti konselor. Catatan eksplorasi bersifat personal dan dapat didiskusikan dengan Guru BK.</p></div></div>
     </section>
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Tahapan eksplorasi">
+    <section id="tahapan-eksplorasi" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 scroll-mt-6" aria-label="Tahapan eksplorasi">
       <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="w-12 h-12 rounded-xl bg-karvia-50 text-karvia-600 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-user-check"></i></div><h2 class="font-bold mb-1">1. Kenali Diriku</h2><p class="text-xs text-slate-500 leading-relaxed">Refleksi minat, kekuatan, dan nilai pribadi.</p></article>
       <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-briefcase"></i></div><h2 class="font-bold mb-1">2. Jelajah Profesi</h2><p class="text-xs text-slate-500 leading-relaxed">Kenali tugas dan jalur pendidikan berbagai profesi.</p></article>
       <article class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"><div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-scale-balanced"></i></div><h2 class="font-bold mb-1">3. Bandingkan Pilihan</h2><p class="text-xs text-slate-500 leading-relaxed">Pertimbangkan pilihan berdasarkan kriteria pribadi.</p></article>

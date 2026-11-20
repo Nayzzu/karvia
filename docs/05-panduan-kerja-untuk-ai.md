@@ -13,6 +13,7 @@ Dokumen ini adalah **aturan main** saat melanjutkan proyek. Baca bersama
 | Landing, login, dashboard Admin/Guru BK/Siswa | 🟡 tampilan awal masih berbasis prototipe; login dan dashboard sudah mulai dihubungkan ke backend pada branch `feat/foundation-auth` |
 | Fondasi backend | 🟡 PDO, helper keamanan/session, autentikasi, sidebar bersama, dan dashboard berbasis data sedang dikerjakan; belum di-commit/push |
 | Halaman CRUD Admin, fitur Guru BK, fitur eksplorasi Siswa | ⬜ belum selesai; dikerjakan pada branch fitur terpisah setelah fondasi diuji |
+| Landing publik | ✅ hero dirapikan dengan komposisi terpusat, warna KARVIA dan font Inter dipertahankan; branch `feat/landing-page` |
 | File HTML prototipe | ✅ utuh, **jangan diubah** |
 
 Jangan menganggap fitur apa pun sudah jadi hanya karena dokumennya ada.

@@ -26,6 +26,7 @@ File tersebut jangan diubah, dipindah, atau dihapus.
 | 8 | [`07-rencana-kerja-dan-prioritas.md`](07-rencana-kerja-dan-prioritas.md) | Prioritas MVP dan risiko |
 | 9 | [`08-keputusan-terbuka.md`](08-keputusan-terbuka.md) | Keputusan yang perlu dikonfirmasi |
 | 10 | [`09-pembagian-tugas-2-orang.md`](09-pembagian-tugas-2-orang.md) | Pembagian kepemilikan file |
+| 11 | [`10-rancangan-landing-page.md`](10-rancangan-landing-page.md) | Konteks, isi, dan rancangan UI landing page |
 
 ## Ringkasan produk
 
