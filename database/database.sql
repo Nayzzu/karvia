@@ -3,7 +3,7 @@
 -- Aplikasi bimbingan karier SMA/MA (PHP native + MySQL)
 --
 -- Isi file:
---   BAGIAN A — struktur tabel (11 tabel)
+--   BAGIAN A — struktur tabel (12 tabel)
 --   BAGIAN B — data contoh (2 sekolah, 7 akun, 8 profesi, data karier)
 --
 -- Cara import (setelah MySQL Laragon berjalan):
@@ -284,14 +284,39 @@ CREATE TABLE `log_aktivitas` (
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
+-- ---------------------------------------------------------------------
+-- 12. artikel — artikel edukasi publik dari Guru BK
+-- ---------------------------------------------------------------------
+CREATE TABLE `artikel` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `guru_id` BIGINT UNSIGNED NOT NULL,
+  `nama_penulis` VARCHAR(150) NOT NULL,
+  `judul` VARCHAR(200) NOT NULL,
+  `gambar` VARCHAR(255) NOT NULL,
+  `isi` MEDIUMTEXT NOT NULL,
+  `diterbitkan_pada` DATETIME NOT NULL,
+  `diperbarui_pada` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_artikel_terbit` (`diterbitkan_pada`),
+  KEY `idx_artikel_guru_terbit` (`guru_id`, `diterbitkan_pada`),
+  CONSTRAINT `fk_artikel_guru`
+    FOREIGN KEY (`guru_id`) REFERENCES `pengguna` (`id`)
+    ON DELETE RESTRICT
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
 -- =====================================================================
 -- BAGIAN B — DATA CONTOH / DEMO
 -- Semua nama dan institusi di bagian ini bersifat fiktif.
 -- Jangan gunakan akun atau isi berikut untuk pemakaian sekolah nyata.
 -- Password contoh HANYA untuk demo lokal:
---   demo.admin  / Admin123!
---   demo.guru1  / Guru123!
---   demo.guru2  / Guru123!
+--   admin / admin
+--   guru / guru
+--   siswa / siswa
+-- Akun tambahan untuk skenario privasi:
+--   demo.admin / Admin123!
+--   demo.guru1, demo.guru2 / Guru123!
 --   demo.siswa1, demo.siswa2, demo.siswa3 / Siswa123!
 -- Aktivitas login awal sengaja kosong (NULL/0), bukan aktivitas nyata.
 -- =====================================================================
@@ -307,7 +332,8 @@ VALUES
    'Alamat fiktif untuk data demo', 'Kota Contoh', 'Provinsi Contoh', 'aktif',
    '2026-11-19 08:00:00', NULL);
 
--- Enam akun fiktif: 1 Admin, 2 Guru BK, dan 3 siswa.
+-- Sembilan akun fiktif: 2 Admin, 3 Guru BK, dan 4 siswa.
+-- Akun admin/guru/siswa disediakan sebagai kombinasi singkat khusus demo lokal.
 -- Hash dibuat dengan password_hash(); last_login_at/login_count tidak dipalsukan.
 INSERT INTO `pengguna`
   (`id`, `sekolah_id`, `nama_lengkap`, `username`, `password_hash`, `role`, `status`,
@@ -319,6 +345,11 @@ VALUES
    'admin', 'aktif', NULL, NULL, NULL, NULL, NULL,
    NULL, 0, NULL, '2026-11-19 08:05:00', NULL),
 
+  (7, NULL, 'Admin KARVIA', 'admin',
+    '$2y$10$RxQu9WDMO.wE4Vl7mzK.jeb9PBus/KA/T.jFNCHPWZUzzGz/K7t8u',
+    'admin', 'aktif', NULL, NULL, NULL, NULL, NULL,
+    NULL, 0, NULL, '2026-11-20 08:05:00', NULL),
+
   (2, 1, 'Guru Demo Utara', 'demo.guru1',
    '$2y$10$AByhEf1LpBOgc4oGg1QVQu0n6p5DawZntitkwMqWWJ4yXMXFkc9d2',
    'guru_bk', 'aktif', NULL, NULL, NULL, NULL, NULL,
@@ -328,6 +359,16 @@ VALUES
    '$2y$10$AByhEf1LpBOgc4oGg1QVQu0n6p5DawZntitkwMqWWJ4yXMXFkc9d2',
    'guru_bk', 'aktif', NULL, NULL, NULL, NULL, NULL,
    NULL, 0, 1, '2026-11-19 08:05:00', NULL),
+
+  (8, 1, 'Guru BK KARVIA', 'guru',
+    '$2y$10$ozWdTLk4VKfJnEMaNrzRaOY84XTHXo7ECNbegRG7VwohvHCU9N0o6',
+    'guru_bk', 'aktif', NULL, 'DEMO-GURU', NULL, NULL, NULL,
+    NULL, 0, 1, '2026-11-20 08:05:00', NULL),
+
+  (9, 1, 'Siswa KARVIA', 'siswa',
+    '$2y$10$B1Vua9CIJ6OmShi4VZfmtOG6utAl78SNvvJ8FWafiuakT71kFTqgC',
+    'siswa', 'aktif', NULL, NULL, 'XI Demo', 'Contoh', NULL,
+    NULL, 0, 1, '2026-11-20 08:05:00', NULL),
 
   (4, 1, 'Siswa Demo Berbagi', 'demo.siswa1',
    '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
@@ -339,7 +380,7 @@ VALUES
    'siswa', 'aktif', NULL, NULL, 'X Demo', 'Contoh', NULL,
    NULL, 0, 1, '2026-11-19 08:05:00', NULL),
 
-  (6, 2, 'Siswa Demo Kosong', 'demo.siswa3',
+  (10, 2, 'Siswa Demo Kosong', 'demo.siswa3',
    '$2y$10$bSx7Qno.tX9rCD/0OqZmNeIrxVxvHRR4B0Fe1UMxQiSxGe7NEpUOK',
    'siswa', 'aktif', NULL, NULL, 'XI Demo', 'Contoh', NULL,
    NULL, 0, 1, '2026-11-19 08:05:00', NULL);

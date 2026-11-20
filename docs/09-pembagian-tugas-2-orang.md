@@ -58,7 +58,7 @@ di prototipe dan bisa dikerjakan paralel setelah fondasi tersedia.
 - [ ] Tulis `database/database.sql`:
   - **Bagian A**: 11 tabel sesuai `03`, primary key, unique, index, foreign key,
     urutan aman untuk diimpor;
-  - **Bagian B**: data contoh (2 sekolah, 7 akun, 4–8 profesi, data karier demo).
+  - **Bagian B**: data contoh (2 sekolah, 9 akun, 4–8 profesi, data karier demo).
 - [ ] Uji import di database kosong: `mysql -u root karvia_db < database/database.sql`.
 - [ ] Buat `config/koneksi.php`: `BASE_URL`, zona waktu, nama session, mode debug,
   kredensial PDO, fungsi koneksi.
@@ -166,6 +166,7 @@ di prototipe dan bisa dikerjakan paralel setelah fondasi tersedia.
 - [ ] Form tindak lanjut + riwayat, ubah status `ditindaklanjuti`.
 - [ ] Cetak ringkasan siswa.
 - [ ] Pastikan tidak bisa membuka siswa sekolah lain.
+- [ ] Tambahan disetujui D-29: kelola artikel publik (`guru_bk/artikel.php`, `guru_bk/artikel_form.php`), validasi gambar aman, dan uji hak milik artikel.
 
 ### 4.4 File yang menjadi milik Orang B
 

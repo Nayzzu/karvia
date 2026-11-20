@@ -21,6 +21,7 @@ $menu_peran = [
     'guru_bk' => [
         ['index', 'Dashboard', 'guru_bk/index.php'],
         ['catatan', 'Catatan Siswa', 'guru_bk/catatan.php'],
+        ['artikel', 'Artikel Edukasi', 'guru_bk/artikel.php'],
     ],
     'siswa' => [
         ['index', 'Beranda', 'siswa/index.php'],

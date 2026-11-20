@@ -36,6 +36,8 @@ karvia/                          ← root aplikasi (nama folder bebas)
 │   ├── css/                     ← CSS tambahan (termasuk gaya cetak)
 │   ├── js/                      ← JavaScript tambahan
 │   └── images/                  ← logo/gambar
+├── uploads/
+│   └── artikel/                 ← gambar artikel tervalidasi, nama acak
 │
 ├── config/
 │   └── koneksi.php              ← konfigurasi aplikasi + koneksi PDO
@@ -56,7 +58,8 @@ karvia/                          ← root aplikasi (nama folder bebas)
 │
 ├── docs/                        ← dokumentasi ini
 │
-├── index.php                    ← landing page → login / dashboard
+├── index.php                    ← landing page + artikel terbaru → login / dashboard
+├── artikel.php                  ← baca artikel publik
 ├── login.php                    ← form + proses login
 ├── logout.php                   ← mengakhiri sesi
 ├── README.md                    ← petunjuk singkat proyek
@@ -93,7 +96,8 @@ peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
 
 | File | Fungsi |
 |------|--------|
-| `index.php` | Belum login → landing publik; sudah login → dashboard sesuai peran. |
+| `index.php` | Belum login → landing publik termasuk kartu artikel terbaru; sudah login → dashboard sesuai peran. |
+| `artikel.php` | Artikel publik lengkap berdasarkan ID (`?id=`); isi teks di-escape, artikel hanya yang terbit ditampilkan. |
 | `login.php` | Form dan proses login username/password, CSRF, pesan gagal, serta pengalihan sesuai peran. |
 | `logout.php` | Menghapus session, menghancurkan cookie, kembali ke login |
 | `README.md` | Petunjuk singkat struktur dan cara menjalankan |
@@ -102,7 +106,8 @@ peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
 ### 3.2 Halaman per peran
 
 Dashboard tiap peran sudah menggunakan autentikasi dan data database dasar.
-Halaman peran lainnya dibuat bertahap saat fase fitur terkait.
+Halaman artikel Guru BK dan publik sedang ditambahkan pada branch `feat/guru-articles`;
+fitur lain dibangun bertahap sesuai urutan pada `docs/05`.
 
 | Folder | Rencana file | Keterangan |
 |--------|--------------|------------|
@@ -116,6 +121,8 @@ Halaman peran lainnya dibuat bertahap saat fase fitur terkait.
 | `guru_bk/` | `index.php` | Dashboard Guru BK + catatan yang dibagikan |
 | | `catatan.php` | Daftar catatan + filter status |
 | | `catatan_detail.php` | Detail catatan + tindak lanjut + cetak |
+| | `artikel.php` | Daftar artikel milik Guru BK + aksi ubah/hapus |
+| | `artikel_form.php` | Tambah/ubah artikel + unggah gambar |
 | `siswa/` | `index.php` | Beranda + status lima langkah |
 | | `kenali_diri.php` | Langkah 1 |
 | | `profesi.php` | Langkah 2 + filter + bookmark |

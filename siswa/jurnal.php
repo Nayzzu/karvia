@@ -1,9 +1,10 @@
 <?php
-define('KARVIA_APP', true);
-$peran_halaman = 'siswa';
-$halaman_aktif = 'jurnal';
-$judul_halaman = 'Jurnal Refleksi';
-require_once __DIR__ . '/../includes/header.php';
+define('KARVIA_APP', true);$peran_halaman='siswa';$halaman_aktif='jurnal';$judul_halaman='Jurnal Refleksi';require_once __DIR__.'/../includes/header.php';
+$pdo=db();$id=(int)auth_pengguna()['id'];$errors=[];
+if($_SERVER['REQUEST_METHOD']==='POST'){csrf_wajib();$data=['hal_baru'=>trim((string)($_POST['hal_baru']??'')),'hambatan'=>trim((string)($_POST['hambatan']??'')),'dukungan'=>trim((string)($_POST['dukungan']??''))];if(!array_filter($data,static fn($v)=>$v!==''))$errors[]='Isi minimal satu bagian jurnal.';foreach($data as $v)if(mb_strlen($v)>10000)$errors[]='Setiap bagian maksimal 10.000 karakter.';if(!$errors){$q=$pdo->prepare('INSERT INTO jurnal_refleksi (siswa_id,hal_baru,hambatan,dukungan,dibuat_pada) VALUES (:id,:baru,:hambatan,:dukungan,NOW())');$q->execute(['id'=>$id,'baru'=>$data['hal_baru']?:null,'hambatan'=>$data['hambatan']?:null,'dukungan'=>$data['dukungan']?:null]);flash_set('sukses','Entri jurnal berhasil ditambahkan.');redirect('siswa/jurnal.php');}}
+$q=$pdo->prepare('SELECT hal_baru,hambatan,dukungan,dibuat_pada FROM jurnal_refleksi WHERE siswa_id=:id ORDER BY dibuat_pada DESC,id DESC');$q->execute(['id'=>$id]);$jurnal=$q->fetchAll();
 ?>
-<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"><h1 class="text-2xl font-extrabold text-slate-900">Jurnal Refleksi</h1><p class="mt-2 text-sm text-slate-600">Kerangka Langkah 5. Form dan riwayat jurnal belum tersedia.</p></section>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<div class="mb-6"><h1 class="text-2xl font-extrabold">Jurnal Refleksi</h1><p class="mt-1 text-sm text-slate-600">Jurnal bersifat pribadi. Guru BK dapat melihatnya setelah kamu membagikan catatan.</p></div><?php if($errors):?><div role="alert" class="mb-4 rounded-xl bg-rose-50 p-4 text-sm text-rose-800"><?php foreach($errors as $e):?><p><?=e($e)?></p><?php endforeach;?></div><?php endif;?>
+<form method="post" class="mb-6 max-w-3xl space-y-4 rounded-2xl border bg-white p-6"><?=csrf_field()?><?php foreach(['hal_baru'=>'Hal baru yang saya pelajari','hambatan'=>'Hal yang terasa menantang','dukungan'=>'Dukungan yang saya butuhkan'] as $k=>$label):?><div><label for="<?=$k?>" class="mb-1 block text-sm font-bold"><?=e($label)?></label><textarea id="<?=$k?>" name="<?=$k?>" maxlength="10000" rows="3" class="w-full rounded-xl border p-3"></textarea></div><?php endforeach;?><button class="rounded-xl bg-emerald-700 px-5 py-2.5 font-bold text-white">Tambah Entri Jurnal</button></form>
+<section class="space-y-4"><?php if(!$jurnal):?><p class="rounded-xl border bg-white p-8 text-center text-slate-500">Belum ada entri jurnal.</p><?php else:foreach($jurnal as $entry):?><article class="rounded-2xl border bg-white p-5"><p class="mb-3 text-xs text-slate-500"><?=e(tanggal_id($entry['dibuat_pada'],true))?></p><?php foreach(['hal_baru'=>'Hal baru','hambatan'=>'Hambatan','dukungan'=>'Dukungan'] as $k=>$label):if($entry[$k]!==null&&$entry[$k]!==''):?><p class="mb-2 whitespace-pre-wrap text-sm"><strong><?=e($label)?>:</strong> <?=e($entry[$k])?></p><?php endif;endforeach;?></article><?php endforeach;endif;?></section>
+<?php require __DIR__.'/../includes/footer.php';?>

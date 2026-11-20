@@ -73,8 +73,19 @@ Sampaikan dengan bahasa sederhana, bukan istilah teknis.
 | D-26 | Struktur folder & lokasi | Folder per peran (`admin/`, `guru_bk/`, `siswa/`), `includes/`, `config/koneksi.php`, `database/database.sql`; lokasi bebas, path bertingkat hanya contoh | Path, `BASE_URL`, deploy | **Disetujui** |
 | D-27 | Jumlah pengembang & pembagian | 2 orang: A fondasi/admin, B siswa/guru | Jobdesk & timeline | **Disetujui** |
 | D-28 | Gaya routing | Satu halaman = satu file; tanpa front controller `?page=` | Struktur file & URL | **Disetujui** |
+| D-29 | Artikel edukasi Guru BK untuk landing page | Guru BK menerbitkan langsung; judul, gambar, isi wajib; penulis dari akun; artikel publik global; pemilik boleh ubah/hapus; JPG/PNG/WebP maks. 2 MB; ringkasan dibuat otomatis | Scope, hak akses, skema DB, upload gambar dan landing | **Disetujui** |
 
 ---
+
+### D-29 — Artikel edukasi Guru BK
+
+- Guru BK dapat membuat artikel edukasi yang langsung tampil publik di landing page untuk semua sekolah dan pengunjung.
+- Form berisi judul, gambar, dan isi. Nama penulis diambil otomatis dari akun Guru BK aktif; waktu terbit diisi sistem.
+- Guru BK hanya dapat mengubah atau menghapus artikel miliknya.
+- Gambar yang diterima JPG, PNG, atau WebP, maksimum 2 MB. Validasi tipe isi file diperlukan, bukan hanya ekstensi; nama file penyimpanan dibuat acak.
+- Ringkasan kartu dibuat dari isi artikel; tidak ada field ringkasan terpisah.
+- Tombol “Baca selengkapnya” membuka isi artikel lengkap beserta gambar, penulis, dan tanggal.
+- Artikel dihapus permanen hanya oleh pemiliknya. Akun Guru BK dinonaktifkan tidak otomatis menghapus artikel; artikel publik tetap tersedia, nama penulis yang tersimpan ditampilkan sebagai nama historis.
 
 ## 3. Detail keputusan yang paling penting
 
@@ -145,7 +156,7 @@ Selama Cindy belum menjawab, pengembangan memakai asumsi berikut:
 4. Admin tidak membaca jurnal.
 5. Guru BK hanya melihat siswa yang membagikan.
 6. Satu siswa punya satu refleksi, satu perbandingan, satu rencana; jurnal banyak.
-7. Data awal: 2 sekolah fiktif, 1 admin, 2 guru, 4 siswa.
+7. Data awal: 2 sekolah fiktif, 2 admin, 3 guru, 4 siswa (termasuk akun login singkat khusus demo lokal).
 8. Tidak ada email, foto profil, pengumuman, atau jadwal di MVP.
 9. Bahasa Indonesia, warna hijau KARVIA, font Inter.
 10. Demo lokal lebih dulu.
@@ -163,6 +174,7 @@ Isi saat keputusan diambil.
 | 19 Nov 2026 | D-26 | Struktur folder per peran; lokasi tidak terikat path tertentu | Pemilik proyek | Path bertingkat hanya contoh |
 | 19 Nov 2026 | D-27 | Project dikerjakan 2 orang | Pemilik proyek | Jobdesk di `09` |
 | 19 Nov 2026 | D-28 | Satu halaman = satu file, tanpa `?page=` | Pemilik proyek | Struktur `admin/`, `guru_bk/`, `siswa/` |
+| 20 Nov 2026 | D-29 | Guru BK menerbitkan artikel langsung; artikel global dengan hak edit/hapus pemilik, gambar JPG/PNG/WebP maks. 2 MB, ringkasan otomatis | Pemilik proyek | Disetujui; implementasi pada `feat/guru-articles` |
 
 ---
 
