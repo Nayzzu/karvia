@@ -177,6 +177,7 @@ CREATE TABLE `jurnal_refleksi` (
 CREATE TABLE `profesi` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nama` VARCHAR(150) NOT NULL,
+  `gambar` VARCHAR(255) NULL,
   `kategori` ENUM('kesehatan', 'teknologi', 'pendidikan', 'bisnis', 'lainnya') NOT NULL,
   `deskripsi` TEXT NULL,
   `kemampuan` TEXT NULL,
@@ -389,24 +390,24 @@ VALUES
 
 -- Empat profesi inti yang ada di prototipe; bukan katalog produksi lengkap.
 INSERT INTO `profesi`
-  (`id`, `nama`, `kategori`, `deskripsi`, `kemampuan`, `jalur_pendidikan`, `sumber`, `urutan`, `status`, `dibuat_pada`, `diperbarui_pada`)
+  (`id`, `nama`, `gambar`, `kategori`, `deskripsi`, `kemampuan`, `jalur_pendidikan`, `sumber`, `urutan`, `status`, `dibuat_pada`, `diperbarui_pada`)
 VALUES
-  (1, 'Dokter', 'kesehatan',
+  (1, 'Dokter', 'assets/img/profesi/dokter.jpg', 'kesehatan',
    'Memeriksa pasien, menegakkan diagnosis, dan memberi pengobatan atau rujukan.',
    'Analitis, teliti, empati, komunikasi, dan mengambil keputusan cepat.',
    'S1 Kedokteran, profesi dokter, spesialis (opsional)',
    'Data demo berdasarkan prototipe KARVIA', 1, 'aktif', '2026-11-19 08:10:00', NULL),
-  (2, 'Software Engineer', 'teknologi',
+  (2, 'Software Engineer', 'assets/img/profesi/software-engineer.jpg', 'teknologi',
    'Merancang dan menulis program, memperbaiki bug, serta membangun aplikasi.',
    'Logika, pemecahan masalah, ketekunan, dan kerja sama tim.',
    'S1 Informatika/Teknik Komputer, bootcamp, sertifikasi',
    'Data demo berdasarkan prototipe KARVIA', 2, 'aktif', '2026-11-19 08:10:00', NULL),
-  (3, 'Guru BK', 'pendidikan',
+  (3, 'Guru BK', 'assets/img/profesi/guru-bk.jpg', 'pendidikan',
    'Membantu siswa mengenali diri, memilih arah karier, dan mengatasi hambatan belajar.',
    'Empati, mendengarkan, komunikasi, dan menjaga kerahasiaan.',
    'S1 Bimbingan dan Konseling, PPG',
    'Data demo berdasarkan prototipe KARVIA', 3, 'aktif', '2026-11-19 08:10:00', NULL),
-  (4, 'Advokat', 'lainnya',
+  (4, 'Advokat', 'assets/img/profesi/advokat.jpg', 'lainnya',
    'Mendampingi klien, menyusun argumen hukum, dan menyelesaikan sengketa.',
    'Membaca, menulis, berargumen, negosiasi, dan etika profesi.',
    'S1 Hukum, pendidikan advokat',

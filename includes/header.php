@@ -1,4 +1,6 @@
 <?php
+// Buffer output agar redirect()/header() tetap bisa dipanggil setelah blok HTML tercetak.
+ob_start();
 if (!defined('KARVIA_APP')) {
     define('KARVIA_APP', true);
 }

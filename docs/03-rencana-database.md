@@ -183,6 +183,7 @@ Minimal salah satu dari tiga kolom teks terisi (validasi aplikasi).
 |-------|------|--------|------------|
 | `id` | BIGINT UNSIGNED | PK, AI | |
 | `nama` | VARCHAR(150) | NOT NULL | |
+| `gambar` | VARCHAR(255) | NULL | Path file foto/ilustrasi profesi |
 | `kategori` | ENUM('kesehatan','teknologi','pendidikan','bisnis','lainnya') | NOT NULL | Sesuai filter prototipe |
 | `deskripsi` | TEXT | NULL | Tugas utama |
 | `kemampuan` | TEXT | NULL | Kemampuan yang dibutuhkan |
