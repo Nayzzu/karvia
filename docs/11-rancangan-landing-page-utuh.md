@@ -1,7 +1,7 @@
 # Rancangan Landing Page KARVIA — Utuh
 
 **Halaman:** `index.php`  
-**Status:** Diterapkan pada `index.php` di branch `feat/landing-page`; uji PHP dan HTTP lulus  
+**Status:** Adaptasi desain diterapkan di `index.php` pada `feat/landing-teal`; pemeriksaan sintaks PHP dan HTTP lulus
 **Cakupan:** halaman publik lengkap dari header sampai footer  
 **Acuan layout hero:** gambar referensi dari pengguna
 
@@ -155,7 +155,9 @@ Jangan menambahkan alamat kontak, akun media sosial, tahun hak cipta, atau tauta
 
 ## 8. Batas implementasi
 
-- Implementasi dilakukan pada `index.php`; aset tambahan hanya bila benar-benar dibutuhkan.
+- Implementasi adaptasi desain template dilakukan pada `index.php`; tidak memindahkan React/TSX ke runtime PHP.
+- Hero memakai mockup UI KARVIA buatan HTML/CSS; seluruh isi mockup adalah ilustrasi, bukan data akun/database.
+- Navigasi sticky, garis progres scroll, animasi CSS ringan, FAQ native `<details>`, section manfaat, tahapan, privasi, dukungan BK, CTA, dan footer diimplementasikan pada halaman.
 - Fokus pembaruan adalah menyusun landing lengkap dari header sampai footer dengan konten di dokumen ini.
 - Pertahankan alur login yang ada.
 - Jangan mengubah halaman internal, skema database, atau hak akses.
