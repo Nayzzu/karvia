@@ -68,6 +68,7 @@ CREATE TABLE `pengguna` (
   `jurusan` VARCHAR(50) NULL,
   `no_telepon` VARCHAR(20) NULL,
   `last_login_at` DATETIME NULL,
+  `terakhir_aktif_pada` DATETIME NULL,
   `login_count` INT UNSIGNED NOT NULL DEFAULT 0,
   `dibuat_oleh` BIGINT UNSIGNED NULL,
   `dibuat_pada` DATETIME NOT NULL,
@@ -78,6 +79,7 @@ CREATE TABLE `pengguna` (
   KEY `idx_pengguna_role` (`role`),
   KEY `idx_pengguna_status` (`status`),
   KEY `idx_pengguna_last_login` (`last_login_at`),
+  KEY `idx_pengguna_terakhir_aktif` (`terakhir_aktif_pada`),
   CONSTRAINT `fk_pengguna_sekolah`
     FOREIGN KEY (`sekolah_id`) REFERENCES `sekolah` (`id`)
     ON DELETE RESTRICT,

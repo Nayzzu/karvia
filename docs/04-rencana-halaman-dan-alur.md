@@ -134,12 +134,14 @@ Jika pengguna membuka halaman lain saat belum login, simpan tujuan awal
 Susunan yang disarankan:
 
 1. Banner sambutan: “Panel Admin KARVIA”, nama admin, tanggal.
-2. Empat kartu statistik **nyata**:
+2. Lima kartu statistik **nyata**:
    - Sekolah aktif
    - Akun terdaftar (rincian: x siswa, y Guru BK)
+   - Sedang online (aktif dalam 5 menit terakhir)
    - Pernah masuk
    - Aktif 30 hari terakhir
-3. Tabel **Rekap per sekolah**:
+3. Widget **Pengguna Sedang Aktif Sekarang** (daftar interaksi online ≤5 menit).
+4. Tabel **Rekap per sekolah**:
    - Nama sekolah
    - Jenjang / kota
    - Jumlah siswa
@@ -226,17 +228,18 @@ Filter:
 - Kata kunci (nama/username).
 - Peran: semua / admin / guru_bk / siswa.
 - Sekolah: semua / per sekolah.
-- Status: semua / aktif / nonaktif.
+- Status akun: semua / aktif / nonaktif.
+- Aktivitas: semua / sedang online / offline.
 - Tombol “Terapkan” dan “Reset”.
 
 Kolom:
 
 | Kolom | Isi |
 |-------|-----|
-| Nama | Nama lengkap + username di bawahnya |
-| Peran | Badge |
+| Nama / Username | Nama lengkap + badge status online/offline + username |
+| Peran | Label peran |
 | Sekolah | Nama sekolah / “Global” untuk admin |
-| Status | Badge aktif/nonaktif |
+| Status Akun | Badge aktif/nonaktif |
 | Terakhir login | Tanggal + jam, atau “Belum pernah” |
 | Aksi | Ubah, Reset password, Nonaktifkan/Aktifkan |
 

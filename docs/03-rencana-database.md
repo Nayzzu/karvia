@@ -112,12 +112,13 @@ Index: `status`, `nama`.
 | `jurusan` | VARCHAR(50) | NULL | Khusus siswa |
 | `no_telepon` | VARCHAR(20) | NULL | Opsional |
 | `last_login_at` | DATETIME | NULL | Diisi saat login berhasil |
+| `terakhir_aktif_pada` | DATETIME | NULL | Diperbarui berkala saat sesi aktif; NULL saat logout |
 | `login_count` | INT UNSIGNED | NOT NULL, default 0 | |
 | `dibuat_oleh` | BIGINT UNSIGNED | NULL, FK → `pengguna.id` SET NULL | Admin pembuat akun |
 | `dibuat_pada` | DATETIME | NOT NULL | |
 | `diperbarui_pada` | DATETIME | NULL | |
 
-Index: `sekolah_id`, `role`, `status`, `last_login_at`.
+Index: `sekolah_id`, `role`, `status`, `last_login_at`, `terakhir_aktif_pada`.
 Aturan aplikasi: `role = admin` → `sekolah_id` NULL; selain admin → wajib terisi.
 Aturan aplikasi: username hanya huruf kecil, angka, titik, garis bawah (3–50 karakter).
 
@@ -305,6 +306,7 @@ Angka harus diberi label yang jujur agar tidak menyesatkan seperti prototipe.
 | Siswa aktif | `role='siswa' AND status='aktif'` | “Siswa dengan akses aktif” |
 | Total Guru BK | `COUNT(*) WHERE role='guru_bk'` | “Guru BK terdaftar” |
 | Pernah login | `last_login_at IS NOT NULL` | “Pernah masuk” |
+| Sedang online | `terakhir_aktif_pada >= NOW() - 5 menit` | “Sedang online” |
 | Aktif 30 hari | `last_login_at >= NOW() - 30 hari` | “Aktif 30 hari terakhir” |
 | Catatan baru | `berbagi_catatan.status='baru'` | “Catatan baru” |
 | Catatan ditindaklanjuti | `status='ditindaklanjuti'` | “Sudah ditindaklanjuti” |

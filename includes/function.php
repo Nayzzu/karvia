@@ -176,9 +176,10 @@ function auth_login(string $username, string $password): array
     $id = (int) $akun['id'];
     try {
         $update = db()->prepare(
-            'UPDATE pengguna SET last_login_at = NOW(), login_count = login_count + 1 WHERE id = :id'
+            'UPDATE pengguna SET last_login_at = NOW(), terakhir_aktif_pada = NOW(), login_count = login_count + 1 WHERE id = :id'
         );
         $update->execute(['id' => $id]);
+        $_SESSION['_terakhir_ping_db'] = time();
         log_aktivitas('login', 'Pengguna berhasil masuk.');
     } catch (PDOException $kesalahan) {
         error_log('KARVIA: gagal memperbarui aktivitas login: ' . $kesalahan->getMessage());
@@ -193,6 +194,12 @@ function auth_logout(): void
         return;
     }
     if (auth_pengguna()) {
+        $id_keluar = (int) auth_pengguna()['id'];
+        try {
+            db()->prepare('UPDATE pengguna SET terakhir_aktif_pada = NULL WHERE id = :id')->execute(['id' => $id_keluar]);
+        } catch (PDOException) {
+            // abaikan
+        }
         log_aktivitas('logout', 'Pengguna keluar.');
     }
     $_SESSION = [];
@@ -243,6 +250,18 @@ function auth_muat_ulang(): ?array
     unset($akun['status']);
     $_SESSION['pengguna'] = $akun;
     $_SESSION['_terakhir_aktif'] = time();
+
+    // Perbarui heartbeat online di database berkala (maksimal sekali per 60 detik)
+    $sekarang = time();
+    if (!isset($_SESSION['_terakhir_ping_db']) || ($sekarang - (int) $_SESSION['_terakhir_ping_db'] >= 60)) {
+        $_SESSION['_terakhir_ping_db'] = $sekarang;
+        try {
+            db()->prepare('UPDATE pengguna SET terakhir_aktif_pada = NOW() WHERE id = :id')->execute(['id' => (int) $akun['id']]);
+        } catch (PDOException $kesalahan) {
+            error_log('KARVIA: gagal memperbarui aktivitas online: ' . $kesalahan->getMessage());
+        }
+    }
+
     return $akun;
 }
 
