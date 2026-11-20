@@ -54,11 +54,113 @@ $stmt = $pdo->prepare('SELECT nama_lengkap, username, role, sekolah_id, kelas, n
 $stmt->execute(['id' => $id]);
 $profil = $stmt->fetch();
 ?>
-<div class="mb-6"><h1 class="text-2xl font-extrabold">Profil &amp; Ganti Password</h1><p class="mt-1 text-sm text-slate-600">Perbarui nama dan nomor telepon. Peran, sekolah, kelas, dan username dikelola Admin.</p></div>
-<?php if ($errors): ?><div role="alert" class="mb-5 rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm text-rose-900"><?php foreach ($errors as $error): ?><p><?= e($error) ?></p><?php endforeach; ?></div><?php endif; ?>
-<div class="grid max-w-4xl gap-5">
-<section class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="text-lg font-bold">Data Profil</h2><dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2"><div><dt class="text-slate-500">Username</dt><dd class="font-semibold"><?= e($profil['username']) ?></dd></div><div><dt class="text-slate-500">Peran</dt><dd class="font-semibold"><?= e($profil['role'] === 'guru_bk' ? 'Guru BK' : ucfirst($profil['role'])) ?></dd></div><div><dt class="text-slate-500">Sekolah</dt><dd class="font-semibold"><?= e($pengguna['sekolah_nama'] ?? 'Admin global') ?></dd></div><?php if ($profil['role'] === 'siswa'): ?><div><dt class="text-slate-500">Kelas</dt><dd class="font-semibold"><?= e($profil['kelas'] ?: '—') ?></dd></div><?php endif; ?></dl>
-<form method="post" class="mt-5 space-y-4 border-t border-slate-100 pt-5"><?= csrf_field() ?><input type="hidden" name="aksi" value="profil"><div><label for="nama_lengkap" class="mb-1 block text-sm font-semibold">Nama lengkap</label><input id="nama_lengkap" name="nama_lengkap" required maxlength="150" value="<?= e($profil['nama_lengkap']) ?>" class="w-full rounded-xl border border-slate-300 px-3 py-2"></div><div><label for="no_telepon" class="mb-1 block text-sm font-semibold">Nomor telepon (opsional)</label><input id="no_telepon" name="no_telepon" maxlength="20" value="<?= e($profil['no_telepon']) ?>" class="w-full rounded-xl border border-slate-300 px-3 py-2"></div><button class="rounded-lg bg-emerald-700 px-4 py-2 font-bold text-white">Simpan Profil</button></form></section>
-<section class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="text-lg font-bold">Ganti Password</h2><form method="post" class="mt-4 space-y-4"><?= csrf_field() ?><input type="hidden" name="aksi" value="password"><div><label for="password_lama" class="mb-1 block text-sm font-semibold">Password saat ini</label><input id="password_lama" name="password_lama" type="password" required autocomplete="current-password" class="w-full rounded-xl border border-slate-300 px-3 py-2"></div><div><label for="password_baru" class="mb-1 block text-sm font-semibold">Password baru</label><input id="password_baru" name="password_baru" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-slate-300 px-3 py-2"><p class="mt-1 text-xs text-slate-500">8–72 karakter.</p></div><div><label for="konfirmasi_password" class="mb-1 block text-sm font-semibold">Ulangi password baru</label><input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-slate-300 px-3 py-2"></div><button class="rounded-lg bg-slate-800 px-4 py-2 font-bold text-white">Ganti Password</button></form></section>
+<div class="flex flex-col gap-1">
+  <h2 class="text-xl font-bold tracking-tight text-[#203628]">Profil Akun &amp; Kata Sandi</h2>
+  <p class="text-xs text-slate-500">Perbarui kontak pribadi Anda. Data peran, sekolah, dan username dikelola oleh Admin.</p>
+</div>
+
+<?php if ($errors): ?>
+  <div role="alert" class="max-w-4xl rounded-2xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-900 shadow-sm">
+    <div class="font-bold mb-1">Periksa kembali:</div>
+    <ul class="list-inside list-disc space-y-0.5">
+      <?php foreach ($errors as $error): ?>
+        <li><?= e($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
+
+<div class="grid max-w-4xl gap-6 lg:grid-cols-2">
+  <!-- Kartu Data Profil -->
+  <section class="flex flex-col justify-between rounded-2xl border border-[#dfe6de] bg-white p-6 shadow-sm">
+    <div>
+      <div class="flex items-center gap-3 border-b border-[#eef2ed] pb-3 mb-4">
+        <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#e8f0e9] text-[#245938]">
+          <?php karvia_icon('users', 'h-4 w-4'); ?>
+        </span>
+        <div>
+          <h3 class="text-base font-bold text-[#203628]">Informasi Akun</h3>
+          <p class="text-[11px] text-slate-500">Detail identitas Anda dalam sistem</p>
+        </div>
+      </div>
+
+      <dl class="grid gap-3 text-xs sm:grid-cols-2">
+        <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3">
+          <dt class="font-semibold text-slate-500">Username</dt>
+          <dd class="mt-0.5 font-bold text-[#203628]">@<?= e($profil['username']) ?></dd>
+        </div>
+        <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3">
+          <dt class="font-semibold text-slate-500">Peran</dt>
+          <dd class="mt-0.5 font-bold text-[#203628]"><?= e($profil['role'] === 'guru_bk' ? 'Guru BK' : ucfirst($profil['role'])) ?></dd>
+        </div>
+        <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3 sm:col-span-2">
+          <dt class="font-semibold text-slate-500">Sekolah</dt>
+          <dd class="mt-0.5 font-bold text-[#203628]"><?= e($pengguna['sekolah_nama'] ?? 'Admin Global') ?></dd>
+        </div>
+        <?php if ($profil['role'] === 'siswa'): ?>
+          <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3 sm:col-span-2">
+            <dt class="font-semibold text-slate-500">Kelas Terdaftar</dt>
+            <dd class="mt-0.5 font-bold text-[#203628]"><?= e($profil['kelas'] ?: '—') ?></dd>
+          </div>
+        <?php endif; ?>
+      </dl>
+
+      <form method="post" class="mt-5 space-y-4 border-t border-[#eef2ed] pt-4">
+        <?= csrf_field() ?>
+        <input type="hidden" name="aksi" value="profil">
+        <div>
+          <label for="nama_lengkap" class="mb-1 block text-xs font-bold text-slate-700">Nama Lengkap *</label>
+          <input id="nama_lengkap" name="nama_lengkap" required maxlength="150" value="<?= e($profil['nama_lengkap']) ?>" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        </div>
+        <div>
+          <label for="no_telepon" class="mb-1 block text-xs font-bold text-slate-700">Nomor Telepon / WhatsApp</label>
+          <input id="no_telepon" name="no_telepon" maxlength="20" value="<?= e($profil['no_telepon']) ?>" placeholder="08xxxxxxxxxx" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#1a4029]">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Kartu Ganti Password -->
+  <section class="flex flex-col justify-between rounded-2xl border border-[#dfe6de] bg-white p-6 shadow-sm">
+    <div>
+      <div class="flex items-center gap-3 border-b border-[#eef2ed] pb-3 mb-4">
+        <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#e8f0e9] text-[#245938]">
+          <?php karvia_icon('settings', 'h-4 w-4'); ?>
+        </span>
+        <div>
+          <h3 class="text-base font-bold text-[#203628]">Keamanan Sandi</h3>
+          <p class="text-[11px] text-slate-500">Perbarui kata sandi akun secara berkala</p>
+        </div>
+      </div>
+
+      <form method="post" class="space-y-4">
+        <?= csrf_field() ?>
+        <input type="hidden" name="aksi" value="password">
+        <div>
+          <label for="password_lama" class="mb-1 block text-xs font-bold text-slate-700">Password Saat Ini *</label>
+          <input id="password_lama" name="password_lama" type="password" required autocomplete="current-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        </div>
+        <div>
+          <label for="password_baru" class="mb-1 block text-xs font-bold text-slate-700">Password Baru *</label>
+          <input id="password_baru" name="password_baru" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+          <p class="mt-1 text-[11px] text-slate-500">Minimal 8 karakter.</p>
+        </div>
+        <div>
+          <label for="konfirmasi_password" class="mb-1 block text-xs font-bold text-slate-700">Ulangi Password Baru *</label>
+          <input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#203628] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#122319]">
+            Ganti Password
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
 </div>
 <?php require __DIR__ . '/includes/footer.php'; ?>

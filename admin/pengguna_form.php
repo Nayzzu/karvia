@@ -105,16 +105,113 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 $sekolah = $pdo->query("SELECT id, nama FROM sekolah WHERE status = 'aktif' ORDER BY nama")->fetchAll();
 ?>
-<div class="mb-6"><a href="<?= e(url('admin/pengguna.php')) ?>" class="text-sm font-semibold text-emerald-800 hover:underline">← Kembali ke pengguna</a><h1 class="mt-3 text-2xl font-extrabold text-slate-900"><?= e($judul_halaman) ?></h1><p class="mt-1 text-sm text-slate-500">Peran akun tidak dapat diubah setelah dibuat.</p></div>
-<?php if ($errors): ?><div class="mb-5 rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm text-rose-900"><ul class="list-inside list-disc"><?php foreach ($errors as $error): ?><li><?= e($error) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
-<form method="post" action="<?= e(url('admin/pengguna_form.php' . ($id ? '?id=' . $id : ''))) ?>" class="max-w-3xl space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
-  <?= csrf_field() ?><input type="hidden" name="id" value="<?= (int) $id ?>">
-  <div><label for="nama_lengkap" class="mb-1 block text-sm font-semibold">Nama lengkap *</label><input id="nama_lengkap" name="nama_lengkap" required maxlength="150" value="<?= e($data['nama_lengkap']) ?>" class="w-full rounded-xl border border-slate-300 px-3 py-2.5"></div>
-  <div class="grid gap-4 sm:grid-cols-2"><div><label for="username" class="mb-1 block text-sm font-semibold">Username *</label><input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-z0-9._]+" value="<?= e($data['username']) ?>" class="w-full rounded-xl border border-slate-300 px-3 py-2.5"></div><div><label for="role" class="mb-1 block text-sm font-semibold">Peran *</label><select id="role" name="role" <?= $id ? 'disabled' : '' ?> class="w-full rounded-xl border border-slate-300 px-3 py-2.5"><option value="admin" <?= $data['role'] === 'admin' ? 'selected' : '' ?>>Admin</option><option value="guru_bk" <?= $data['role'] === 'guru_bk' ? 'selected' : '' ?>>Guru BK</option><option value="siswa" <?= $data['role'] === 'siswa' ? 'selected' : '' ?>>Siswa</option></select><?php if ($id): ?><input type="hidden" name="role" value="<?= e($data['role']) ?>"><?php endif; ?></div></div>
-  <div><label for="sekolah_id" class="mb-1 block text-sm font-semibold">Sekolah <span id="sekolah-wajib" class="text-rose-600">*</span></label><select id="sekolah_id" name="sekolah_id" class="w-full rounded-xl border border-slate-300 px-3 py-2.5"><option value="">— Tidak ada (Admin) —</option><?php foreach ($sekolah as $row): ?><option value="<?= (int) $row['id'] ?>" <?= (string) $data['sekolah_id'] === (string) $row['id'] ? 'selected' : '' ?>><?= e($row['nama']) ?></option><?php endforeach; ?></select></div>
-  <?php if (!$id): ?><div class="grid gap-4 sm:grid-cols-2"><div><label for="password" class="mb-1 block text-sm font-semibold">Password awal *</label><input id="password" name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-slate-300 px-3 py-2.5"></div><div><label for="konfirmasi_password" class="mb-1 block text-sm font-semibold">Konfirmasi password *</label><input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-slate-300 px-3 py-2.5"></div></div><?php endif; ?>
-  <fieldset class="rounded-xl border border-slate-200 p-4"><legend class="px-1 text-sm font-bold">Data tambahan (opsional)</legend><div class="grid gap-4 sm:grid-cols-2"><div><label for="kelas" class="mb-1 block text-xs font-semibold">Kelas (Siswa)</label><input id="kelas" name="kelas" maxlength="20" value="<?= e($data['kelas']) ?>" class="w-full rounded-lg border border-slate-300 px-3 py-2"></div><div><label for="jurusan" class="mb-1 block text-xs font-semibold">Jurusan (Siswa)</label><input id="jurusan" name="jurusan" maxlength="50" value="<?= e($data['jurusan']) ?>" class="w-full rounded-lg border border-slate-300 px-3 py-2"></div><div><label for="nisn" class="mb-1 block text-xs font-semibold">NISN (Siswa)</label><input id="nisn" name="nisn" maxlength="20" value="<?= e($data['nisn']) ?>" class="w-full rounded-lg border border-slate-300 px-3 py-2"></div><div><label for="nip" class="mb-1 block text-xs font-semibold">NIP (Guru BK)</label><input id="nip" name="nip" maxlength="30" value="<?= e($data['nip']) ?>" class="w-full rounded-lg border border-slate-300 px-3 py-2"></div><div><label for="no_telepon" class="mb-1 block text-xs font-semibold">Nomor telepon</label><input id="no_telepon" name="no_telepon" maxlength="20" value="<?= e($data['no_telepon']) ?>" class="w-full rounded-lg border border-slate-300 px-3 py-2"></div></div></fieldset>
-  <div class="flex flex-wrap gap-3"><button class="rounded-xl bg-emerald-700 px-5 py-2.5 font-bold text-white hover:bg-emerald-800">Simpan</button><a href="<?= e(url('admin/pengguna.php')) ?>" class="rounded-xl border border-slate-300 px-5 py-2.5 font-semibold">Batal</a></div>
+<div class="flex flex-col gap-1">
+  <a href="<?= e(url('admin/pengguna.php')) ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#245938] hover:underline">
+    &larr; Kembali ke Kelola Pengguna
+  </a>
+  <h2 class="mt-2 text-xl font-bold tracking-tight text-[#203628]"><?= e($judul_halaman) ?></h2>
+  <p class="text-xs text-slate-500">Peran akun tidak dapat diubah setelah dibuat demi menjaga integritas data riwayat.</p>
+</div>
+
+<?php if ($errors): ?>
+  <div class="max-w-3xl rounded-2xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-900 shadow-sm">
+    <div class="font-bold mb-1">Terdapat kesalahan pengisian:</div>
+    <ul class="list-inside list-disc space-y-0.5">
+      <?php foreach ($errors as $error): ?>
+        <li><?= e($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
+
+<form method="post" action="<?= e(url('admin/pengguna_form.php' . ($id ? '?id=' . $id : ''))) ?>" class="max-w-3xl space-y-5 rounded-2xl border border-[#dfe6de] bg-white p-6 shadow-sm">
+  <?= csrf_field() ?>
+  <input type="hidden" name="id" value="<?= (int) $id ?>">
+
+  <div>
+    <label for="nama_lengkap" class="mb-1 block text-xs font-bold text-slate-700">Nama Lengkap *</label>
+    <input id="nama_lengkap" name="nama_lengkap" required maxlength="150" value="<?= e($data['nama_lengkap']) ?>" placeholder="Contoh: Budi Prasetyo" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="username" class="mb-1 block text-xs font-bold text-slate-700">Username *</label>
+      <input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-z0-9._]+" value="<?= e($data['username']) ?>" placeholder="huruf kecil, angka, titik, garis bawah" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+    </div>
+    <div>
+      <label for="role" class="mb-1 block text-xs font-bold text-slate-700">Peran Akun *</label>
+      <select id="role" name="role" <?= $id ? 'disabled' : '' ?> class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        <option value="admin" <?= $data['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+        <option value="guru_bk" <?= $data['role'] === 'guru_bk' ? 'selected' : '' ?>>Guru BK</option>
+        <option value="siswa" <?= $data['role'] === 'siswa' ? 'selected' : '' ?>>Siswa</option>
+      </select>
+      <?php if ($id): ?>
+        <input type="hidden" name="role" value="<?= e($data['role']) ?>">
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <div>
+    <label for="sekolah_id" class="mb-1 block text-xs font-bold text-slate-700">
+      Sekolah <span id="sekolah-wajib" class="text-rose-600">*</span>
+    </label>
+    <select id="sekolah_id" name="sekolah_id" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      <option value="">— Tidak ada (Admin Global) —</option>
+      <?php foreach ($sekolah as $row): ?>
+        <option value="<?= (int) $row['id'] ?>" <?= (string) $data['sekolah_id'] === (string) $row['id'] ? 'selected' : '' ?>>
+          <?= e($row['nama']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+
+  <?php if (!$id): ?>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="password" class="mb-1 block text-xs font-bold text-slate-700">Password Awal *</label>
+        <input id="password" name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      </div>
+      <div>
+        <label for="konfirmasi_password" class="mb-1 block text-xs font-bold text-slate-700">Konfirmasi Password *</label>
+        <input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      </div>
+    </div>
+  <?php endif; ?>
+
+  <fieldset class="rounded-xl border border-[#eef2ed] bg-[#fcfdfc] p-4">
+    <legend class="px-2 text-xs font-bold text-slate-600">Data Tambahan (Opsional)</legend>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div>
+        <label for="kelas" class="mb-1 block text-xs font-semibold text-slate-600">Kelas (Khusus Siswa)</label>
+        <input id="kelas" name="kelas" maxlength="20" value="<?= e($data['kelas']) ?>" placeholder="Misal: XII IPA 1" class="w-full rounded-xl border border-[#dfe6de] bg-white px-3 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:outline-none">
+      </div>
+      <div>
+        <label for="jurusan" class="mb-1 block text-xs font-semibold text-slate-600">Jurusan (Khusus Siswa)</label>
+        <input id="jurusan" name="jurusan" maxlength="50" value="<?= e($data['jurusan']) ?>" placeholder="Misal: MIPA" class="w-full rounded-xl border border-[#dfe6de] bg-white px-3 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:outline-none">
+      </div>
+      <div>
+        <label for="nisn" class="mb-1 block text-xs font-semibold text-slate-600">NISN (Khusus Siswa)</label>
+        <input id="nisn" name="nisn" maxlength="20" value="<?= e($data['nisn']) ?>" class="w-full rounded-xl border border-[#dfe6de] bg-white px-3 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:outline-none">
+      </div>
+      <div>
+        <label for="nip" class="mb-1 block text-xs font-semibold text-slate-600">NIP (Khusus Guru BK)</label>
+        <input id="nip" name="nip" maxlength="30" value="<?= e($data['nip']) ?>" class="w-full rounded-xl border border-[#dfe6de] bg-white px-3 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:outline-none">
+      </div>
+      <div class="sm:col-span-2">
+        <label for="no_telepon" class="mb-1 block text-xs font-semibold text-slate-600">Nomor Telepon / WhatsApp</label>
+        <input id="no_telepon" name="no_telepon" maxlength="20" value="<?= e($data['no_telepon']) ?>" placeholder="08xxxxxxxxxx" class="w-full rounded-xl border border-[#dfe6de] bg-white px-3 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:outline-none">
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="flex flex-wrap gap-2.5 pt-2 border-t border-[#eef2ed]">
+    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-[#1a4029]">
+      Simpan Akun
+    </button>
+    <a href="<?= e(url('admin/pengguna.php')) ?>" class="inline-flex items-center justify-center rounded-xl border border-[#dfe6de] bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-[#f6f8f5]">
+      Batal
+    </a>
+  </div>
 </form>
 <script>
 (() => {

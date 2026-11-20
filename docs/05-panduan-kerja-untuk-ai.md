@@ -7,7 +7,7 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Area | Status | Bukti / sisa |
 |---|---|---|
 | Fondasi login, session, PDO, CSRF, role | Selesai lokal | Login semua peran/role guard sudah diuji sebelumnya; uji akhir wajib diulang |
-| Admin P0 | Selesai lokal | Dashboard, sekolah, pengguna, reset, rekap, pemantauan online/aktif 5 menit, uji HTTP |
+| Admin P0 | Selesai lokal | Dashboard, sekolah, pengguna, reset, rekap, pemantauan online/aktif 5 menit, redesign sidebar & shell Attendara, uji HTTP |
 | Guru BK P0 | Selesai lokal | Catatan, isolasi sekolah, tindak lanjut transaksi, uji HTTP sebelumnya |
 | Siswa P0 | Selesai lokal | Form eksplorasi, jurnal, sharing; uji HTTP dan persistensi sebelumnya |
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |

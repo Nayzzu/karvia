@@ -35,8 +35,149 @@ $stmt = $pdo->prepare(
 $stmt->execute(['id' => $id]);
 $akun = $stmt->fetchAll();
 ?>
-<div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><a href="<?= e(url('admin/sekolah.php')) ?>" class="text-sm font-semibold text-emerald-800 hover:underline">&larr; Daftar Sekolah</a><h1 class="mt-3 text-2xl font-extrabold text-slate-900"><?= e($sekolah['nama']) ?></h1><p class="mt-1 text-sm text-slate-500">Detail profil dan akun yang terhubung ke sekolah ini.</p></div><a href="<?= e(url('admin/sekolah_form.php?id=' . $id)) ?>" class="rounded-xl border border-slate-300 px-4 py-2.5 text-center text-sm font-semibold">Ubah Sekolah</a></div>
-<section class="mb-6 grid gap-4 sm:grid-cols-3"><article class="rounded-2xl border border-slate-200 bg-white p-5"><div class="text-xs font-semibold uppercase text-slate-400">Siswa</div><div class="mt-2 text-2xl font-extrabold"><?= e($sekolah['jumlah_siswa']) ?></div></article><article class="rounded-2xl border border-slate-200 bg-white p-5"><div class="text-xs font-semibold uppercase text-slate-400">Guru BK</div><div class="mt-2 text-2xl font-extrabold"><?= e($sekolah['jumlah_guru']) ?></div></article><article class="rounded-2xl border border-slate-200 bg-white p-5"><div class="text-xs font-semibold uppercase text-slate-400">Catatan Dibagikan</div><div class="mt-2 text-2xl font-extrabold"><?= e($sekolah['jumlah_catatan']) ?></div></article></section>
-<section class="mb-6 rounded-3xl border border-slate-200 bg-white p-6"><h2 class="mb-4 text-lg font-bold">Profil Sekolah</h2><dl class="grid gap-4 text-sm sm:grid-cols-2"><div><dt class="text-slate-500">Jenjang</dt><dd class="font-semibold"><?= e($sekolah['jenjang']) ?></dd></div><div><dt class="text-slate-500">NPSN</dt><dd class="font-semibold"><?= e($sekolah['npsn'] ?: '—') ?></dd></div><div><dt class="text-slate-500">Kota / Provinsi</dt><dd class="font-semibold"><?= e($sekolah['kota'] ?: '—') ?> / <?= e($sekolah['provinsi'] ?: '—') ?></dd></div><div><dt class="text-slate-500">Status</dt><dd class="font-semibold"><?= e(ucfirst($sekolah['status'])) ?></dd></div><div class="sm:col-span-2"><dt class="text-slate-500">Alamat</dt><dd class="font-semibold"><?= nl2br(e($sekolah['alamat'] ?: '—')) ?></dd></div></dl></section>
-<section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"><div class="flex items-center justify-between border-b border-slate-100 p-6"><div><h2 class="text-lg font-bold">Akun Terkait</h2><p class="mt-1 text-xs text-slate-500">Tidak menampilkan catatan pribadi siswa.</p></div><a href="<?= e(url('admin/pengguna_form.php?sekolah_id=' . $id)) ?>" class="text-sm font-semibold text-emerald-800 hover:underline">Tambah Pengguna</a></div><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-xs uppercase text-slate-600"><tr><th class="p-4">Nama / Username</th><th class="p-4">Peran</th><th class="p-4">Kelas</th><th class="p-4">Status</th><th class="p-4">Login Terakhir</th></tr></thead><tbody><?php if (!$akun): ?><tr><td colspan="5" class="p-8 text-center text-slate-500">Belum ada akun yang terhubung.</td></tr><?php else: foreach ($akun as $baris): ?><tr class="border-t border-slate-100"><td class="p-4"><div class="flex items-center gap-2"><div class="font-semibold"><?= e($baris['nama_lengkap']) ?></div><?php if (!empty($baris['sedang_online'])): ?><span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800"><span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span>Online</span><?php endif; ?></div><div class="text-xs text-slate-500">@<?= e($baris['username']) ?></div></td><td class="p-4"><?= e($baris['role']==='guru_bk'?'Guru BK':ucfirst($baris['role'])) ?></td><td class="p-4"><?= e($baris['kelas'] ?: '—') ?></td><td class="p-4"><?= e(ucfirst($baris['status'])) ?></td><td class="p-4"><?= e(tanggal_id($baris['last_login_at'],true)) ?></td></tr><?php endforeach; endif; ?></tbody></table></div></section>
+
+<!-- Header & Navigasi Balik -->
+<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <a href="<?= e(url('admin/sekolah.php')) ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#245938] hover:underline">
+      &larr; Kembali ke Daftar Sekolah
+    </a>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-[#203628]"><?= e($sekolah['nama']) ?></h2>
+    <p class="mt-0.5 text-xs text-slate-500">Detail instansi sekolah dan daftar akun yang terhubung.</p>
+  </div>
+  <a href="<?= e(url('admin/sekolah_form.php?id=' . $id)) ?>" class="inline-flex items-center gap-2 rounded-xl border border-[#dfe6de] bg-white px-4 py-2.5 text-xs font-bold text-[#203628] shadow-sm hover:bg-[#f6f8f5]">
+    Ubah Profil Sekolah
+  </a>
+</div>
+
+<!-- Kartu Statistik Sekolah -->
+<section class="grid gap-4 sm:grid-cols-3">
+  <article class="flex items-start justify-between gap-3 rounded-2xl border border-[#dfe6de] bg-white p-5 shadow-[0_2px_8px_rgba(48,56,50,0.04)]">
+    <div>
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Siswa Terdaftar</h3>
+      <p class="mt-2 text-2xl font-extrabold tracking-tight text-[#203628]"><?= e($sekolah['jumlah_siswa']) ?></p>
+      <p class="mt-1 text-xs text-slate-500">Akun siswa aktif/nonaktif</p>
+    </div>
+    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8f0e9] text-[#245938]">
+      <?php karvia_icon('users', 'h-5 w-5'); ?>
+    </span>
+  </article>
+
+  <article class="flex items-start justify-between gap-3 rounded-2xl border border-[#dfe6de] bg-white p-5 shadow-[0_2px_8px_rgba(48,56,50,0.04)]">
+    <div>
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Guru BK</h3>
+      <p class="mt-2 text-2xl font-extrabold tracking-tight text-[#203628]"><?= e($sekolah['jumlah_guru']) ?></p>
+      <p class="mt-1 text-xs text-slate-500">Tenaga pembimbing sekolah</p>
+    </div>
+    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8f0e9] text-[#245938]">
+      <?php karvia_icon('school', 'h-5 w-5'); ?>
+    </span>
+  </article>
+
+  <article class="flex items-start justify-between gap-3 rounded-2xl border border-[#dfe6de] bg-white p-5 shadow-[0_2px_8px_rgba(48,56,50,0.04)]">
+    <div>
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Catatan Dibagikan</h3>
+      <p class="mt-2 text-2xl font-extrabold tracking-tight text-[#203628]"><?= e($sekolah['jumlah_catatan']) ?></p>
+      <p class="mt-1 text-xs text-slate-500">Konsultasi siswa ke Guru BK</p>
+    </div>
+    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8f0e9] text-[#245938]">
+      <?php karvia_icon('file', 'h-5 w-5'); ?>
+    </span>
+  </article>
+</section>
+
+<!-- Profil Sekolah -->
+<section class="rounded-2xl border border-[#dfe6de] bg-white p-5 shadow-sm sm:p-6">
+  <h3 class="text-base font-bold text-[#203628] border-b border-[#eef2ed] pb-3 mb-4">Informasi Instansi</h3>
+  <dl class="grid gap-4 text-xs sm:grid-cols-2 lg:grid-cols-4">
+    <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3.5">
+      <dt class="font-semibold text-slate-500">Jenjang</dt>
+      <dd class="mt-1 text-sm font-bold text-[#203628]"><?= e($sekolah['jenjang']) ?></dd>
+    </div>
+    <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3.5">
+      <dt class="font-semibold text-slate-500">NPSN</dt>
+      <dd class="mt-1 text-sm font-bold text-[#203628]"><?= e($sekolah['npsn'] ?: '—') ?></dd>
+    </div>
+    <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3.5">
+      <dt class="font-semibold text-slate-500">Kota / Provinsi</dt>
+      <dd class="mt-1 text-sm font-bold text-[#203628]"><?= e($sekolah['kota'] ?: '—') ?> / <?= e($sekolah['provinsi'] ?: '—') ?></dd>
+    </div>
+    <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3.5">
+      <dt class="font-semibold text-slate-500">Status Instansi</dt>
+      <dd class="mt-1">
+        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold <?= $sekolah['status'] === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600' ?>">
+          <?= e(ucfirst($sekolah['status'])) ?>
+        </span>
+      </dd>
+    </div>
+    <div class="rounded-xl border border-[#eef2ed] bg-[#fbfdfb] p-3.5 sm:col-span-2 lg:col-span-4">
+      <dt class="font-semibold text-slate-500">Alamat Lengkap</dt>
+      <dd class="mt-1 text-xs text-slate-700 leading-relaxed"><?= nl2br(e($sekolah['alamat'] ?: '—')) ?></dd>
+    </div>
+  </dl>
+</section>
+
+<!-- Tabel Akun Terkait -->
+<section class="rounded-2xl border border-[#dfe6de] bg-white shadow-sm overflow-hidden">
+  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#eef2ed] p-5 sm:p-6">
+    <div>
+      <h3 class="text-base font-bold text-[#203628]">Akun Terdaftar di Sekolah Ini</h3>
+      <p class="mt-0.5 text-xs text-slate-500">Daftar Guru BK dan Siswa. Catatan pribadi siswa tidak dapat diakses admin.</p>
+    </div>
+    <a href="<?= e(url('admin/pengguna_form.php?sekolah_id=' . $id)) ?>" class="inline-flex items-center gap-1.5 rounded-xl bg-[#224f35] px-3.5 py-2 text-xs font-bold text-white hover:bg-[#1a4029]">
+      <?php karvia_icon('plus', 'h-3.5 w-3.5'); ?>
+      Tambah Akun
+    </a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-[#f3f6f1] text-xs uppercase tracking-wide text-slate-600">
+        <tr>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Nama / Username</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Peran</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Kelas</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Status</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Login Terakhir</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-[#edf1ec] text-slate-700">
+        <?php if (!$akun): ?>
+          <tr><td colspan="5" class="px-5 py-10 text-center text-sm text-slate-500">Belum ada akun yang terhubung ke sekolah ini.</td></tr>
+        <?php else: foreach ($akun as $baris): ?>
+          <tr class="transition-colors hover:bg-[#f8faf7]">
+            <td class="px-5 py-3.5">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-[#203628]"><?= e($baris['nama_lengkap']) ?></span>
+                <?php if (!empty($baris['sedang_online'])): ?>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800" title="Aktif dalam 5 menit terakhir">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                    Online
+                  </span>
+                <?php endif; ?>
+              </div>
+              <div class="text-xs text-slate-500">@<?= e($baris['username']) ?></div>
+            </td>
+            <td class="px-5 py-3.5">
+              <span class="inline-block rounded-md bg-[#eef3ee] px-2.5 py-1 text-xs font-semibold text-[#245938]">
+                <?= e($baris['role'] === 'guru_bk' ? 'Guru BK' : ucfirst($baris['role'])) ?>
+              </span>
+            </td>
+            <td class="px-5 py-3.5 text-xs text-slate-600">
+              <?= e($baris['kelas'] ?: '—') ?>
+            </td>
+            <td class="px-5 py-3.5">
+              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold <?= $baris['status'] === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600' ?>">
+                <?= e(ucfirst($baris['status'])) ?>
+              </span>
+            </td>
+            <td class="px-5 py-3.5 text-xs text-slate-600 whitespace-nowrap">
+              <?= e(tanggal_id($baris['last_login_at'], true)) ?>
+            </td>
+          </tr>
+        <?php endforeach; endif; ?>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <?php require __DIR__ . '/../includes/footer.php'; ?>

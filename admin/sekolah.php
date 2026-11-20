@@ -46,22 +46,108 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($parameter);
 $sekolah = $stmt->fetchAll();
 ?>
-<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-  <div><h1 class="text-2xl font-extrabold text-slate-900">Daftar Sekolah</h1><p class="mt-1 text-sm text-slate-500">Cari dan kelola sekolah yang menggunakan KARVIA.</p></div>
-  <a href="<?= e(url('admin/sekolah_form.php')) ?>" class="inline-flex justify-center rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-800"><i class="fa-solid fa-plus mr-2"></i>Tambah Sekolah</a>
+
+<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <h2 class="text-xl font-bold tracking-tight text-[#203628]">Daftar Sekolah Mitra</h2>
+    <p class="mt-0.5 text-xs text-slate-500">Kelola master instansi sekolah dan pantau jumlah akun terdaftar.</p>
+  </div>
+  <a href="<?= e(url('admin/sekolah_form.php')) ?>" class="inline-flex items-center gap-2 rounded-xl bg-[#224f35] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#1a4029]">
+    <?php karvia_icon('plus', 'h-4 w-4'); ?>
+    Tambah Sekolah
+  </a>
 </div>
-<form method="get" action="<?= e(url('admin/sekolah.php')) ?>" class="mb-5 flex flex-col gap-2 sm:flex-row">
-  <label class="sr-only" for="cari">Cari nama atau lokasi</label>
-  <input id="cari" name="cari" value="<?= e($cari) ?>" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm sm:max-w-md" placeholder="Cari nama, kota, atau provinsi">
-  <button class="rounded-xl bg-slate-800 px-4 py-2.5 text-sm font-semibold text-white">Terapkan</button>
-  <?php if ($cari !== ''): ?><a href="<?= e(url('admin/sekolah.php')) ?>" class="rounded-xl border border-slate-300 px-4 py-2.5 text-center text-sm font-semibold">Reset</a><?php endif; ?>
+
+<!-- Form Cari Attendara Style -->
+<form method="get" action="<?= e(url('admin/sekolah.php')) ?>" class="rounded-2xl border border-[#dfe6de] bg-white p-4 shadow-sm sm:p-5">
+  <div class="flex flex-col gap-2.5 sm:flex-row">
+    <div class="relative flex-1">
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+        <?php karvia_icon('search', 'h-4 w-4'); ?>
+      </span>
+      <input id="cari" name="cari" value="<?= e($cari) ?>" placeholder="Cari nama sekolah, kota, atau provinsi..." class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] py-2 pl-10 pr-3.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+    </div>
+    <div class="flex items-center gap-2">
+      <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-4 py-2 text-xs font-bold text-white hover:bg-[#1a4029]">
+        Cari
+      </button>
+      <?php if ($cari !== ''): ?>
+        <a href="<?= e(url('admin/sekolah.php')) ?>" class="rounded-xl border border-[#dfe6de] px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-[#f6f8f5]">
+          Reset
+        </a>
+      <?php endif; ?>
+    </div>
+  </div>
 </form>
-<section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-  <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-600"><tr><th class="p-4">Sekolah</th><th class="p-4">Kota / Provinsi</th><th class="p-4">Siswa</th><th class="p-4">Guru BK</th><th class="p-4">Status</th><th class="p-4">Aksi</th></tr></thead><tbody>
-  <?php if (!$sekolah): ?><tr><td colspan="6" class="p-10 text-center text-slate-500"><?= $cari !== '' ? 'Tidak ada sekolah yang cocok dengan pencarian.' : 'Belum ada sekolah. Tambahkan sekolah pertama.' ?></td></tr><?php else: foreach ($sekolah as $baris): ?>
-    <tr class="border-b border-slate-100 align-top"><td class="p-4"><a class="font-semibold text-emerald-800 hover:underline" href="<?= e(url('admin/sekolah_detail.php?id=' . $baris['id'])) ?>"><?= e($baris['nama']) ?></a><div class="mt-1 text-xs text-slate-500"><?= e($baris['jenjang']) ?><?= $baris['npsn'] ? ' · NPSN ' . e($baris['npsn']) : '' ?></div></td><td class="p-4"><?= e($baris['kota'] ?: '—') ?> / <?= e($baris['provinsi'] ?: '—') ?></td><td class="p-4"><?= e($baris['jumlah_siswa']) ?></td><td class="p-4"><?= e($baris['jumlah_guru']) ?></td><td class="p-4"><span class="rounded-full px-2.5 py-1 text-xs font-semibold <?= $baris['status'] === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600' ?>"><?= e(ucfirst($baris['status'])) ?></span></td>
-      <td class="p-4"><div class="flex flex-wrap gap-2"><a class="text-xs font-semibold text-blue-700 hover:underline" href="<?= e(url('admin/sekolah_form.php?id=' . $baris['id'])) ?>">Ubah</a><form method="post" action="<?= e(url('admin/sekolah.php')) ?>" onsubmit="return confirm('<?= $baris['status'] === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?> sekolah ini? Akun pengguna di dalam sekolah tidak ikut berubah.');"><?= csrf_field() ?><input type="hidden" name="id" value="<?= e($baris['id']) ?>"><input type="hidden" name="status_baru" value="<?= $baris['status'] === 'aktif' ? 'nonaktif' : 'aktif' ?>"><button class="text-xs font-semibold <?= $baris['status'] === 'aktif' ? 'text-rose-700' : 'text-emerald-700' ?> hover:underline"><?= $baris['status'] === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?></button></form></div></td>
-    </tr>
-  <?php endforeach; endif; ?></tbody></table></div>
+
+<!-- Tabel Sekolah Attendara Style -->
+<section class="rounded-2xl border border-[#dfe6de] bg-white shadow-sm overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-[#f3f6f1] text-xs uppercase tracking-wide text-slate-600">
+        <tr>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Sekolah</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Kota / Provinsi</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold text-center">Siswa</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold text-center">Guru BK</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold">Status</th>
+          <th scope="col" class="px-5 py-3.5 font-semibold text-right">Aksi</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-[#edf1ec] text-slate-700">
+        <?php if (!$sekolah): ?>
+          <tr>
+            <td colspan="6" class="px-5 py-10 text-center text-sm text-slate-500">
+              <?= $cari !== '' ? 'Tidak ada sekolah yang cocok dengan kata kunci pencarian.' : 'Belum ada data sekolah. Silakan tambahkan sekolah pertama.' ?>
+            </td>
+          </tr>
+        <?php else: foreach ($sekolah as $baris): ?>
+          <tr class="transition-colors hover:bg-[#f8faf7] align-middle">
+            <td class="px-5 py-3.5">
+              <a class="font-bold text-[#203628] hover:text-[#245938] hover:underline" href="<?= e(url('admin/sekolah_detail.php?id=' . $baris['id'])) ?>">
+                <?= e($baris['nama']) ?>
+              </a>
+              <div class="mt-0.5 text-xs text-slate-500">
+                <?= e($baris['jenjang']) ?><?= $baris['npsn'] ? ' &middot; NPSN ' . e($baris['npsn']) : '' ?>
+              </div>
+            </td>
+            <td class="px-5 py-3.5 text-xs text-slate-600">
+              <?= e($baris['kota'] ?: '—') ?> / <?= e($baris['provinsi'] ?: '—') ?>
+            </td>
+            <td class="px-5 py-3.5 text-center font-medium">
+              <?= e($baris['jumlah_siswa']) ?>
+            </td>
+            <td class="px-5 py-3.5 text-center font-medium">
+              <?= e($baris['jumlah_guru']) ?>
+            </td>
+            <td class="px-5 py-3.5">
+              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold <?= $baris['status'] === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600' ?>">
+                <?= e(ucfirst($baris['status'])) ?>
+              </span>
+            </td>
+            <td class="px-5 py-3.5 text-right whitespace-nowrap">
+              <div class="inline-flex items-center gap-2">
+                <a class="inline-flex items-center rounded-lg border border-[#cfe0d3] bg-[#edf4ee] px-2.5 py-1 text-xs font-semibold text-[#245938] hover:bg-[#dfeada]" href="<?= e(url('admin/sekolah_detail.php?id=' . $baris['id'])) ?>">
+                  Detail
+                </a>
+                <a class="inline-flex items-center rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50" href="<?= e(url('admin/sekolah_form.php?id=' . $baris['id'])) ?>">
+                  Ubah
+                </a>
+                <form method="post" action="<?= e(url('admin/sekolah.php')) ?>" onsubmit="return confirm('<?= $baris['status'] === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?> sekolah ini? Akun pengguna di dalam sekolah tidak ikut berubah.');">
+                  <?= csrf_field() ?>
+                  <input type="hidden" name="id" value="<?= e($baris['id']) ?>">
+                  <input type="hidden" name="status_baru" value="<?= $baris['status'] === 'aktif' ? 'nonaktif' : 'aktif' ?>">
+                  <button type="submit" class="inline-flex items-center rounded-lg border px-2.5 py-1 text-xs font-semibold <?= $baris['status'] === 'aktif' ? 'border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100' : 'border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100' ?>">
+                    <?= $baris['status'] === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' ?>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <?php endforeach; endif; ?>
+      </tbody>
+    </table>
+  </div>
 </section>
+
 <?php require __DIR__ . '/../includes/footer.php'; ?>

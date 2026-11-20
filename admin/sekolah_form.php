@@ -64,15 +64,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 $judul_halaman = $id ? 'Ubah Sekolah' : 'Tambah Sekolah';
 ?>
-<div class="mb-6"><a href="<?= e(url('admin/sekolah.php')) ?>" class="text-sm font-semibold text-emerald-800 hover:underline">&larr; Kembali ke daftar sekolah</a><h1 class="mt-3 text-2xl font-extrabold text-slate-900"><?= e($judul_halaman) ?></h1><p class="mt-1 text-sm text-slate-500">Informasi sekolah digunakan untuk pengelompokan akun dan rekap.</p></div>
-<?php if ($errors): ?><div class="mb-5 rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm text-rose-900"><ul class="list-inside list-disc"><?php foreach ($errors as $error): ?><li><?= e($error) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
-<form method="post" action="<?= e(url('admin/sekolah_form.php' . ($id ? '?id=' . $id : ''))) ?>" class="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-  <?= csrf_field() ?><input type="hidden" name="id" value="<?= e($id) ?>">
-  <div><label for="nama" class="mb-1 block text-sm font-semibold">Nama sekolah <span class="text-rose-600">*</span></label><input id="nama" name="nama" required maxlength="150" value="<?= e($data['nama']) ?>" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"><p class="mt-1 text-xs text-slate-500">3–150 karakter.</p></div>
-  <div class="grid gap-5 sm:grid-cols-2"><div><label for="npsn" class="mb-1 block text-sm font-semibold">NPSN</label><input id="npsn" name="npsn" maxlength="20" value="<?= e($data['npsn']) ?>" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"><p class="mt-1 text-xs text-slate-500">Opsional, harus unik jika diisi.</p></div><div><label for="jenjang" class="mb-1 block text-sm font-semibold">Jenjang</label><select id="jenjang" name="jenjang" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"><option value="SMA" <?= $data['jenjang']==='SMA'?'selected':'' ?>>SMA</option><option value="MA" <?= $data['jenjang']==='MA'?'selected':'' ?>>MA</option></select></div></div>
-  <div><label for="alamat" class="mb-1 block text-sm font-semibold">Alamat</label><textarea id="alamat" name="alamat" rows="3" maxlength="500" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"><?= e($data['alamat']) ?></textarea></div>
-  <div class="grid gap-5 sm:grid-cols-2"><div><label for="kota" class="mb-1 block text-sm font-semibold">Kota</label><input id="kota" name="kota" maxlength="100" value="<?= e($data['kota']) ?>" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"></div><div><label for="provinsi" class="mb-1 block text-sm font-semibold">Provinsi</label><input id="provinsi" name="provinsi" maxlength="100" value="<?= e($data['provinsi']) ?>" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"></div></div>
-  <div><label for="status" class="mb-1 block text-sm font-semibold">Status</label><select id="status" name="status" class="w-full rounded-xl border border-slate-300 px-4 py-2.5"><option value="aktif" <?= $data['status']==='aktif'?'selected':'' ?>>Aktif</option><option value="nonaktif" <?= $data['status']==='nonaktif'?'selected':'' ?>>Nonaktif</option></select></div>
-  <div class="flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row"><button class="rounded-xl bg-emerald-700 px-5 py-3 font-bold text-white hover:bg-emerald-800">Simpan Sekolah</button><a href="<?= e(url('admin/sekolah.php')) ?>" class="rounded-xl border border-slate-300 px-5 py-3 text-center font-semibold">Batal</a></div>
+<div class="flex flex-col gap-1">
+  <a href="<?= e(url('admin/sekolah.php')) ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#245938] hover:underline">
+    &larr; Kembali ke Daftar Sekolah
+  </a>
+  <h2 class="mt-2 text-xl font-bold tracking-tight text-[#203628]"><?= e($judul_halaman) ?></h2>
+  <p class="text-xs text-slate-500">Informasi instansi sekolah digunakan untuk pengelompokan akun Guru BK, Siswa, dan rekapitulasi.</p>
+</div>
+
+<?php if ($errors): ?>
+  <div class="max-w-3xl rounded-2xl border border-rose-200 bg-rose-50/80 p-4 text-xs text-rose-900 shadow-sm">
+    <div class="font-bold mb-1">Terdapat kesalahan pengisian:</div>
+    <ul class="list-inside list-disc space-y-0.5">
+      <?php foreach ($errors as $error): ?>
+        <li><?= e($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
+
+<form method="post" action="<?= e(url('admin/sekolah_form.php' . ($id ? '?id=' . $id : ''))) ?>" class="max-w-3xl space-y-5 rounded-2xl border border-[#dfe6de] bg-white p-6 shadow-sm">
+  <?= csrf_field() ?>
+  <input type="hidden" name="id" value="<?= e($id) ?>">
+
+  <div>
+    <label for="nama" class="mb-1 block text-xs font-bold text-slate-700">Nama Sekolah <span class="text-rose-600">*</span></label>
+    <input id="nama" name="nama" required maxlength="150" value="<?= e($data['nama']) ?>" placeholder="Contoh: SMA Negeri 1 Jakarta" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+    <p class="mt-1 text-[11px] text-slate-500">3–150 karakter nama resmi instansi.</p>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="npsn" class="mb-1 block text-xs font-bold text-slate-700">NPSN</label>
+      <input id="npsn" name="npsn" maxlength="20" value="<?= e($data['npsn']) ?>" placeholder="Nomor Pokok Sekolah Nasional" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      <p class="mt-1 text-[11px] text-slate-500">Opsional, harus unik jika diisi.</p>
+    </div>
+    <div>
+      <label for="jenjang" class="mb-1 block text-xs font-bold text-slate-700">Jenjang Pendidikan *</label>
+      <select id="jenjang" name="jenjang" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+        <option value="SMA" <?= $data['jenjang'] === 'SMA' ? 'selected' : '' ?>>SMA (Sekolah Menengah Atas)</option>
+        <option value="MA" <?= $data['jenjang'] === 'MA' ? 'selected' : '' ?>>MA (Madrasah Aliyah)</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label for="alamat" class="mb-1 block text-xs font-bold text-slate-700">Alamat Lengkap</label>
+    <textarea id="alamat" name="alamat" rows="3" maxlength="500" placeholder="Alamat jalan, nomor, RT/RW, kelurahan/desa..." class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]"><?= e($data['alamat']) ?></textarea>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="kota" class="mb-1 block text-xs font-bold text-slate-700">Kabupaten / Kota</label>
+      <input id="kota" name="kota" maxlength="100" value="<?= e($data['kota']) ?>" placeholder="Contoh: Kota Bandung" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+    </div>
+    <div>
+      <label for="provinsi" class="mb-1 block text-xs font-bold text-slate-700">Provinsi</label>
+      <input id="provinsi" name="provinsi" maxlength="100" value="<?= e($data['provinsi']) ?>" placeholder="Contoh: Jawa Barat" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+    </div>
+  </div>
+
+  <div>
+    <label for="status" class="mb-1 block text-xs font-bold text-slate-700">Status Instansi</label>
+    <select id="status" name="status" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      <option value="aktif" <?= $data['status'] === 'aktif' ? 'selected' : '' ?>>Aktif (Dapat digunakan)</option>
+      <option value="nonaktif" <?= $data['status'] === 'nonaktif' ? 'selected' : '' ?>>Nonaktif (Ditangguhkan)</option>
+    </select>
+  </div>
+
+  <div class="flex flex-wrap gap-2.5 pt-3 border-t border-[#eef2ed]">
+    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-[#1a4029]">
+      Simpan Data Sekolah
+    </button>
+    <a href="<?= e(url('admin/sekolah.php')) ?>" class="inline-flex items-center justify-center rounded-xl border border-[#dfe6de] bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-[#f6f8f5]">
+      Batal
+    </a>
+  </div>
 </form>
 <?php require __DIR__ . '/../includes/footer.php'; ?>
