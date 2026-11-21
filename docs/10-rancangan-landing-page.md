@@ -132,18 +132,18 @@ Deskripsi tidak menyatakan bahwa seluruh fitur sudah tersedia bila implementasin
 - Desktop mempertahankan navigasi horizontal saat ini.
 
 ### Carousel artikel
-- Mobile menyajikan hingga 6 artikel sebagai carousel horizontal CSS scroll-snap, bukan kolom panjang.
+- Semua ukuran layar menyajikan hingga 6 artikel sebagai carousel horizontal CSS scroll-snap, bukan grid/kolom panjang.
 - Kartu clean/editorial: gambar konsisten, metadata ringkas, judul mudah dipindai, ringkasan pendek, CTA jelas; palet hijau-krem dan font Inter tetap.
-- Kartu berikutnya tampak sebagian sebagai petunjuk geser; kontrol/indikator posisi sederhana dan aksesibel melengkapi gestur sentuh.
+- Kartu berikutnya tampak sebagian sebagai petunjuk geser; kontrol/indikator posisi sederhana dan aksesibel melengkapi gestur sentuh atau mouse.
 - Tidak autoplay. Gerak hormati `prefers-reduced-motion`.
-- Desktop mempertahankan grid artikel yang sudah ada.
+- Desktop memakai kartu lebih lebar dan kontrol carousel yang sama; tidak kembali ke grid.
 
 ### Kriteria penerimaan
 - Pengunjung memahami tujuan KARVIA dan batasannya.
 - Navbar mobile tertutup ringkas; overlay berfungsi dengan sentuh dan keyboard, tertutup setelah anchor dipilih atau Escape.
-- Carousel menampung sampai 6 artikel tanpa membuat halaman memanjang karena seluruh kartu; pengguna dapat mencapai semua kartu dengan geser dan kontrol yang aksesibel.
-- Gambar, judul, ringkasan, dan tautan setiap artikel tetap benar; artikel kosong tetap memakai empty state.
-- Tampilan desktop tetap grid dengan navigasi saat ini.
+- Carousel pada mobile dan desktop menampung sampai 6 artikel tanpa menumpuk semua kartu; semua kartu dapat dicapai dengan geser dan kontrol aksesibel.
+- Gambar, judul, ringkasan, dan tautan tiap artikel tetap benar; artikel kosong tetap memakai empty state.
+- Desktop juga memakai carousel, dengan ukuran kartu responsif dan navigasi sebelumnya/berikutnya.
 - Warna KARVIA dan font Inter tidak berubah; tidak ada dependensi baru.
 - Login, pendaftaran siswa, anchor, dan redirect pengguna login tetap benar.
 - Uji viewport mobile dan desktop, keyboard, serta PHP lint sebelum selesai.

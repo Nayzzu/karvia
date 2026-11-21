@@ -197,4 +197,4 @@ Pada commit `23bdd0c` di branch `feat/landing-teal`:
 
 Navbar mobile mengikuti referensi pengguna: logo dan tombol menu bulat saat tertutup; overlay layar penuh saat dibuka dengan tautan vertikal besar, tombol tutup, serta CTA. Gunakan palet KARVIA hijau-krem, bukan warna marun pada referensi.
 
-Artikel mobile berubah menjadi carousel horizontal clean/editorial dengan scroll-snap, cuplikan kartu berikutnya, metadata ringkas, kontrol/indikator yang aksesibel, tanpa autoplay. Desktop tetap memakai grid artikel. Detail dan kriteria penerimaan tercatat di `docs/10-rancangan-landing-page.md`.
+Artikel pada semua ukuran layar memakai carousel horizontal clean/editorial dengan scroll-snap, cuplikan kartu berikutnya, metadata ringkas, kontrol/indikator yang aksesibel, tanpa autoplay. Desktop memakai kartu lebih lebar dan kontrol yang sama, bukan grid. Detail dan kriteria penerimaan tercatat di `docs/10-rancangan-landing-page.md`.

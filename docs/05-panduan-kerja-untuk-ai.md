@@ -48,8 +48,8 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 
 ### Revisi mobile landing
 - [x] Navbar mobile menampilkan logo + tombol; dialog memuat tautan section dan CTA daftar siswa.
-- [x] Artikel mobile memakai carousel scroll-snap dan kontrol sebelumnya/berikutnya; desktop kembali grid.
-- [ ] Verifikasi manual viewport sempit/lebar, keyboard Escape/fokus, dan swipe pada browser.
+- [x] Artikel memakai carousel scroll-snap dan kontrol sebelumnya/berikutnya pada mobile dan desktop; desktop menampilkan beberapa kartu per langkah.
+- [ ] Verifikasi manual viewport sempit/lebar, keyboard Escape/fokus, dan swipe/scroll pada browser.
 
 ### Artikel D-29
 - [x] Guru BK membuat artikel uji dengan PNG valid ukuran <2 MB.

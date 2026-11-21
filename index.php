@@ -74,6 +74,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     .artikel-track{scrollbar-width:none;scroll-behavior:smooth}
     .artikel-track::-webkit-scrollbar{display:none}
     .menu-mobile::backdrop{background:#173a24}
+    @media(min-width:768px){.artikel-track{scrollbar-width:auto}.artikel-track::-webkit-scrollbar{display:block;height:8px}.artikel-track::-webkit-scrollbar-thumb{border-radius:999px;background:#cce0d1}.artikel-track::-webkit-scrollbar-track{background:transparent}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -307,9 +308,9 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
           <div class="rounded-2xl border border-dashed border-[#cce0d1] bg-[#f6f8f5] p-8 text-center"><span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#224f35]"><?php karvia_icon('file', 'h-5 w-5'); ?></span><p class="mt-3 font-semibold text-[#203628]">Artikel edukasi segera hadir.</p><p class="mt-1 text-sm text-slate-500">Guru BK akan membagikan wawasan karier di sini.</p></div>
         <?php else: ?>
           <div class="relative">
-            <div id="artikel-track" class="artikel-track -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3" aria-label="Artikel terbaru, geser untuk melihat artikel lainnya">
+            <div id="artikel-track" class="artikel-track -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 md:mx-0 md:gap-5 md:px-0 md:pb-3" aria-label="Artikel terbaru, geser untuk melihat artikel lainnya">
               <?php foreach ($artikel_terbaru as $artikel): $ringkasan = trim(preg_replace('/\s+/u', ' ', strip_tags($artikel['isi']))); ?>
-                <article class="karvia-card w-[86%] shrink-0 snap-start overflow-hidden rounded-2xl border border-[#dfe6de] bg-white sm:w-[72%] md:w-auto">
+                <article class="karvia-card w-[86%] shrink-0 snap-start overflow-hidden rounded-2xl border border-[#dfe6de] bg-white sm:w-[72%] md:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]">
                   <a href="<?= e(url('artikel.php?id=' . (int) $artikel['id'])) ?>" class="block h-full">
                     <img src="<?= e(url('uploads/artikel/' . rawurlencode($artikel['gambar']))) ?>" alt="Sampul artikel: <?= e($artikel['judul']) ?>" loading="lazy" class="aspect-[16/10] w-full bg-[#eef2ed] object-cover">
                     <div class="p-5">
@@ -322,7 +323,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
                 </article>
               <?php endforeach; ?>
             </div>
-            <div class="mt-4 flex items-center justify-between md:hidden">
+            <div class="mt-4 flex items-center justify-between">
               <p id="artikel-status" class="text-xs font-medium text-slate-500" aria-live="polite">Artikel 1 dari <?= count($artikel_terbaru) ?></p>
               <div class="flex gap-2">
                 <button type="button" data-artikel-arah="-1" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#dfe6de] text-[#224f35] transition hover:bg-[#f2f7f3] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] disabled:opacity-40" aria-label="Artikel sebelumnya"><span aria-hidden="true">←</span></button>
@@ -435,16 +436,32 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
           return jarak < Math.abs(kartuArtikel[terdekat].getBoundingClientRect().left - tengahTrack) ? indeks : terdekat;
         }, 0);
         artikelStatus.textContent = `Artikel ${artikelAktif + 1} dari ${kartuArtikel.length}`;
+        const desktop = window.matchMedia('(min-width: 768px)').matches;
+        const perTampilan = desktop ? (window.matchMedia('(min-width: 1024px)').matches ? 3 : 2) : 1;
+        const indeksMaks = Math.max(0, kartuArtikel.length - perTampilan);
         kontrolArtikel.forEach((tombol) => {
           const arah = Number(tombol.dataset.artikelArah);
-          tombol.disabled = arah < 0 ? artikelAktif === 0 : artikelAktif === kartuArtikel.length - 1;
+          tombol.disabled = arah < 0 ? artikelAktif === 0 : artikelAktif >= indeksMaks;
+        });
+      };
+      const perbaruiTampilanCarousel = () => {
+        const desktop = window.matchMedia('(min-width: 768px)').matches;
+        const perTampilan = desktop ? (window.matchMedia('(min-width: 1024px)').matches ? 3 : 2) : 1;
+        const indeksMaks = Math.max(0, kartuArtikel.length - perTampilan);
+        kontrolArtikel.forEach((tombol) => {
+          const arah = Number(tombol.dataset.artikelArah);
+          tombol.disabled = arah < 0 ? artikelAktif === 0 : artikelAktif >= indeksMaks;
         });
       };
       artikelTrack.addEventListener('scroll', () => window.requestAnimationFrame(perbaruiArtikel), { passive: true });
       kontrolArtikel.forEach((tombol) => tombol.addEventListener('click', () => {
-        const tujuan = Math.max(0, Math.min(kartuArtikel.length - 1, artikelAktif + Number(tombol.dataset.artikelArah)));
+        const desktop = window.matchMedia('(min-width: 768px)').matches;
+        const perTampilan = desktop ? (window.matchMedia('(min-width: 1024px)').matches ? 3 : 2) : 1;
+        const indeksMaks = Math.max(0, kartuArtikel.length - perTampilan);
+        const tujuan = Math.max(0, Math.min(indeksMaks, artikelAktif + Number(tombol.dataset.artikelArah) * perTampilan));
         kartuArtikel[tujuan].scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
       }));
+      window.addEventListener('resize', perbaruiArtikel, { passive: true });
       perbaruiArtikel();
     }
   </script>
