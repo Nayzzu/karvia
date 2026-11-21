@@ -64,30 +64,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#224f35">
   <title>Daftar Akun Siswa — KARVIA</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>body{font-family:Inter,sans-serif}</style>
+  <link rel="stylesheet" href="<?= e(url('assets/css/auth.css')) ?>">
 </head>
-<body class="flex min-h-screen items-center justify-center bg-[#f6f8f5] px-4 py-10 text-slate-900 antialiased">
-  <main class="w-full max-w-lg">
-    <a href="<?= e(url('index.php')) ?>" class="mb-6 block text-center text-xl font-extrabold tracking-tight text-[#173a24]">KARVIA <span class="text-sm font-medium text-slate-500">· Pendaftaran Siswa</span></a>
-    <section class="rounded-2xl border border-[#dfe6de] bg-white p-6 shadow-sm sm:p-8">
-      <h1 class="text-xl font-bold text-[#203628]">Buat akun siswa</h1>
-      <p class="mt-1 text-sm text-slate-500">Pendaftaran terbuka untuk siswa sekolah yang terdaftar di KARVIA.</p>
-      <?php if ($errors): ?>
-        <div class="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900" role="alert"><ul class="list-inside list-disc space-y-1"><?php foreach ($errors as $error): ?><li><?= e($error) ?></li><?php endforeach; ?></ul></div>
-      <?php endif; ?>
-      <form method="post" class="mt-6 space-y-4">
-        <?= csrf_field() ?>
-        <div><label for="nama_lengkap" class="mb-1 block text-sm font-semibold text-slate-700">Nama lengkap *</label><input id="nama_lengkap" name="nama_lengkap" required minlength="2" maxlength="150" value="<?= e($nilai['nama']) ?>" autocomplete="name" class="w-full rounded-xl border border-[#dfe6de] px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"></div>
-        <div><label for="sekolah_id" class="mb-1 block text-sm font-semibold text-slate-700">Sekolah *</label><select id="sekolah_id" name="sekolah_id" required class="w-full rounded-xl border border-[#dfe6de] bg-white px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"><option value="">Pilih sekolah</option><?php foreach ($sekolah as $s): ?><option value="<?= (int) $s['id'] ?>" <?= $nilai['sekolah_id'] === (string) $s['id'] ? 'selected' : '' ?>><?= e($s['nama']) ?><?= $s['kota'] ? ' — ' . e($s['kota']) : '' ?></option><?php endforeach; ?></select></div>
-        <div><label for="kelas" class="mb-1 block text-sm font-semibold text-slate-700">Kelas *</label><input id="kelas" name="kelas" required maxlength="20" value="<?= e($nilai['kelas']) ?>" placeholder="Contoh: XI IPA 1" class="w-full rounded-xl border border-[#dfe6de] px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"></div>
-        <div><label for="username" class="mb-1 block text-sm font-semibold text-slate-700">Username *</label><input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-zA-Z0-9._-]{3,50}" value="<?= e($nilai['username']) ?>" autocomplete="username" class="w-full rounded-xl border border-[#dfe6de] px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"><p class="mt-1 text-xs text-slate-500">3–50 karakter: huruf, angka, titik, garis bawah, atau tanda hubung.</p></div>
-        <div><label for="password" class="mb-1 block text-sm font-semibold text-slate-700">Password *</label><input id="password" name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"><p class="mt-1 text-xs text-slate-500">Minimal 8 karakter.</p></div>
-        <div><label for="konfirmasi_password" class="mb-1 block text-sm font-semibold text-slate-700">Konfirmasi password *</label><input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" class="w-full rounded-xl border border-[#dfe6de] px-3.5 py-3 text-sm focus:border-[#2d6a45] focus:outline-none focus:ring-2 focus:ring-[#2d6a45]/30"></div>
-        <button type="submit" class="w-full rounded-xl bg-[#224f35] px-4 py-3.5 text-sm font-bold text-white transition hover:bg-[#1d482d] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2">Daftar dan lanjutkan</button>
-      </form>
-      <p class="mt-5 text-center text-sm text-slate-500">Sudah punya akun? <a class="font-bold text-[#245938] hover:underline" href="<?= e(url('login.php')) ?>">Masuk</a></p>
+<body class="auth-page auth-register">
+  <main class="auth-layout">
+    <aside class="auth-aside">
+      <a href="<?= e(url('index.php')) ?>" class="auth-brand" aria-label="KARVIA, kembali ke beranda">
+        <span class="auth-brand-mark" aria-hidden="true">K</span>
+        <span><span class="auth-brand-name">KARVIA</span><span class="auth-brand-tagline">Career Vision &amp; Action</span></span>
+      </a>
+      <div class="auth-aside-copy">
+        <p class="auth-eyebrow">Mulai langkahmu</p>
+        <h2>Temukan arah.<br>Tumbuhkan potensi.</h2>
+        <p>Buat akun siswa untuk mulai mengenali minat dan merancang langkah karier bersama.</p>
+      </div>
+      <p class="auth-aside-foot">Pendaftaran mandiri khusus siswa<br>UIN Raden Intan Lampung · Chindy Theresia</p>
+    </aside>
+
+    <section class="auth-main" aria-labelledby="auth-title">
+      <div class="auth-form-wrap">
+        <header class="auth-heading">
+          <h1 id="auth-title">Buat akun siswa</h1>
+          <p>Pendaftaran terbuka untuk siswa sekolah yang terdaftar di KARVIA.</p>
+        </header>
+        <?php if ($errors): ?>
+          <div class="auth-alert" role="alert"><ul><?php foreach ($errors as $error): ?><li><?= e($error) ?></li><?php endforeach; ?></ul></div>
+        <?php endif; ?>
+        <form method="post" action="<?= e(url('daftar.php')) ?>">
+          <?= csrf_field() ?>
+          <div class="auth-fields">
+            <div class="auth-field"><label for="nama_lengkap">Nama lengkap *</label><input id="nama_lengkap" name="nama_lengkap" required minlength="2" maxlength="150" value="<?= e($nilai['nama']) ?>" autocomplete="name"></div>
+            <div class="auth-field"><label for="sekolah_id">Sekolah *</label><select id="sekolah_id" name="sekolah_id" required><option value="">Pilih sekolah</option><?php foreach ($sekolah as $s): ?><option value="<?= (int) $s['id'] ?>" <?= $nilai['sekolah_id'] === (string) $s['id'] ? 'selected' : '' ?>><?= e($s['nama']) ?><?= $s['kota'] ? ' — ' . e($s['kota']) : '' ?></option><?php endforeach; ?></select></div>
+            <div class="auth-field"><label for="kelas">Kelas *</label><input id="kelas" name="kelas" required maxlength="20" value="<?= e($nilai['kelas']) ?>" placeholder="Contoh: XI IPA 1"></div>
+            <div class="auth-field"><label for="username">Username *</label><input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-zA-Z0-9._-]{3,50}" value="<?= e($nilai['username']) ?>" autocomplete="username"><p class="auth-help">3–50 karakter: huruf, angka, titik, garis bawah, atau tanda hubung.</p></div>
+            <div class="auth-field"><label for="password">Password *</label><input id="password" name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"><p class="auth-help">Gunakan 8–72 karakter.</p></div>
+            <div class="auth-field"><label for="konfirmasi_password">Konfirmasi password *</label><input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></div>
+          </div>
+          <button type="submit" class="auth-submit">Daftar dan lanjutkan <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="auth-switch-link">Sudah punya akun? <a class="auth-link" href="<?= e(url('login.php')) ?>">Masuk</a></p>
+        <a class="auth-link auth-back" href="<?= e(url('index.php')) ?>">Kembali ke beranda</a>
+      </div>
     </section>
   </main>
 </body>

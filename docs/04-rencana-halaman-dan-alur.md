@@ -84,12 +84,12 @@ masuk hanya dengan mengetik nama.
 
 ### 2.2 Tampilan
 
-- Latar hijau gelap seperti prototipe, kartu putih di tengah.
-- Judul KARVIA, subjudul “Career Vision & Action”.
-- Kredit pengembang tetap tampil.
-- Field: **Username**, **Password**.
+- Layout responsif dua kolom: panel hijau KARVIA dengan pesan eksplorasi karier, form putih bersih; pada layar sempit panel bertumpuk di atas form.
+- Judul KARVIA, subjudul “Career Vision & Action”, dan kredit pengembang tetap tampil.
+- Field berlabel dan terhubung: **Username**, **Password**.
 - Link **Daftar di sini** membuka registrasi siswa; tidak tersedia untuk role Admin/Guru BK.
-- Tombol “Masuk ke KARVIA”.
+- Tombol “Masuk ke KARVIA”; autentikasi tetap memakai proses server-side yang ada.
+- CSS khusus halaman berada di `assets/css/auth.css`, dibatasi di `.auth-page` agar tidak mengubah halaman lain.
 - Tautan pendaftaran tersedia khusus untuk siswa; peran pendaftar dipatok menjadi siswa oleh server. Akun Admin/Guru BK tetap dibuat Admin.
 - Tidak ada petunjuk password demo di halaman produksi.
 

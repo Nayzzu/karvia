@@ -11,7 +11,7 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Guru BK P0 | Selesai lokal | Catatan, isolasi sekolah, tindak lanjut transaksi, uji HTTP sebelumnya |
 | Siswa P0 | Selesai lokal | Form eksplorasi, jurnal, sharing; uji HTTP dan persistensi sebelumnya |
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |
-| Registrasi siswa & username | Implementasi lokal | `daftar.php` membatasi role siswa; form username di profil hanya siswa; uji runtime perlu dilakukan |
+| Registrasi siswa & username | Implementasi lokal | `daftar.php` membatasi role siswa; login/daftar memakai layout responsif KARVIA dan CSS terlingkup `assets/css/auth.css`; backend, CSRF, validasi, username di profil tetap server-side |
 | Data tambahan Bandar Lampung | Diimpor lokal | `dummy_karvia2.sql`: 3 sekolah, 3 admin sekolah, 9 Guru BK, 90 siswa, 1 artikel; nama lengkap fiktif natural, username tetap bernomor; import ulang menyelaraskan nama tanpa mengubah heartbeat |
 | Landing | Implementasi lokal | Navbar dialog layar penuh, carousel artikel semua layar, hero bersih dengan animasi load; PHP lint + HTTP smoke lulus; browser viewport/keyboard perlu verifikasi manual |
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
