@@ -23,8 +23,8 @@ File tersebut jangan diubah atau dihapus.
 | 8 | [`07-rencana-kerja-dan-prioritas.md`](07-rencana-kerja-dan-prioritas.md) | Prioritas MVP dan risiko |
 | 9 | [`08-keputusan-terbuka.md`](08-keputusan-terbuka.md) | Keputusan yang perlu dikonfirmasi |
 | 10 | [`09-pembagian-tugas-2-orang.md`](09-pembagian-tugas-2-orang.md) | Pembagian kepemilikan file |
-| 11 | [`10-rancangan-landing-page.md`](10-rancangan-landing-page.md) | Konteks, isi, dan rancangan UI landing page |
-| 12 | [`11-rancangan-landing-page-utuh.md`](11-rancangan-landing-page-utuh.md) | Konteks, susunan aktual, verifikasi, dan rencana perubahan landing page |
+| 11 | [`10-rancangan-landing-page.md`](10-rancangan-landing-page.md) | Rancangan UI landing dan kriteria revisi mobile navbar/carousel |
+| 12 | [`11-rancangan-landing-page-utuh.md`](11-rancangan-landing-page-utuh.md) | Konteks, susunan aktual, verifikasi, dan revisi mobile disetujui |
 | 13 | [`12-panduan-instalasi.md`](12-panduan-instalasi.md) | Cara menjalankan lokal, akun demo, backup |
 | 14 | [`13-konteks-proyek-untuk-ai.md`](13-konteks-proyek-untuk-ai.md) | Konteks proyek dan aturan kerja untuk AI |
 | 15 | [`14-registrasi-siswa-dan-data-tambahan.md`](14-registrasi-siswa-dan-data-tambahan.md) | Kebijakan pendaftaran siswa dan SQL tambahan Bandar Lampung |

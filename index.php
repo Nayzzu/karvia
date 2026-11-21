@@ -71,6 +71,9 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     .karvia-card:hover{transform:translateY(-4px);border-color:#c3d8c8;box-shadow:0 18px 38px -28px #224f3570}
     .karvia-faq summary::-webkit-details-marker{display:none}
     .karvia-faq[open] summary svg{transform:rotate(45deg)}
+    .artikel-track{scrollbar-width:none;scroll-behavior:smooth}
+    .artikel-track::-webkit-scrollbar{display:none}
+    .menu-mobile::backdrop{background:#173a24}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -78,7 +81,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
   <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-[#224f35] focus:px-4 focus:py-2.5 focus:text-sm focus:font-bold focus:text-white">Lewati ke konten</a>
 
   <header id="atas" class="sticky top-0 z-50 border-b border-[#dfe6de] bg-white/90 backdrop-blur-xl">
-    <div class="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex min-h-[68px] max-w-7xl items-center justify-between gap-4 px-4 sm:min-h-[76px] sm:px-6 lg:px-8">
       <a href="#atas" class="flex shrink-0 items-center gap-3" aria-label="KARVIA, kembali ke atas">
         <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#224f35] text-white shadow-sm"><?php karvia_icon('compass', 'h-5 w-5'); ?></span>
         <span><strong class="block leading-tight tracking-tight text-[#203628]">KARVIA</strong><small class="text-xs text-slate-500">Career Vision &amp; Action</small></span>
@@ -91,16 +94,33 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
         <a class="transition hover:text-[#224f35]" href="#privasi">Privasi</a>
         <a class="transition hover:text-[#224f35]" href="#faq">FAQ</a>
       </nav>
-      <a href="login.php" class="inline-flex shrink-0 items-center rounded-xl bg-[#224f35] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d482d] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2">Masuk <?php karvia_icon('arrow-right', 'ml-2 h-4 w-4'); ?></a>
+      <a href="login.php" class="hidden shrink-0 items-center rounded-xl bg-[#224f35] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d482d] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2 md:inline-flex">Masuk <?php karvia_icon('arrow-right', 'ml-2 h-4 w-4'); ?></a>
+      <button id="menu-buka" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#dfe6de] text-[#224f35] transition hover:bg-[#f2f7f3] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2 md:hidden" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="menu-mobile">
+        <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
-    <nav class="flex justify-center gap-6 overflow-x-auto border-t border-[#eef2ed] px-4 py-2.5 text-xs font-medium text-slate-600 md:hidden" aria-label="Navigasi halaman seluler">
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#tentang">Tentang</a>
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#tahapan">Tahapan</a>
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#artikel">Artikel</a>
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#pendampingan">BK</a>
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#privasi">Privasi</a>
-      <a class="whitespace-nowrap hover:text-[#224f35]" href="#faq">FAQ</a>
-    </nav>
+    <dialog id="menu-mobile" class="menu-mobile m-0 h-dvh max-h-none w-screen max-w-none border-0 bg-[#173a24] p-0 text-[#f7f2d7] backdrop:bg-[#173a24] md:hidden" aria-labelledby="judul-menu-mobile">
+      <div class="flex min-h-dvh flex-col px-5 pb-8 pt-5 sm:px-8">
+        <div class="flex items-center justify-between">
+          <a href="#atas" class="text-lg font-extrabold tracking-tight" aria-label="KARVIA, kembali ke atas">KARVIA</a>
+          <button id="menu-tutup" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-[#f7f2d7] transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#f7f2d7]" aria-label="Tutup menu navigasi"><svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        </div>
+        <h2 id="judul-menu-mobile" class="sr-only">Navigasi KARVIA</h2>
+        <nav class="my-auto" aria-label="Navigasi halaman seluler">
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#tentang">Tentang</a>
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#tahapan">Tahapan</a>
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#artikel">Artikel</a>
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#pendampingan">Pendampingan</a>
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#privasi">Privasi</a>
+          <a class="block border-b border-white/10 py-4 text-3xl font-medium tracking-tight" href="#faq">FAQ</a>
+        </nav>
+        <div class="space-y-4">
+          <a href="login.php" class="flex min-h-12 items-center justify-center rounded-full border border-white/25 px-5 text-sm font-bold tracking-wide text-[#f7f2d7]">Masuk</a>
+          <a href="daftar.php" class="flex min-h-12 items-center justify-center rounded-full bg-[#f7edbd] px-5 text-sm font-bold tracking-wide text-[#173a24]">Daftar Siswa</a>
+          <p class="text-xs font-semibold uppercase tracking-[.14em] text-[#d8dfc1]">Kenali diri, jelajahi pilihan, rencanakan langkah.</p>
+        </div>
+      </div>
+    </dialog>
     <div class="karvia-progress" id="scroll-progress" aria-hidden="true"></div>
   </header>
 
@@ -286,20 +306,29 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
         <?php if (!$artikel_terbaru): ?>
           <div class="rounded-2xl border border-dashed border-[#cce0d1] bg-[#f6f8f5] p-8 text-center"><span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#224f35]"><?php karvia_icon('file', 'h-5 w-5'); ?></span><p class="mt-3 font-semibold text-[#203628]">Artikel edukasi segera hadir.</p><p class="mt-1 text-sm text-slate-500">Guru BK akan membagikan wawasan karier di sini.</p></div>
         <?php else: ?>
-          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <?php foreach ($artikel_terbaru as $artikel): $ringkasan = trim(preg_replace('/\s+/u', ' ', strip_tags($artikel['isi']))); ?>
-              <article class="karvia-card overflow-hidden rounded-2xl border border-[#dfe6de] bg-white">
-                <a href="<?= e(url('artikel.php?id=' . (int) $artikel['id'])) ?>" class="block">
-                  <img src="<?= e(url('uploads/artikel/' . rawurlencode($artikel['gambar']))) ?>" alt="Sampul artikel: <?= e($artikel['judul']) ?>" loading="lazy" class="aspect-[16/10] w-full bg-[#eef2ed] object-cover">
-                  <div class="p-5">
-                    <p class="text-xs font-medium text-slate-500"><?= e(tanggal_id($artikel['diterbitkan_pada'])) ?> <span class="mx-1">·</span> <?= e($artikel['nama_penulis']) ?></p>
-                    <h3 class="mt-3 text-lg font-bold leading-snug text-[#203628]"><?= e($artikel['judul']) ?></h3>
-                    <p class="artikel-isi mt-2 text-sm leading-relaxed text-slate-600"><?= e($ringkasan) ?></p>
-                    <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#2d6a45]">Baca selengkapnya <?php karvia_icon('arrow-right', 'h-3.5 w-3.5'); ?></span>
-                  </div>
-                </a>
-              </article>
-            <?php endforeach; ?>
+          <div class="relative">
+            <div id="artikel-track" class="artikel-track -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3" aria-label="Artikel terbaru, geser untuk melihat artikel lainnya">
+              <?php foreach ($artikel_terbaru as $artikel): $ringkasan = trim(preg_replace('/\s+/u', ' ', strip_tags($artikel['isi']))); ?>
+                <article class="karvia-card w-[86%] shrink-0 snap-start overflow-hidden rounded-2xl border border-[#dfe6de] bg-white sm:w-[72%] md:w-auto">
+                  <a href="<?= e(url('artikel.php?id=' . (int) $artikel['id'])) ?>" class="block h-full">
+                    <img src="<?= e(url('uploads/artikel/' . rawurlencode($artikel['gambar']))) ?>" alt="Sampul artikel: <?= e($artikel['judul']) ?>" loading="lazy" class="aspect-[16/10] w-full bg-[#eef2ed] object-cover">
+                    <div class="p-5">
+                      <p class="text-xs font-medium text-slate-500"><?= e(tanggal_id($artikel['diterbitkan_pada'])) ?> <span class="mx-1">·</span> <?= e($artikel['nama_penulis']) ?></p>
+                      <h3 class="mt-3 text-lg font-bold leading-snug text-[#203628]"><?= e($artikel['judul']) ?></h3>
+                      <p class="artikel-isi mt-2 text-sm leading-relaxed text-slate-600"><?= e($ringkasan) ?></p>
+                      <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#2d6a45]">Baca selengkapnya <?php karvia_icon('arrow-right', 'h-3.5 w-3.5'); ?></span>
+                    </div>
+                  </a>
+                </article>
+              <?php endforeach; ?>
+            </div>
+            <div class="mt-4 flex items-center justify-between md:hidden">
+              <p id="artikel-status" class="text-xs font-medium text-slate-500" aria-live="polite">Artikel 1 dari <?= count($artikel_terbaru) ?></p>
+              <div class="flex gap-2">
+                <button type="button" data-artikel-arah="-1" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#dfe6de] text-[#224f35] transition hover:bg-[#f2f7f3] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] disabled:opacity-40" aria-label="Artikel sebelumnya"><span aria-hidden="true">←</span></button>
+                <button type="button" data-artikel-arah="1" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#dfe6de] text-[#224f35] transition hover:bg-[#f2f7f3] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] disabled:opacity-40" aria-label="Artikel berikutnya"><span aria-hidden="true">→</span></button>
+              </div>
+            </div>
           </div>
         <?php endif; ?>
       </div>
@@ -362,6 +391,62 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
       window.addEventListener('resize', update, { passive: true });
       update();
     })();
+
+    const menu = document.getElementById('menu-mobile');
+    const tombolMenu = document.getElementById('menu-buka');
+    const tombolTutup = document.getElementById('menu-tutup');
+    if (menu && tombolMenu && tombolTutup) {
+      tombolMenu.addEventListener('click', () => {
+        menu.showModal();
+        tombolMenu.setAttribute('aria-expanded', 'true');
+        tombolTutup.focus();
+      });
+      const tutupMenu = () => {
+        if (menu.open) menu.close();
+        tombolMenu.setAttribute('aria-expanded', 'false');
+        tombolMenu.focus();
+      };
+      tombolTutup.addEventListener('click', tutupMenu);
+      menu.querySelectorAll('a').forEach((tautan) => tautan.addEventListener('click', () => {
+        if (menu.open) menu.close();
+        tombolMenu.setAttribute('aria-expanded', 'false');
+      }));
+      menu.addEventListener('click', (event) => {
+        const batasDialog = menu.getBoundingClientRect();
+        if (event.clientX < batasDialog.left || event.clientX > batasDialog.right || event.clientY < batasDialog.top || event.clientY > batasDialog.bottom) tutupMenu();
+      });
+      menu.addEventListener('close', () => {
+        tombolMenu.setAttribute('aria-expanded', 'false');
+        if (window.matchMedia('(min-width: 768px)').matches) return;
+        tombolMenu.focus();
+      });
+    }
+
+    const artikelTrack = document.getElementById('artikel-track');
+    const artikelStatus = document.getElementById('artikel-status');
+    if (artikelTrack && artikelStatus) {
+      const kartuArtikel = [...artikelTrack.querySelectorAll('article')];
+      const kontrolArtikel = [...document.querySelectorAll('[data-artikel-arah]')];
+      let artikelAktif = 0;
+      const perbaruiArtikel = () => {
+        const tengahTrack = artikelTrack.getBoundingClientRect().left;
+        artikelAktif = kartuArtikel.reduce((terdekat, kartu, indeks) => {
+          const jarak = Math.abs(kartu.getBoundingClientRect().left - tengahTrack);
+          return jarak < Math.abs(kartuArtikel[terdekat].getBoundingClientRect().left - tengahTrack) ? indeks : terdekat;
+        }, 0);
+        artikelStatus.textContent = `Artikel ${artikelAktif + 1} dari ${kartuArtikel.length}`;
+        kontrolArtikel.forEach((tombol) => {
+          const arah = Number(tombol.dataset.artikelArah);
+          tombol.disabled = arah < 0 ? artikelAktif === 0 : artikelAktif === kartuArtikel.length - 1;
+        });
+      };
+      artikelTrack.addEventListener('scroll', () => window.requestAnimationFrame(perbaruiArtikel), { passive: true });
+      kontrolArtikel.forEach((tombol) => tombol.addEventListener('click', () => {
+        const tujuan = Math.max(0, Math.min(kartuArtikel.length - 1, artikelAktif + Number(tombol.dataset.artikelArah)));
+        kartuArtikel[tujuan].scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
+      }));
+      perbaruiArtikel();
+    }
   </script>
 </body>
 </html>

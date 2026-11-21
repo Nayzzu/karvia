@@ -6,6 +6,13 @@ ubah status menjadi **Disetujui** dan catat tanggalnya di bagian akhir.
 
 ---
 
+## Keputusan disetujui: revisi mobile landing
+
+| Tanggal | Keputusan | Rincian |
+|---|---|---|
+| 21 Nov 2026 | Navbar mobile | Baris logo + tombol menu bulat; saat dibuka overlay layar penuh, tautan vertikal, tombol tutup, CTA Masuk/Daftar Siswa; palet hijau-krem KARVIA. Desktop tidak berubah. |
+| 21 Nov 2026 | Artikel mobile | Carousel horizontal clean/editorial, CSS scroll-snap, kartu berikutnya terlihat sebagian, kontrol aksesibel, tanpa autoplay; desktop tetap grid. |
+
 ## 1. Enam pertanyaan prioritas untuk Cindy
 
 Sampaikan dengan bahasa sederhana, bukan istilah teknis.

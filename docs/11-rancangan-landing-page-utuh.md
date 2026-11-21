@@ -1,7 +1,7 @@
 # Rancangan Landing Page KARVIA — Utuh
 
 **Halaman:** `index.php`  
-**Status:** Implementasi saat ini ada di `index.php` pada branch `staging`; landing menampilkan alur siswa dan artikel publik.
+**Status:** Implementasi saat ini ada di `index.php` pada branch `staging`; revisi mobile navbar dan carousel artikel sedang dikerjakan.
 **Cakupan:** halaman publik lengkap dari header sampai footer  
 **Acuan layout hero:** gambar referensi dari pengguna
 
@@ -72,8 +72,11 @@ Bagian berikut menyimpan isi dan batasan produk yang menjadi acuan. Teks final y
 
 **Perilaku:**
 - Tautan navigasi memakai anchor section yang benar-benar tersedia.
-- Pada layar kecil, navigasi harus tetap ringkas dan tidak meluber. Interaksi menu tambahan hanya dibuat bila memang diperlukan.
-- Tautan pendaftaran siswa tersedia di login; landing tidak mengumpulkan data akun langsung.
+- Mobile tertutup: tampilkan logo KARVIA dan tombol menu bulat saja.
+- Mobile terbuka: overlay layar penuh hijau-krem KARVIA, tautan besar vertikal, pemisah tipis, tombol tutup, CTA Masuk dan Daftar Siswa.
+- Gunakan `aria-expanded`, label tombol, fokus keyboard, Escape untuk menutup, dan tutup menu setelah anchor dipilih.
+- Desktop tetap memakai navigasi horizontal dan tombol Masuk.
+- Tautan daftar siswa menuju `daftar.php`; role lain tidak boleh mendaftar mandiri.
 
 ### 6.2 Hero
 
@@ -190,6 +193,8 @@ Pada commit `23bdd0c` di branch `feat/landing-teal`:
 - Pengguna yang sudah login tetap diarahkan ke dashboard sesuai peran.
 - Tidak ada pendaftaran palsu, tombol mati, atau tautan ke halaman fitur yang belum tersedia.
 
-## 11. Perubahan desain berikutnya
+## 11. Revisi mobile disetujui
 
-Pengguna menyatakan landing page saat ini sudah terlihat bagus, tetapi ingin menunda beberapa perubahan visual sampai tahap akhir. Jangan mengubah desain lagi tanpa arahan berikutnya. Catat masukan lanjutan di bagian ini saat pengguna memberikannya.
+Navbar mobile mengikuti referensi pengguna: logo dan tombol menu bulat saat tertutup; overlay layar penuh saat dibuka dengan tautan vertikal besar, tombol tutup, serta CTA. Gunakan palet KARVIA hijau-krem, bukan warna marun pada referensi.
+
+Artikel mobile berubah menjadi carousel horizontal clean/editorial dengan scroll-snap, cuplikan kartu berikutnya, metadata ringkas, kontrol/indikator yang aksesibel, tanpa autoplay. Desktop tetap memakai grid artikel. Detail dan kriteria penerimaan tercatat di `docs/10-rancangan-landing-page.md`.

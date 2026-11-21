@@ -1,9 +1,9 @@
 # 10 — Rancangan Landing Page KARVIA
 
 **Halaman:** `index.php`  
-**Status:** diterapkan di `feat/landing-page`; verifikasi UI selesai  
-**Acuan visual:** gambar referensi hero yang diberikan pengguna  
-**Batas rancangan:** landing publik; perubahan visual utama hanya pada hero
+**Status:** revisi mobile navbar dan artikel disetujui; implementasi berjalan di `staging`
+**Acuan visual:** screenshot menu layar penuh dan carousel editorial clean dari pengguna
+**Batas rancangan:** fokus mobile; pertahankan identitas KARVIA, font Inter, konten dan perilaku desktop yang ada
 
 ---
 
@@ -121,12 +121,29 @@ Deskripsi tidak menyatakan bahwa seluruh fitur sudah tersedia bila implementasin
 - Jangan mengubah, memindahkan, atau menghapus `karvia_career_vision_action.html`.
 - Jangan menganggap rancangan halaman sebagai bukti bahwa fitur siswa atau Guru BK telah selesai.
 
-## 9. Kriteria penerimaan
+## 9. Revisi mobile navbar dan artikel
 
-- Pengunjung memahami tujuan KARVIA dan batasannya dari halaman publik.
-- Hero memiliki komposisi terpusat, bersih, dan mudah dibaca pada desktop maupun ponsel.
-- Warna KARVIA dan font Inter tidak berubah.
-- Tombol login membuka `login.php`; tombol tahapan mengarah ke section tahapan.
-- Peringatan privasi tidak memberi kesan Guru BK dapat melihat semua catatan siswa.
-- Pengguna yang sudah login tetap diarahkan ke dashboard sesuai perannya.
-- Section di luar hero tidak mengalami perubahan desain yang tidak diminta.
+### Navbar
+- Pada mobile, header tertutup hanya menampilkan identitas KARVIA dan tombol menu bulat, supaya baris navigasi tidak padat.
+- Tombol membuka overlay menu layar penuh bernuansa hijau-krem KARVIA; tautan besar tersusun vertikal dengan pemisah halus.
+- Tombol menu berubah menjadi tutup (`×`), memakai `aria-expanded`, label aksesibel, fokus keyboard yang jelas, dan target sentuh nyaman.
+- Menu memuat anchor Tentang, Tahapan, Artikel, Pendampingan, Privasi, FAQ, serta CTA Masuk dan Daftar Siswa. Daftar menuju `daftar.php`; Admin/Guru BK tetap tidak memiliki registrasi mandiri.
+- Pilih tautan menutup menu. Escape menutup menu. Jangan menambah dependensi.
+- Desktop mempertahankan navigasi horizontal saat ini.
+
+### Carousel artikel
+- Mobile menyajikan hingga 6 artikel sebagai carousel horizontal CSS scroll-snap, bukan kolom panjang.
+- Kartu clean/editorial: gambar konsisten, metadata ringkas, judul mudah dipindai, ringkasan pendek, CTA jelas; palet hijau-krem dan font Inter tetap.
+- Kartu berikutnya tampak sebagian sebagai petunjuk geser; kontrol/indikator posisi sederhana dan aksesibel melengkapi gestur sentuh.
+- Tidak autoplay. Gerak hormati `prefers-reduced-motion`.
+- Desktop mempertahankan grid artikel yang sudah ada.
+
+### Kriteria penerimaan
+- Pengunjung memahami tujuan KARVIA dan batasannya.
+- Navbar mobile tertutup ringkas; overlay berfungsi dengan sentuh dan keyboard, tertutup setelah anchor dipilih atau Escape.
+- Carousel menampung sampai 6 artikel tanpa membuat halaman memanjang karena seluruh kartu; pengguna dapat mencapai semua kartu dengan geser dan kontrol yang aksesibel.
+- Gambar, judul, ringkasan, dan tautan setiap artikel tetap benar; artikel kosong tetap memakai empty state.
+- Tampilan desktop tetap grid dengan navigasi saat ini.
+- Warna KARVIA dan font Inter tidak berubah; tidak ada dependensi baru.
+- Login, pendaftaran siswa, anchor, dan redirect pengguna login tetap benar.
+- Uji viewport mobile dan desktop, keyboard, serta PHP lint sebelum selesai.

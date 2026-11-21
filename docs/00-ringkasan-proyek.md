@@ -104,7 +104,7 @@ Membangun aplikasi KARVIA yang:
 | Bahasa | PHP native (prosedural sederhana), tanpa framework |
 | Database | MySQL/MariaDB melalui Laragon, diakses dengan PDO |
 | Web server | Apache Laragon (folder proyek di `www/`) |
-| Tampilan | HTML + Tailwind CSS (CDN pada MVP) + SVG icon KARVIA + Google Fonts Inter |
+| Tampilan | HTML + Tailwind CSS (CDN pada MVP) + SVG icon KARVIA + Google Fonts Inter; mobile landing memakai menu overlay dan carousel CSS tanpa dependensi baru |
 | JavaScript | Vanilla JS seperlunya; interaksi utama memakai form server-side |
 | Autentikasi | Session PHP + `password_hash` / `password_verify` |
 | Penyimpanan | Database relasional (bukan localStorage, bukan variabel JS) |

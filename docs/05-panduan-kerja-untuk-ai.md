@@ -13,10 +13,11 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |
 | Registrasi siswa & username | Implementasi lokal | `daftar.php` membatasi role siswa; form username di profil hanya siswa; uji runtime perlu dilakukan |
 | Data tambahan Bandar Lampung | Diimpor lokal | `dummy_karvia2.sql`: 3 sekolah, 3 admin sekolah, 9 Guru BK, 90 siswa, 1 artikel; import dua kali tetap idempotent; status online tidak diubah |
+| Landing mobile | Implementasi lokal | Navbar dialog layar penuh dan carousel artikel scroll-snap; PHP lint + HTTP smoke lulus; browser viewport/keyboard perlu verifikasi manual |
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
 | Keamanan server Apache | Lokal terverifikasi | Aturan `.htaccess` menolak akses ke `docs/`, `database/`, `config/`, `includes/`, root file sensitif, dan direktori upload (403) |
-| Dokumentasi/panduan | Diperbarui | `docs/12-panduan-instalasi.md` berisi setup lokal, akun demo, backup dan peringatan |
-| Rilis/commit | Dikerjakan di `staging` | Registrasi siswa, ubah username, dan dummy Bandar Lampung; PHP lint lolos; runtime registrasi dan re-run SQL perlu verifikasi akhir |
+| Dokumentasi/panduan | Diperbarui | Setup lokal di `docs/12`; spesifikasi dan kriteria mobile landing di `docs/10`/`docs/11`; keputusan UI di `docs/08` |
+| Rilis/commit | Dikerjakan di `staging` | Registrasi siswa dan data Bandar Lampung ada di `ee7abe4`; revisi mobile landing navbar/carousel sedang dikerjakan, belum dirilis |
 
 Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs/karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
 
@@ -44,6 +45,11 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 - [x] Ubah nama/telepon terproteksi CSRF dan output escape diuji.
 - [x] Password lama salah ditolak; password baru dapat dipakai login.
 - [x] CSRF invalid → 403. Password lama salah → 200 dengan pesan error. Password baru valid → 302 profil.php; login baru berhasil (302 dashboard); login lama gagal (302 login.php). Profil nama/telepon tersimpan, output di-escape. Fixture demo dipulihkan.
+
+### Revisi mobile landing
+- [x] Navbar mobile menampilkan logo + tombol; dialog memuat tautan section dan CTA daftar siswa.
+- [x] Artikel mobile memakai carousel scroll-snap dan kontrol sebelumnya/berikutnya; desktop kembali grid.
+- [ ] Verifikasi manual viewport sempit/lebar, keyboard Escape/fokus, dan swipe pada browser.
 
 ### Artikel D-29
 - [x] Guru BK membuat artikel uji dengan PNG valid ukuran <2 MB.

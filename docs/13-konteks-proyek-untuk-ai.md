@@ -24,9 +24,7 @@ Database: `database/database.sql` (struktur), `database/dummy_karvia.sql` (data 
 7. `docs/05-panduan-kerja-untuk-ai.md`
 8. `docs/09-pembagian-tugas-2-orang.md` (jobdesk 2 pengembang)
 
-Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa sudah
-ada; tampilan memakai gaya Attendara; siswa dapat daftar mandiri; data awal 2 sekolah
-dan data tambahan 3 sekolah ada di file dummy masing-masing. Rincian status ada di `docs/05` dan `docs/14`.
+Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa tersedia; siswa dapat daftar mandiri; data demo lima sekolah tersedia. Revisi mobile landing navbar dan carousel artikel disetujui dan sedang dikerjakan. Rincian status ada di `docs/05`, `docs/10`, `docs/11`, dan `docs/14`.
 
 ## Aturan utama
 
