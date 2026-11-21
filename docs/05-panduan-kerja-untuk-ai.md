@@ -11,25 +11,33 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Guru BK P0 | Selesai lokal | Catatan, isolasi sekolah, tindak lanjut transaksi, uji HTTP sebelumnya |
 | Siswa P0 | Selesai lokal | Form eksplorasi, jurnal, sharing; uji HTTP dan persistensi sebelumnya |
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |
+| Registrasi siswa & username | Implementasi lokal | `daftar.php` membatasi role siswa; form username di profil hanya siswa; uji runtime perlu dilakukan |
+| Data tambahan Bandar Lampung | Diimpor lokal | `dummy_karvia2.sql`: 3 sekolah, 3 admin sekolah, 9 Guru BK, 90 siswa, 1 artikel; import dua kali tetap idempotent; status online tidak diubah |
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
 | Keamanan server Apache | Lokal terverifikasi | Aturan `.htaccess` menolak akses ke `docs/`, `database/`, `config/`, `includes/`, root file sensitif, dan direktori upload (403) |
 | Dokumentasi/panduan | Diperbarui | `docs/12-panduan-instalasi.md` berisi setup lokal, akun demo, backup dan peringatan |
-| Rilis/commit | Selesai pada branch fitur | Commit `2e1e0ce` mencakup alur Admin, Guru BK, Siswa, profil, artikel, dan `.htaccess`. Folder `teal-treasury-landing/` sengaja ditinggal terpisah |
+| Rilis/commit | Dikerjakan di `staging` | Registrasi siswa, ubah username, dan dummy Bandar Lampung; PHP lint lolos; runtime registrasi dan re-run SQL perlu verifikasi akhir |
 
 Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs/karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
 
 ## 2. Aturan wajib
 
-1. PHP native + PDO + session; tanpa framework, Composer, localStorage, migration, atau seeder.
+1. PHP native + PDO + session; tanpa framework, Composer, localStorage, migration, atau seeder. SQL dummy terpisah dari struktur; `dummy_karvia.sql` destructive, `dummy_karvia2.sql` additive.
 2. Satu halaman = satu file; halaman peran hanya dalam `admin/`, `guru_bk/`, `siswa/`.
 3. Semua query memakai prepared statement; output HTML di-escape dengan `e()`; POST memakai CSRF.
 4. Otorisasi server-side dan filter `sekolah_id`/`siswa_id` wajib.
 5. Admin tidak membaca isi jurnal; Guru BK hanya membaca data siswa sekolahnya setelah dibagikan.
 6. Akun dinonaktifkan, bukan dihapus. Password tidak pernah disimpan/dicatat sebagai teks biasa.
-7. Perubahan skema wajib memperbarui `docs/03-rencana-database.md`; database tetap satu file SQL.
+7. Perubahan skema wajib memperbarui `docs/03-rencana-database.md`; struktur dan file dummy terpisah.
 8. Jangan buang atau menimpa perubahan lokal yang belum jelas pemiliknya. Jangan commit tanpa pemeriksaan diff.
 
 ## 3. Checklist penutupan
+
+### Registrasi siswa dan username
+- [x] Data valid → akun role `siswa`, session aktif, dashboard; request role `admin` diabaikan (HTTP lokal).
+- [x] CSRF invalid → 403; Admin tidak mendapat form ubah username (HTTP lokal).
+- [ ] Sekolah invalid/nonaktif, username format salah/duplikat, password pendek/mismatch perlu uji negatif.
+- [x] Ubah username dengan password benar berhasil; password salah ditolak (HTTP lokal).
 
 ### Profil dan password
 - [x] Profil dapat dibuka oleh Admin, Guru BK, Siswa.
@@ -65,15 +73,17 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 - [ ] Bersihkan hanya data uji, pertahankan fixture demo yang disepakati.
 - [x] Review `git status`, diff tiap file; biarkan landing `teal-treasury-landing/` belum siap terpisah.
 - [x] Perbarui `docs/04` dan status dokumen ini berdasarkan tes nyata.
-- [x] Commit per batas fitur pada branch `feat/guru-articles` (`2e1e0ce`).
+- [x] Perubahan rilis terdahulu sudah berada di `staging`; pekerjaan revisi saat ini akan dicatat pada commit baru.
 - [x] Jalankan smoke test lagi setelah commit (14/14 lulus).
 
 ## 4. Jalankan proyek
 
 1. Buka Laragon, pilih **Start All**.
 2. Buat database `karvia_db`, lalu impor `database/database.sql` hanya pada database kosong.
-3. Cek `BASE_URL` dan kredensial di `config/koneksi.php`.
-4. Buka `http://localhost/karvia/`.
+3. Impor `database/dummy_karvia.sql` hanya untuk DB kosong/demo (file ini TRUNCATE tabel).
+4. Impor `database/dummy_karvia2.sql` untuk tambahan Bandar Lampung; non-destructive dan dapat dijalankan ulang.
+5. Cek `BASE_URL` dan kredensial di `config/koneksi.php`.
+6. Buka `http://localhost/karvia/`.
 5. Akun demo lokal: `admin/admin`, `guru/guru`, `siswa/siswa`. Ganti sebelum penggunaan nyata.
 6. Backup dengan `mysqldump -u root karvia_db > database/backup_YYYY-MM-DD.sql`; simpan backup privat.
 

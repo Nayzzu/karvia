@@ -29,6 +29,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flash_set('sukses', 'Profil berhasil diperbarui.');
             redirect('profil.php');
         }
+    } elseif ($aksi === 'username' && $pengguna['role'] === 'siswa') {
+        $username = strtolower(trim((string) ($_POST['username'] ?? '')));
+        $password = (string) ($_POST['password_verifikasi'] ?? '');
+        if (!preg_match('/^[a-z0-9._-]{3,50}$/', $username)) $errors[] = 'Username harus 3–50 karakter: huruf kecil, angka, titik, garis bawah, atau tanda hubung.';
+        $stmt = $pdo->prepare('SELECT password_hash FROM pengguna WHERE id = :id AND status = \'aktif\'');
+        $stmt->execute(['id' => $id]);
+        $hash = $stmt->fetchColumn();
+        if (!$hash || !password_verify($password, $hash)) $errors[] = 'Password saat ini tidak sesuai.';
+        if (!$errors) {
+            try {
+                $stmt = $pdo->prepare('UPDATE pengguna SET username = :username, diperbarui_pada = NOW() WHERE id = :id');
+                $stmt->execute(['username' => $username, 'id' => $id]);
+                $_SESSION['pengguna']['username'] = $username;
+                flash_set('sukses', 'Username berhasil diperbarui.');
+                redirect('profil.php');
+            } catch (PDOException $kesalahan) {
+                if ($kesalahan->getCode() === '23000') $errors[] = 'Username sudah digunakan. Pilih username lain.';
+                else throw $kesalahan;
+            }
+        }
     } elseif ($aksi === 'password') {
         $lama = (string) ($_POST['password_lama'] ?? '');
         $baru = (string) ($_POST['password_baru'] ?? '');
@@ -122,6 +142,22 @@ $profil = $stmt->fetch();
           </button>
         </div>
       </form>
+      <?php if ($profil['role'] === 'siswa'): ?>
+        <form method="post" class="mt-5 space-y-4 border-t border-[#eef2ed] pt-4">
+          <?= csrf_field() ?>
+          <input type="hidden" name="aksi" value="username">
+          <div>
+            <label for="username_baru" class="mb-1 block text-xs font-bold text-slate-700">Ubah Username</label>
+            <input id="username_baru" name="username" required minlength="3" maxlength="50" pattern="[a-zA-Z0-9._-]{3,50}" value="<?= e($profil['username']) ?>" autocomplete="username" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+            <p class="mt-1 text-[11px] text-slate-500">3–50 karakter: huruf, angka, titik, garis bawah, atau tanda hubung.</p>
+          </div>
+          <div>
+            <label for="password_verifikasi" class="mb-1 block text-xs font-bold text-slate-700">Password Saat Ini *</label>
+            <input id="password_verifikasi" name="password_verifikasi" type="password" required autocomplete="current-password" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+          </div>
+          <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#1a4029]">Simpan Username</button>
+        </form>
+      <?php endif; ?>
     </div>
   </section>
 

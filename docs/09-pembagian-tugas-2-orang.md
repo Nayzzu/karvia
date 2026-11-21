@@ -12,7 +12,7 @@ Konteks teknis yang sudah ditetapkan:
   `docs/`, plus `index.php`, `login.php`, `logout.php` di akar.
 - Tidak ada front controller `?page=`; setiap halaman adalah file PHP sendiri
   (lihat `02` bagian 2–5).
-- Database: satu file `database/database.sql` (struktur + data contoh).
+- Database: `database/database.sql` (struktur), `database/dummy_karvia.sql` (data awal destructive), `database/dummy_karvia2.sql` (data tambahan Bandar Lampung).
 - Tanpa folder `migrations/` atau `seeders/`.
 - PHP native + MySQL/PDO + session.
 - Tiga peran: Admin, Guru BK, Siswa.
@@ -55,11 +55,8 @@ di prototipe dan bisa dikerjakan paralel setelah fondasi tersedia.
 
 ### 3.1 Database & konfigurasi
 
-- [ ] Tulis `database/database.sql`:
-  - **Bagian A**: 11 tabel sesuai `03`, primary key, unique, index, foreign key,
-    urutan aman untuk diimpor;
-  - **Bagian B**: data contoh (2 sekolah, 9 akun, 4–8 profesi, data karier demo).
-- [ ] Uji import di database kosong: `mysql -u root karvia_db < database/database.sql`.
+- [x] Struktur tabel berada di `database/database.sql`; data awal dan tambahan berada pada dua file dummy terpisah.
+- [x] Uji import struktur dan data tambahan lokal; detail hitungan fixture di `docs/03`.
 - [ ] Buat `config/koneksi.php`: `BASE_URL`, zona waktu, nama session, mode debug,
   kredensial PDO, fungsi koneksi.
 - [ ] Buat `database/backup_YYYY-MM-DD.sql` sebelum demo.
@@ -113,7 +110,7 @@ di prototipe dan bisa dikerjakan paralel setelah fondasi tersedia.
 
 | Area | File |
 |------|------|
-| Database | `database/database.sql`, `database/dummy_karvia.sql`, `database/backup_*.sql` |
+| Database | `database/database.sql`, `database/dummy_karvia.sql`, `database/dummy_karvia2.sql`, `database/backup_*.sql` |
 | Config | `config/koneksi.php` |
 | Includes | `includes/function.php`, `includes/header.php`, `includes/footer.php` |
 | Akar | `index.php`, `login.php`, `logout.php`, `profil.php`, `.htaccess`, `AGENTS.md` |

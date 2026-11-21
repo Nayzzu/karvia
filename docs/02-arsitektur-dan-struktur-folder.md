@@ -43,7 +43,9 @@ karvia/                          ← root aplikasi (nama folder bebas)
 │   └── koneksi.php              ← konfigurasi aplikasi + koneksi PDO
 │
 ├── database/
-│   └── database.sql             ← struktur + data contoh
+│   ├── database.sql             ← struktur tabel
+│   ├── dummy_karvia.sql          ← data awal 2 sekolah (destructive)
+│   └── dummy_karvia2.sql         ← tambahan 3 sekolah Bandar Lampung
 │
 ├── guru_bk/
 │   └── index.php                ← dashboard Guru BK
@@ -61,6 +63,7 @@ karvia/                          ← root aplikasi (nama folder bebas)
 ├── index.php                    ← landing page + artikel terbaru → login / dashboard
 ├── artikel.php                  ← baca artikel publik
 ├── login.php                    ← form + proses login
+├── daftar.php                   ← pendaftaran mandiri khusus siswa
 ├── logout.php                   ← mengakhiri sesi
 ├── profil.php                   ← ubah profil dan kata sandi
 └── AGENTS.md                    ← stub penunjuk ke docs/13
@@ -185,11 +188,13 @@ jangan pernah menampilkan isinya di halaman. Nilai default Laragon: host
 
 | File | Fungsi |
 |------|--------|
-| `database/database.sql` | Satu file SQL berisi **bagian A: struktur tabel** dan **bagian B: data contoh** (2 sekolah, akun demo, profesi, data karier) |
+| `database/database.sql` | Struktur tabel, index, dan foreign key |
+| `database/dummy_karvia.sql` | Data awal 2 sekolah; mengosongkan tabel dan hanya untuk setup demo baru |
+| `database/dummy_karvia2.sql` | Tambahan 3 sekolah Bandar Lampung, akun demo, dan 1 artikel; non-destructive |
 | `database/backup_YYYY-MM-DD.sql` | Hanya dibuat saat backup sebelum demo/perubahan besar |
 
-Tidak ada folder `migrations/` atau `seeders/`. Satu file dipilih agar proses
-impor cukup satu langkah. Rincian tabel ada di
+Tidak ada folder `migrations/` atau `seeders/`. Struktur dan fixture demo dipisah
+agar penambahan data tidak perlu mengosongkan database. Rincian tabel ada di
 [`03-rencana-database.md`](03-rencana-database.md).
 
 ### 3.6 Assets
@@ -417,7 +422,7 @@ Ambil gaya dari prototipe:
    - atau virtual host, mis. `http://karvia.test`, dengan document root diarahkan
      ke folder proyek.
 3. Buat database `karvia_db` (utf8mb4).
-4. Import `database/database.sql` lewat HeidiSQL/phpMyAdmin/terminal.
+4. Import `database/database.sql`, lalu `database/dummy_karvia.sql` dan `database/dummy_karvia2.sql` sesuai panduan `docs/12`. File dummy pertama mengosongkan tabel; file kedua hanya menambah data.
 5. Isi `config/koneksi.php` sesuai Laragon (default user `root`, password kosong).
 6. Jalankan Apache & MySQL dari Laragon.
 

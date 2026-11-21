@@ -12,7 +12,8 @@ Post/Redirect/Get) agar refresh tidak mengirim ulang data.
 Publik
 ├── Landing dengan kartu artikel
 ├── Baca artikel (`artikel.php`)
-└── Login
+├── Login
+└── Pendaftaran siswa (`daftar.php`)
 
 Admin
 ├── Dashboard
@@ -87,8 +88,9 @@ masuk hanya dengan mengetik nama.
 - Judul KARVIA, subjudul “Career Vision & Action”.
 - Kredit pengembang tetap tampil.
 - Field: **Username**, **Password**.
+- Link **Daftar di sini** membuka registrasi siswa; tidak tersedia untuk role Admin/Guru BK.
 - Tombol “Masuk ke KARVIA”.
-- Tidak ada tautan “Daftar” (akun dibuat Admin).
+- Tautan pendaftaran tersedia khusus untuk siswa; peran pendaftar dipatok menjadi siswa oleh server. Akun Admin/Guru BK tetap dibuat Admin.
 - Tidak ada petunjuk password demo di halaman produksi.
 
 ### 2.3 Alur
@@ -120,7 +122,15 @@ Redirect tujuan:
 Jika pengguna membuka halaman lain saat belum login, simpan tujuan awal
 (opsional) lalu arahkan ke login.
 
-### 2.4 Logout
+### 2.4 Pendaftaran mandiri Siswa
+
+- `daftar.php` hanya membuat akun dengan peran `siswa`; request tidak dapat memilih role.
+- Pendaftar memilih sekolah aktif dan mengisi nama, kelas, username, password, konfirmasi password.
+- Username tervalidasi unik dengan format 3–50 karakter (`a-z`, angka, `.`, `_`, `-`); password 8–72 karakter dan disimpan sebagai hash.
+- Setelah berhasil, siswa langsung login dan diarahkan ke dashboard.
+- Admin/Guru BK tidak memiliki pendaftaran publik.
+
+### 2.5 Logout
 
 - Hapus data session, hancurkan cookie session, redirect ke login.
 - Tampilkan flash “Anda telah keluar.”

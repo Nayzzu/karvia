@@ -20,6 +20,8 @@ bagaimana kita tahu fitur itu sudah jadi.**
 | Aksi | Admin | Guru BK | Siswa |
 |------|:-----:|:-------:|:-----:|
 | Login / logout | ✅ | ✅ | ✅ |
+| Daftar akun sendiri | ❌ | ❌ | ✅ (siswa saja) |
+| Ubah username sendiri | ❌ | ❌ | ✅ |
 | Ganti password sendiri | ✅ | ✅ | ✅ |
 | Lihat dashboard | ✅ global | ✅ sekolah sendiri | ✅ pribadi |
 | Lihat daftar semua sekolah | ✅ | ❌ | ❌ |
@@ -65,9 +67,12 @@ bantuan teknis, akses isi catatan harus menjadi keputusan terpisah dan tercatat.
 | AUTH-08 | Setiap halaman internal memeriksa login dan peran | P0 |
 | AUTH-09 | Pengguna dapat mengganti password sendiri | P1 |
 | AUTH-10 | Catat `last_login_at` dan `login_count` setiap login berhasil | P0 |
+| AUTH-11 | Siswa dapat mendaftar sendiri pada sekolah aktif; role dipatok `siswa` di server | P1 |
+| AUTH-12 | Siswa dapat mengubah username sendiri setelah verifikasi password saat ini | P1 |
 
-**Keputusan awal:** akun dibuat oleh Admin (tidak ada pendaftaran mandiri).
-Alasan: Cindy perlu mengontrol siapa yang boleh masuk.
+**Kebijakan akun:** pendaftaran mandiri dibatasi untuk siswa dan hanya mengaitkan
+akun ke sekolah aktif yang terdaftar. Admin dan Guru BK tetap dibuat Admin. Admin
+sekolah dapat menonaktifkan akun yang tidak sesuai; form publik tidak menerima role.
 
 ---
 
@@ -95,7 +100,7 @@ Alasan: Cindy perlu mengontrol siapa yang boleh masuk.
 | SCH-04 | Aktif/nonaktifkan sekolah | P1 |
 | SCH-05 | Detail sekolah: profil + jumlah siswa + jumlah Guru BK + daftar akun terkait | P0 |
 | SCH-06 | Larang hapus sekolah yang masih memiliki pengguna | P1 |
-| SCH-07 | 2 sekolah contoh tersedia dari bagian B `database.sql` | P0 |
+| SCH-07 | Lima sekolah demo tersedia setelah impor `dummy_karvia.sql` + `dummy_karvia2.sql` | P0 |
 
 ### 3.3 Manajemen pengguna & akses
 
@@ -217,7 +222,7 @@ menyesatkan. Diganti dengan metrik yang benar-benar dihitung.
 
 ### 6.4 Kinerja & kompatibilitas
 
-- Target data awal kecil (2 sekolah, puluhan pengguna); tidak perlu optimasi rumit.
+- Data demo berisi lima sekolah dan ratusan akun; tetap gunakan query terindeks, tanpa optimasi khusus skala besar.
 - Daftar pengguna memakai pencarian dan (bila perlu) pagination 25 baris.
 - Berjalan di Chrome/Edge/Firefox modern, desktop dan mobile.
 - Halaman utama dimuat < 2 detik pada data demo.
@@ -236,7 +241,7 @@ menyesatkan. Diganti dengan metrik yang benar-benar dihitung.
 
 | No | Skenario | Hasil yang diharapkan |
 |----|----------|-----------------------|
-| 1 | Login admin dengan akun contoh | Masuk ke dashboard admin, melihat 2 sekolah |
+| 1 | Login admin dengan akun contoh | Masuk ke dashboard admin, melihat 5 sekolah setelah impor kedua file dummy |
 | 2 | Tambah Guru BK baru di SMA contoh | Akun muncul di daftar, bisa login |
 | 3 | Nonaktifkan siswa | Siswa gagal login dengan pesan “akun dinonaktifkan” |
 | 4 | Aktifkan kembali siswa | Siswa bisa login lagi |

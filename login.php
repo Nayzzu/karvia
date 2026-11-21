@@ -105,7 +105,7 @@ $flash = flash_ambil();
         </div>
       </div>
 
-      <p class="mt-6 text-center text-xs text-slate-500">Belum punya akun? Akun disiapkan oleh Admin sekolah.</p>
+      <p class="mt-6 text-center text-xs text-slate-500">Belum punya akun siswa? <a class="font-semibold text-[#2d6a45] hover:underline" href="<?= e(url('daftar.php')) ?>">Daftar di sini</a></p>
       <p class="mt-2 text-center text-xs"><a class="font-semibold text-[#2d6a45] hover:underline" href="<?= e(url('index.php')) ?>">Kembali ke beranda</a></p>
     </div>
   </main>

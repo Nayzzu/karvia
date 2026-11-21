@@ -11,7 +11,7 @@
 
 Landing page memperkenalkan KARVIA kepada siswa, Guru BK, dan pihak sekolah. Pengunjung harus cepat memahami bahwa KARVIA mendukung eksplorasi karier siswa dan menyediakan jalan masuk bagi pengguna yang sudah memiliki akun.
 
-Landing page bukan halaman pendaftaran. Akun dibuat oleh Admin; pengunjung masuk melalui halaman login.
+Landing page bukan halaman pendaftaran. Siswa dapat mendaftar melalui `daftar.php`; Admin dan Guru BK tetap dibuat oleh Admin. Pengunjung masuk melalui halaman login.
 
 ## 2. Konteks produk
 
@@ -111,7 +111,7 @@ Deskripsi tidak menyatakan bahwa seluruh fitur sudah tersedia bila implementasin
 - Tombol **Masuk** dan **Masuk ke KARVIA** membuka `login.php`.
 - Tombol **Lihat Tahapan** berpindah ke section tahapan pada halaman yang sama.
 - Pengguna yang sudah login tetap diarahkan ke dashboard sesuai peran melalui alur `index.php` saat ini.
-- Tidak ada pendaftaran mandiri.
+- Tautan daftar siswa boleh tampil di halaman login; registrasi akun tetap khusus siswa.
 - Tidak menampilkan statistik, testimoni, atau klaim yang tidak memiliki sumber nyata.
 
 ## 8. Batas implementasi

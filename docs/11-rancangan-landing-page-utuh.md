@@ -1,7 +1,7 @@
 # Rancangan Landing Page KARVIA — Utuh
 
 **Halaman:** `index.php`  
-**Status:** Implementasi saat ini ada di `index.php` pada branch `feat/landing-teal` (commit `23bdd0c`). Pemeriksaan sintaks PHP dan HTTP lulus. Penyesuaian desain lanjutan ditunda sesuai permintaan pengguna.
+**Status:** Implementasi saat ini ada di `index.php` pada branch `staging`; landing menampilkan alur siswa dan artikel publik.
 **Cakupan:** halaman publik lengkap dari header sampai footer  
 **Acuan layout hero:** gambar referensi dari pengguna
 
@@ -11,7 +11,7 @@
 
 KARVIA (Career Vision & Action) adalah media digital pendukung bimbingan karier bagi siswa SMA/MA. KARVIA membantu siswa mengenali diri, menjelajahi pilihan profesi dan jalur setelah lulus, membandingkan pilihan, merencanakan langkah, menulis refleksi, dan berdiskusi dengan Guru BK.
 
-KARVIA **bukan tes psikologis**, bukan penentu jurusan atau karier otomatis, dan bukan pengganti Guru BK/konselor. Sistem memakai akun yang dibuat Admin. Tidak ada pendaftaran mandiri dari landing page. Catatan siswa bersifat personal; Guru BK hanya melihat catatan yang dibagikan siswa dan sesuai cakupan sekolahnya.
+KARVIA **bukan tes psikologis**, bukan penentu jurusan atau karier otomatis, dan bukan pengganti Guru BK/konselor. Siswa dapat mendaftar sendiri melalui halaman terpisah; Admin dan Guru BK tetap dibuat oleh Admin. Catatan siswa bersifat personal; Guru BK hanya melihat catatan yang dibagikan siswa dan sesuai cakupan sekolahnya.
 
 Landing page memperkenalkan produk kepada siswa, Guru BK, dan pihak sekolah, lalu mengarahkan pengguna yang sudah memiliki akun untuk masuk.
 
@@ -73,7 +73,7 @@ Bagian berikut menyimpan isi dan batasan produk yang menjadi acuan. Teks final y
 **Perilaku:**
 - Tautan navigasi memakai anchor section yang benar-benar tersedia.
 - Pada layar kecil, navigasi harus tetap ringkas dan tidak meluber. Interaksi menu tambahan hanya dibuat bila memang diperlukan.
-- Jangan menampilkan tautan daftar akun karena pendaftaran mandiri tidak tersedia.
+- Tautan pendaftaran siswa tersedia di login; landing tidak mengumpulkan data akun langsung.
 
 ### 6.2 Hero
 

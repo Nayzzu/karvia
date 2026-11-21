@@ -4,14 +4,14 @@
 > penunjuk ke file ini.
 
 Proyek: **KARVIA** — aplikasi bimbingan karier SMA/MA, PHP native + MySQL (Laragon),
-tiga peran: **Admin, Guru BK, Siswa**, multi-sekolah (2 sekolah contoh).
+tiga peran: **Admin, Guru BK, Siswa**, multi-sekolah (5 sekolah contoh; tambahan 3 sekolah Bandar Lampung).
 
 Struktur folder mengikuti pola per peran: `admin/`, `guru_bk/`, `siswa/`,
 `includes/`, `config/`, `database/`, `assets/`, `docs/`, plus `index.php`,
 `login.php`, `logout.php` di akar. Lokasi folder bebas; path bertingkat seperti
 `www\TUBES_PRK_PEMWEB_2026\kelompok\kelompok_18` hanya contoh penataan.
-Database: `database/database.sql` (struktur) + `database/dummy_karvia.sql`
-(data contoh), tanpa folder migration/seeder.
+Database: `database/database.sql` (struktur), `database/dummy_karvia.sql` (data awal),
+`database/dummy_karvia2.sql` (data tambahan Bandar Lampung), tanpa folder migration/seeder.
 
 ## Wajib dibaca sebelum mengubah kode
 
@@ -25,17 +25,17 @@ Database: `database/database.sql` (struktur) + `database/dummy_karvia.sql`
 8. `docs/09-pembagian-tugas-2-orang.md` (jobdesk 2 pengembang)
 
 Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa sudah
-ada; tampilan memakai gaya Attendara; data contoh 2 sekolah di
-`database/dummy_karvia.sql`. Rincian status ada di `docs/05`.
+ada; tampilan memakai gaya Attendara; siswa dapat daftar mandiri; data awal 2 sekolah
+dan data tambahan 3 sekolah ada di file dummy masing-masing. Rincian status ada di `docs/05` dan `docs/14`.
 
 ## Aturan utama
 
 - `docs/karvia_career_vision_action.html` adalah prototipe acuan. **Jangan diubah
   atau dihapus.**
 - Jangan menambah fitur di luar ruang lingkup MVP tanpa mencatatnya di
-  `docs/08-keputusan-terbuka.md`.
+  `docs/08-keputusan-terbuka.md`; keputusan yang sudah disetujui ada di tabel D-30/D-31.
 - Gunakan PHP native + PDO + session. Tanpa framework, Composer, atau localStorage.
-- Login nyata (username + password hash); peran berasal dari akun, bukan pilihan user.
+- Login nyata (username + password hash); peran berasal dari akun, bukan pilihan user. Pendaftaran mandiri hanya untuk siswa; Admin dan Guru BK dibuat Admin. Siswa dapat mengganti username setelah verifikasi password.
 - “Keluarkan pengguna” = **nonaktifkan**, bukan hapus permanen.
 - Guru BK hanya melihat data siswa di sekolahnya yang sudah dibagikan.
 - Admin tidak membaca isi jurnal siswa (hanya rekap).
@@ -43,9 +43,9 @@ ada; tampilan memakai gaya Attendara; data contoh 2 sekolah di
 - Semua query memakai prepared statement, output di-escape, form POST memakai CSRF.
 - Bahasa UI dan nama tabel/fungsi: Indonesia, sederhana, mudah dipelajari Cindy.
 - Setiap perubahan skema database wajib memperbarui `docs/03`.
-- Database memakai dua file SQL: `database/database.sql` (struktur) dan
-  `database/dummy_karvia.sql` (data contoh). Jangan membuat folder `migrations/`
-  atau `seeders/`.
+- Database memakai `database/database.sql` (struktur), `database/dummy_karvia.sql`
+  (data awal, destructive), dan `database/dummy_karvia2.sql` (data tambahan non-destructive).
+  Jangan membuat folder `migrations/` atau `seeders/`.
 - Satu halaman = satu file; halaman peran hanya di `admin/`, `guru_bk/`, `siswa/`.
   Jangan membuat front controller dengan `?page=`.
 - Ikuti urutan build dan checklist di `docs/05`; untuk pembagian kerja lihat `docs/09`.

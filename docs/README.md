@@ -4,9 +4,7 @@ Folder ini adalah sumber konteks utama untuk pengembangan KARVIA. Aturan produk,
 rencana database, dan urutan pengerjaan dicatat di sini agar pekerjaan dapat
 dilanjutkan bertahap.
 
-**Status:** aplikasi PHP native sudah memiliki alur Admin, Guru BK, dan Siswa;
-lihat `docs/05` untuk status verifikasi terkini. Artikel Guru BK disetujui melalui
-D-29 dan perlu lulus uji pemilik/upload/publik sebelum dianggap siap rilis.
+**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri siswa, lima sekolah demo, dan artikel Guru BK. Verifikasi dan sisa uji tercatat di `docs/05` dan `docs/14`.
 
 **Prototipe acuan:** [`karvia_career_vision_action.html`](karvia_career_vision_action.html)
 File tersebut jangan diubah atau dihapus.
@@ -29,6 +27,7 @@ File tersebut jangan diubah atau dihapus.
 | 12 | [`11-rancangan-landing-page-utuh.md`](11-rancangan-landing-page-utuh.md) | Konteks, susunan aktual, verifikasi, dan rencana perubahan landing page |
 | 13 | [`12-panduan-instalasi.md`](12-panduan-instalasi.md) | Cara menjalankan lokal, akun demo, backup |
 | 14 | [`13-konteks-proyek-untuk-ai.md`](13-konteks-proyek-untuk-ai.md) | Konteks proyek dan aturan kerja untuk AI |
+| 15 | [`14-registrasi-siswa-dan-data-tambahan.md`](14-registrasi-siswa-dan-data-tambahan.md) | Kebijakan pendaftaran siswa dan SQL tambahan Bandar Lampung |
 
 ## Ringkasan produk
 
@@ -56,13 +55,14 @@ karvia/
 ├── admin/
 ├── assets/img/profesi/
 ├── config/koneksi.php
-├── database/{database,dummy_karvia}.sql
+├── database/{database,dummy_karvia,dummy_karvia2}.sql
 ├── docs/
 ├── guru_bk/
 ├── includes/{header,footer,function}.php
 ├── siswa/
 ├── uploads/artikel/
 ├── index.php
+├── daftar.php
 ├── login.php
 ├── logout.php
 └── profil.php

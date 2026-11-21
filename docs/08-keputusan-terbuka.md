@@ -57,7 +57,7 @@ Sampaikan dengan bahasa sederhana, bukan istilah teknis.
 | D-10 | Hapus sekolah | Tidak dihapus; nonaktifkan | Integritas data | Usulan |
 | D-11 | Definisi “pengguna aktif” | Tampilkan “terdaftar”, “pernah login”, “aktif 30 hari” | Label dashboard | Usulan |
 | D-12 | Ekspor CSV/Excel | P1 setelah demo | Prioritas fitur | Usulan |
-| D-13 | Nama 2 sekolah contoh | SMA Nusantara 1 & MA Al-Hikmah (fiktif) | Data demo | Usulan |
+| D-13 | Dua sekolah awal | SMAN 1 Bandung dan MAN 2 Yogyakarta | Data awal | Diganti data demo aktual |
 | D-14 | Kelola katalog profesi | Admin (P2); MVP pakai data contoh di `database.sql` | Prioritas fitur | Usulan |
 | D-15 | Pengumuman & jadwal konsultasi | Tidak masuk MVP | Scope | Usulan |
 | D-16 | Hosting | Demo lokal Laragon dulu | Cara akses & biaya | Terbuka |
@@ -69,11 +69,13 @@ Sampaikan dengan bahasa sederhana, bukan istilah teknis.
 | D-22 | Email/notifikasi | Tidak ada di MVP | Scope | Usulan |
 | D-23 | Foto profil | Tidak ada di MVP | Scope | Usulan |
 | D-24 | Password awal | Dibuat Admin, minimal 8 karakter | Keamanan | Usulan |
-| D-25 | Cara menyimpan struktur & data awal | Satu file `database/database.sql` (bagian A struktur + bagian B data contoh), tanpa migration/seeder | Cara import & dokumentasi | **Disetujui** |
+| D-25 | Cara menyimpan struktur & data awal | Struktur `database/database.sql`; data awal `dummy_karvia.sql`; tambahan dapat dipisah sebagai file dummy non-destructive; tanpa migration/seeder | Cara impor dan dokumentasi | **Diperbarui** |
 | D-26 | Struktur folder & lokasi | Folder per peran (`admin/`, `guru_bk/`, `siswa/`), `includes/`, `config/koneksi.php`, `database/database.sql`; lokasi bebas, path bertingkat hanya contoh | Path, `BASE_URL`, deploy | **Disetujui** |
 | D-27 | Jumlah pengembang & pembagian | 2 orang: A fondasi/admin, B siswa/guru | Jobdesk & timeline | **Disetujui** |
 | D-28 | Gaya routing | Satu halaman = satu file; tanpa front controller `?page=` | Struktur file & URL | **Disetujui** |
 | D-29 | Artikel edukasi Guru BK untuk landing page | Guru BK menerbitkan langsung; judul, gambar, isi wajib; penulis dari akun; artikel publik global; pemilik boleh ubah/hapus; JPG/PNG/WebP maks. 2 MB; ringkasan dibuat otomatis | Scope, hak akses, skema DB, upload gambar dan landing | **Disetujui** |
+| D-30 | Pendaftaran mandiri | Siswa boleh mendaftar ke sekolah aktif; Admin/Guru BK tetap dibuat Admin; siswa dapat mengganti username setelah verifikasi password | Pendaftaran publik, keamanan akun, onboarding | **Disetujui 21 Nov 2026** |
+| D-31 | Data demo Bandar Lampung | Tambah SMAN 1 Bandar Lampung, SMAN 9 Bandar Lampung, MAN 1 Bandar Lampung; tiap sekolah 1 admin, 3 Guru BK, 30 siswa; satu artikel hanya untuk sekolah pertama | Data dummy dan pengujian lintas sekolah | **Disetujui 21 Nov 2026** |
 
 ---
 
@@ -150,7 +152,7 @@ Jika online, siapkan hosting minimal sehari sebelumnya.
 
 Selama Cindy belum menjawab, pengembangan memakai asumsi berikut:
 
-1. Akun dibuat Admin.
+1. Pendaftaran publik terbatas untuk siswa; akun Admin/Guru BK dibuat Admin.
 2. Login memakai username.
 3. “Keluar” = nonaktif.
 4. Admin tidak membaca jurnal.
@@ -170,11 +172,13 @@ Isi saat keputusan diambil.
 | Tanggal | ID | Keputusan | Diputuskan oleh | Catatan |
 |---------|----|-----------|-----------------|---------|
 | 19 Nov 2026 | D-01…D-24 | Default sementara dipakai untuk mulai build | Tim pengembang | Menunggu konfirmasi Cindy |
-| 19 Nov 2026 | D-25 | Database memakai satu file `database/database.sql` (struktur + data contoh) | Pemilik proyek | Menggantikan rencana dua file |
+| 21 Nov 2026 | D-25 | Struktur dan data demo dipisahkan; file tambahan dibuat non-destructive bila perlu menambah fixture | Pemilik proyek | Diperbarui saat menambahkan `dummy_karvia2.sql` |
 | 19 Nov 2026 | D-26 | Struktur folder per peran; lokasi tidak terikat path tertentu | Pemilik proyek | Path bertingkat hanya contoh |
 | 19 Nov 2026 | D-27 | Project dikerjakan 2 orang | Pemilik proyek | Jobdesk di `09` |
 | 19 Nov 2026 | D-28 | Satu halaman = satu file, tanpa `?page=` | Pemilik proyek | Struktur `admin/`, `guru_bk/`, `siswa/` |
 | 20 Nov 2026 | D-29 | Guru BK menerbitkan artikel langsung; artikel global dengan hak edit/hapus pemilik, gambar JPG/PNG/WebP maks. 2 MB, ringkasan otomatis | Pemilik proyek | Disetujui; implementasi pada `feat/guru-articles` |
+| 21 Nov 2026 | D-30 | Pendaftaran mandiri khusus siswa dan ubah username dengan verifikasi password; Admin/Guru BK tetap dibuat Admin | Pemilik proyek | Disetujui untuk onboarding siswa |
+| 21 Nov 2026 | D-31 | Tiga sekolah dummy Bandar Lampung, tiap sekolah 1 admin + 3 Guru BK + 30 siswa; satu artikel untuk sekolah pertama | Pemilik proyek | Disetujui; `database/dummy_karvia2.sql` |
 
 ---
 

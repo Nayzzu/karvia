@@ -3,7 +3,7 @@
 Database: **`karvia_db`** (MySQL/MariaDB, InnoDB, `utf8mb4`, `utf8mb4_unicode_ci`).
 Semua waktu memakai zona **Asia/Jakarta**.
 
-File `database/database.sql` berisi struktur dan data demo. Struktur terdiri dari 12 tabel; data demo tetap fiktif. File SQL ini dirancang untuk database kosong. Setiap perubahan skema **wajib** memperbarui dokumen ini.
+`database/database.sql` berisi struktur tabel, `database/dummy_karvia.sql` berisi data awal 2 sekolah, dan `database/dummy_karvia2.sql` menambahkan 3 sekolah fiktif di Bandar Lampung beserta akun demo tanpa menghapus data lama. Struktur terdiri dari 12 tabel. File struktur dirancang untuk database kosong; file dummy awal mengosongkan tabel, sedangkan `dummy_karvia2.sql` bersifat tambahan/idempotent. Setiap perubahan skema **wajib** memperbarui dokumen ini.
 
 ---
 
@@ -325,18 +325,20 @@ mengukur pemakaian, gunakan “pernah login” atau “aktif 30 hari”.
 
 ## 7. Rencana file SQL
 
-Project ini **tidak memakai migration/seeder**. Seluruh database disimpan dalam
-**satu file** di folder `database/`:
+Project ini **tidak memakai migration/seeder**. Struktur dan data demo dipisah
+menjadi file SQL di folder `database/`:
 
 | File | Isi | Kapan dijalankan |
 |------|-----|------------------|
-| `database/database.sql` | **Bagian A:** struktur semua tabel, index, dan foreign key. **Bagian B:** data contoh (2 sekolah, akun demo, profesi, data karier) | Sekali, saat database masih kosong |
+| `database/database.sql` | Struktur semua tabel, index, dan foreign key | Sekali, saat database masih kosong |
+| `database/dummy_karvia.sql` | Data contoh awal 2 sekolah; destructive (`TRUNCATE`), database lokal/demo saja | Setelah struktur, hanya jika memang boleh mengganti seluruh data |
+| `database/dummy_karvia2.sql` | Tambahan 3 sekolah Bandar Lampung, 3 admin, 9 Guru BK, 90 siswa, dan 1 artikel; tidak menghapus data lama | Setelah `dummy_karvia.sql`; aman dijalankan ulang untuk baris yang sama |
 | `database/backup_YYYY-MM-DD.sql` | Salinan database saat backup | Hanya sebelum demo/perubahan besar |
 
-Satu file dipilih agar proses impor cukup satu langkah dan mudah diulang di
-komputer lain. Bagian A dan B diberi penanda komentar yang jelas.
+Struktur terpisah dari data. File tambahan Bandar Lampung memakai `INSERT` bersyarat
+agar tidak menggandakan username/NPSN saat dijalankan ulang.
 
-Urutan pembuatan tabel **di bagian A `database.sql`** (agar foreign key valid):
+Urutan pembuatan tabel di `database.sql` (agar foreign key valid):
 
 1. `sekolah`
 2. `pengguna`
@@ -366,65 +368,46 @@ dapat bentrok. Jika ingin mengulang dari awal, hapus database lalu buat ulang.
 
 ---
 
-## 8. Rencana data contoh (bagian B `database.sql`)
+## 8. Data contoh saat ini dan fixture historis
 
-Data demo bertujuan menguji alur dasar dan tampilan dengan jumlah kecil. Semua
-nama sekolah, nama akun, dan isi catatan bersifat fiktif; bukan klaim afiliasi
-atau identitas orang nyata. Kombinasi sederhana `admin/admin`, `guru/guru`, dan
-`siswa/siswa` hanya untuk demo lokal; password tetap disimpan sebagai hash.
+Data demo bertujuan menguji alur sistem dan tampilan. Nama akun, isi catatan,
+dan identitas pada file SQL adalah fiktif. Sekolah Bandar Lampung memakai NPSN
+placeholder, bukan klaim afiliasi atau NPSN resmi. Password sederhana hanya
+untuk demo lokal; password tetap tersimpan sebagai hash.
 
-### 8.1 Dua sekolah demo
+### 8.1 Dua sekolah awal
 
-Nama dan lokasi berikut sengaja generik/fiktif, tanpa NPSN, dan bukan afiliasi
-sekolah nyata.
+Dua sekolah awal dalam `dummy_karvia.sql`:
 
 | Nama | Jenjang | Kota | Provinsi |
 |------|---------|------|----------|
-| Sekolah Demo KARVIA Utara | SMA | Kota Contoh | Provinsi Contoh |
-| Sekolah Demo KARVIA Selatan | MA | Kota Contoh | Provinsi Contoh |
+| SMAN 1 Bandung | SMA | Bandung | Jawa Barat |
+| MAN 2 Yogyakarta | MA | Yogyakarta | DI Yogyakarta |
 
-### 8.2 Akun demo
+Tiga baris tambahan `dummy_karvia2.sql` memakai nama sekolah dan NPSN dummy
+untuk kebutuhan uji lokal; bukan klaim afiliasi atau NPSN resmi:
 
-Semua nama pengguna adalah label fiktif untuk pengujian, bukan identitas orang. Password sederhana hanya untuk demo lokal; jangan gunakan pada pemakaian nyata.
+| Nama | Jenjang | Kota | Provinsi |
+|------|---------|------|----------|
+| SMAN 1 Bandar Lampung | SMA | Bandar Lampung | Lampung |
+| SMAN 9 Bandar Lampung | SMA | Bandar Lampung | Lampung |
+| MAN 1 Bandar Lampung | MA | Bandar Lampung | Lampung |
 
-| Peran | Nama demo | Username | Password demo | Sekolah |
-|-------|-----------|----------|---------------|---------|
-| Admin | Admin KARVIA | `admin` | `admin` | — |
-| Guru BK | Guru BK KARVIA | `guru` | `guru` | Sekolah Demo KARVIA Utara |
-| Siswa | Siswa KARVIA | `siswa` | `siswa` | Sekolah Demo KARVIA Utara |
-| Admin | Admin Demo KARVIA | `demo.admin` | `Admin123!` | — |
-| Guru BK | Guru Demo Utara | `demo.guru1` | `Guru123!` | Sekolah Demo KARVIA Utara |
-| Guru BK | Guru Demo Selatan | `demo.guru2` | `Guru123!` | Sekolah Demo KARVIA Selatan |
-| Siswa | Siswa Demo Berbagi | `demo.siswa1` | `Siswa123!` | Sekolah Demo KARVIA Utara |
-| Siswa | Siswa Demo Privat | `demo.siswa2` | `Siswa123!` | Sekolah Demo KARVIA Utara |
-| Siswa | Siswa Demo Kosong | `demo.siswa3` | `Siswa123!` | Sekolah Demo KARVIA Selatan |
+### 8.2 Akun awal dan hitungan fixture
 
-**Penting:** akun dan kata sandi ini hanya untuk demo lokal. Ganti/hapus sebelum
-pemakaian nyata. Database hanya menyimpan hash kata sandi. Semua `last_login_at`
-dibiarkan `NULL` dan `login_count` bernilai `0` agar tidak menggambarkan aktivitas
-login fiktif.
+`dummy_karvia.sql` menyediakan akun `admin/admin`, `admin1/admin`, `admin2/admin`,
+`guru1`–`guru6` dengan password `guru`, dan `siswa1`–`siswa60` dengan password
+`siswa`. `dummy_karvia2.sql` menambahkan `admin3`–`admin5` (password `admin`),
+`guru7`–`guru15` (password `guru`), dan `siswa61`–`siswa150` (password `siswa`).
+Semua adalah akun fiktif untuk demo lokal; ganti password sebelum pemakaian nyata.
 
-### 8.3 Data demo dalam Bagian B
+Fixture setelah impor ketiga file SQL terdiri dari:
+- 5 sekolah: SMAN 1 Bandung, MAN 2 Yogyakarta, SMAN 1 Bandar Lampung, SMAN 9 Bandar Lampung, MAN 1 Bandar Lampung.
+- 6 akun Admin (termasuk Admin global), 15 Guru BK, dan 150 siswa.
+- 4 profesi, 13 artikel (12 awal + satu artikel untuk SMAN 1 Bandar Lampung).
+- Data eksplorasi siswa awal tersedia sesuai fixture `dummy_karvia.sql`; tambahan siswa baru tidak memiliki aktivitas/catatan fiktif.
 
-- Katalog berisi 4 profesi inti dari prototipe: Dokter, Software Engineer, Guru BK,
-  dan Advokat.
-- Siswa Demo Berbagi: satu refleksi, satu perbandingan, satu rencana, satu jurnal,
-  satu bookmark, dan satu berbagi berstatus `baru`.
-- Siswa Demo Privat: refleksi tersedia, tetapi belum dibagikan untuk menguji privasi.
-- Siswa Demo Kosong: tidak memiliki data eksplorasi untuk menguji empty state.
-- Semua isi eksplorasi ditandai sebagai data fiktif/demo; jumlahnya sengaja dibatasi.
-
-### 8.4 Isi bagian B dan verifikasi lokal
-
-Urutan insert:
-
-1. `sekolah` — 2 baris fiktif.
-2. `pengguna` — 2 Admin, 3 Guru BK, 4 siswa (password sudah di-hash; aktivitas login kosong).
-3. `profesi` — 4 profesi inti.
-4. Data karier demo terbatas — satu siswa berbagi, satu siswa belum berbagi, dan
-   satu siswa tanpa data eksplorasi.
-
-Skema dan data demo diuji pada MySQL 8.0.30 memakai database sementara kosong: 12 tabel, 14 foreign key, 2 sekolah, 9 pengguna, 4 profesi, dan 3 akun login singkat. Database lokal `karvia_db` yang sudah ada tidak diubah; untuk mencoba perubahan, backup lalu impor SQL pada database kosong. Semua akun memiliki `last_login_at = NULL` dan `login_count = 0`.
+Dummy tambahan telah diuji pada DB lokal: import dua kali tetap menghasilkan 5 sekolah, 171 pengguna, dan 13 artikel; heartbeat akun lama tidak berubah.
 
 Bagian B harus dijalankan pada database kosong setelah bagian A. File SQL tidak
 menjalankan `TRUNCATE` atau menghapus data yang sudah ada. Untuk memperbarui

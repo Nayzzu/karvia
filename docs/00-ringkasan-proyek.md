@@ -9,8 +9,8 @@
 | Jenis | Media digital bimbingan karier untuk siswa SMA/MA |
 | Pengembang awal | Chindy Theresia (2411080092) — UIN Raden Intan Lampung |
 | Pengguna sistem | Admin, Guru BK, Siswa SMA/MA |
-| Cakupan | Multi-sekolah (dimulai dari 2 sekolah contoh) |
-| Status | Membangun ulang dari prototipe HTML menjadi aplikasi PHP + database; prototipe tetap menjadi acuan visual, sementara halaman PHP awal baru berupa tampilan |
+| Cakupan | Multi-sekolah (5 sekolah contoh: Bandung, Yogyakarta, dan Bandar Lampung) |
+| Status | Aplikasi PHP native + MySQL aktif dikembangkan; tersedia pendaftaran mandiri siswa, pengelolaan tiga peran, data multi-sekolah, dan artikel edukasi |
 
 > KARVIA adalah **media pendukung bimbingan karier**, bukan tes psikologis dan bukan
 > alat yang otomatis memvonis pilihan siswa. Pesan ini harus tetap tampil di aplikasi.
@@ -63,7 +63,7 @@ Membangun aplikasi KARVIA yang:
 
 - Login/logout dengan username + password, peran otomatis dari akun.
 - Tiga peran dan pembatasan akses.
-- Entitas sekolah + 2 sekolah contoh.
+- Entitas sekolah + 5 sekolah contoh (2 awal dan 3 sekolah fiktif Bandar Lampung).
 - Admin:
   - dashboard ringkasan nyata;
   - daftar & pencarian pengguna (filter peran, sekolah, status);
@@ -81,12 +81,12 @@ Membangun aplikasi KARVIA yang:
   - simpan profesi (bookmark);
   - bagikan catatan ke Guru BK (benar-benar tersimpan);
   - cetak ringkasan konsultasi.
-- Data contoh: 2 sekolah, akun admin, guru BK, dan beberapa siswa untuk demo.
+- Data contoh: 5 sekolah, akun admin/guru/siswa; data tambahan Bandar Lampung ada di `database/dummy_karvia2.sql`.
 - Dokumentasi cara menjalankan dan penjelasan alur data untuk Cindy.
 
 ### Tidak termasuk (untuk saat ini)
 
-- Pendaftaran akun mandiri oleh siswa/guru (akun dibuat Admin).
+- Pendaftaran mandiri Admin dan Guru BK (hanya siswa yang dapat mendaftar sendiri).
 - Aplikasi mobile khusus.
 - Tes psikologis tervalidasi atau skoring otomatis.
 - Chat real-time, video konseling, atau notifikasi WhatsApp/email.
@@ -104,7 +104,7 @@ Membangun aplikasi KARVIA yang:
 | Bahasa | PHP native (prosedural sederhana), tanpa framework |
 | Database | MySQL/MariaDB melalui Laragon, diakses dengan PDO |
 | Web server | Apache Laragon (folder proyek di `www/`) |
-| Tampilan | HTML + Tailwind CSS (CDN pada MVP) + FontAwesome + Google Fonts Inter |
+| Tampilan | HTML + Tailwind CSS (CDN pada MVP) + SVG icon KARVIA + Google Fonts Inter |
 | JavaScript | Vanilla JS seperlunya; interaksi utama memakai form server-side |
 | Autentikasi | Session PHP + `password_hash` / `password_verify` |
 | Penyimpanan | Database relasional (bukan localStorage, bukan variabel JS) |
@@ -116,7 +116,7 @@ Membangun aplikasi KARVIA yang:
 
 - Cindy bukan dari bidang komputer; istilah teknis harus dijelaskan.
 - Target indikatif: **Rabu, 25 November 2026** (dihitung dari Kamis, 19 November 2026).
-- Untuk demo lokal tersedia data contoh yang sedikit dan jelas ditandai sebagai fiktif: 2 sekolah, 2 Admin, 3 Guru BK, 4 siswa (termasuk login singkat `admin/admin`, `guru/guru`, `siswa/siswa`), 4 profesi, serta data eksplorasi terbatas untuk pengujian privasi dan tampilan. Aktivitas login contoh tidak diisi. Untuk pemakaian nyata, data contoh harus dihapus dan diganti data yang sah.
+- Data demo lokal terdiri dari 5 sekolah (2 awal dan 3 tambahan Bandar Lampung), 6 Admin termasuk Admin global, 15 Guru BK, 150 siswa, 4 profesi, 12 artikel awal + 1 artikel tambahan, serta data eksplorasi terbatas. Akun dan identitas bersifat fiktif; NPSN tambahan adalah placeholder. Untuk pemakaian nyata, ganti data dan seluruh password demo.
 - Sistem harus terasa “benar-benar dipakai”, bukan sekadar tampilan.
 
 ---
@@ -125,7 +125,7 @@ Membangun aplikasi KARVIA yang:
 
 MVP dianggap berhasil jika skenario berikut berjalan tanpa edit manual database:
 
-1. Admin login, melihat 2 sekolah dan jumlah pengguna nyata.
+1. Admin login, melihat 5 sekolah dan jumlah pengguna nyata setelah impor kedua file dummy.
 2. Admin membuat akun Guru BK baru di salah satu sekolah.
 3. Admin menonaktifkan akun siswa; siswa tersebut tidak bisa login.
 4. Guru BK login dan hanya melihat siswa dari sekolahnya.

@@ -42,7 +42,7 @@ Keluaran: kerangka proyek + pemahaman bersama.
 ### Jumat, 20 November — Database & login
 
 - [ ] Buat database `karvia_db`.
-- [ ] Tulis `database/database.sql` (bagian A struktur + bagian B data contoh).
+- [x] Struktur `database/database.sql`; data awal dan tambahan dipisah ke file dummy SQL.
 - [ ] Import & uji relasi.
 - [ ] `config/koneksi.php`.
 - [ ] `includes/function.php` (koneksi, escape, flash, CSRF, auth, validasi, format).
@@ -64,7 +64,7 @@ akun nonaktif ditolak. Data tetap ada setelah restart.
 - [ ] Form tambah/ubah sekolah.
 - [ ] Detail sekolah (jumlah siswa/guru).
 
-**Milestone:** Cindy bisa melihat 2 sekolah dan angka yang berubah saat data ditambah.
+**Milestone historis:** Cindy melihat 2 sekolah awal; fixture saat ini bertambah menjadi 5 sekolah setelah impor SQL tambahan.
 
 ---
 
@@ -184,7 +184,7 @@ bisa banyak sekolah, dan data benar-benar tersimpan.”
 
 1. Login `admin`.
 2. Tunjukkan dashboard: jumlah sekolah, siswa, Guru BK, yang pernah login.
-3. Buka daftar sekolah → 2 sekolah contoh.
+3. Buka daftar sekolah → 5 sekolah setelah import `dummy_karvia2.sql`.
 4. Buka detail sekolah → jumlah siswa & Guru BK.
 5. Tambah Guru BK baru → simpan.
 6. Nonaktifkan satu akun siswa → jelaskan “keluar = nonaktif, data tetap aman”.
@@ -211,7 +211,7 @@ bisa banyak sekolah, dan data benar-benar tersimpan.”
 
 1. Kembali ke Guru BK → catatan siswa muncul.
 2. Tunjukkan rekap Admin berubah.
-3. Jelaskan batasan: bukan tes psikologis; akun dibuat Admin; nonaktif bukan hapus.
+3. Jelaskan batasan: bukan tes psikologis; pendaftaran mandiri hanya untuk siswa; nonaktif bukan hapus.
 4. Sampaikan cara backup dan langkah menjalankan.
 
 ---
