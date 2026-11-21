@@ -24,7 +24,7 @@ Database: `database/database.sql` (struktur), `database/dummy_karvia.sql` (data 
 7. `docs/05-panduan-kerja-untuk-ai.md`
 8. `docs/09-pembagian-tugas-2-orang.md` (jobdesk 2 pengembang)
 
-Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa tersedia; siswa dapat daftar mandiri; data demo lima sekolah tersedia. Login dan daftar siswa kini memakai layout responsif bertema hijau KARVIA dengan CSS terlingkup di `assets/css/auth.css`; pemrosesan autentikasi dan pendaftaran tetap PHP server-side. Nama lengkap pada data dummy Bandar Lampung memakai nama fiktif natural; username demo dipertahankan. Rincian ada di `docs/03`, `docs/04`, `docs/05`, `docs/12`, dan `docs/14`.
+Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa tersedia; siswa dapat daftar mandiri; data demo lima sekolah tersedia. Alur siswa diperbarui bertahap: beranda, Kenali Diriku, Jelajah Profesi (15 pilihan dengan foto), Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Ringkasan Konsultasi, Jalur Setelah Lulus, dan Tips & Edukasi Karier. Login dan daftar siswa memakai layout responsif tema KARVIA dengan autentikasi server-side. Rincian ada di `docs/03`, `docs/04`, `docs/05`, `docs/06`, `docs/12`, dan `docs/14`.
 
 ## Aturan utama
 

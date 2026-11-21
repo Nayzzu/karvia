@@ -111,7 +111,7 @@ Profesi dan Bandingkan. Boleh dipertahankan di sidebar agar siswa tidak bingung.
 ### 4.4 Konten yang boleh dipertahankan
 
 - Teks pengantar KARVIA dan disclaimer “bukan tes psikologis”.
-- Deskripsi 4 profesi (Dokter, Software Engineer, Guru BK, Advokat) diisi ke tabel `profesi` pada bagian B `database.sql`.
+- Katalog memuat 15 profesi awal untuk eksplorasi, termasuk 11 tambahan dari kesehatan, teknologi, bisnis, dan bidang lain. Setiap kartu memakai foto lokal di `assets/img/profesi/`. Fixture awal berada di `dummy_karvia.sql`; `dummy_karvia2.sql` menambahkan profesi dan foto tambahan secara idempotent agar database yang sudah terisi bisa diperbarui tanpa mengimpor ulang file destructive.
 - Kategori filter profesi.
 - Konten “Jalur Setelah Lulus SMA/MA”.
 - Konten “Tips & Edukasi Karier”.

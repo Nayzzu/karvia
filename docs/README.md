@@ -4,7 +4,7 @@ Folder ini adalah sumber konteks utama untuk pengembangan KARVIA. Aturan produk,
 rencana database, dan urutan pengerjaan dicatat di sini agar pekerjaan dapat
 dilanjutkan bertahap.
 
-**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri siswa, lima sekolah demo, dan artikel Guru BK. Halaman login dan daftar siswa memakai layout responsif tema KARVIA dengan stylesheet khusus, sementara alur akun tetap server-side. Nama dummy akun Bandar Lampung fiktif natural; username demo tetap berurutan. Verifikasi dan sisa uji tercatat di `docs/04`, `docs/05`, dan `docs/14`.
+**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri, lima sekolah demo, dan artikel Guru BK. Login/daftar memakai layout responsif KARVIA. Pengalaman siswa bertahap diperbarui pada beranda, Kenali Diriku, Jelajah Profesi, Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Ringkasan Konsultasi, Jalur Setelah Lulus, dan Tips & Edukasi Karier; katalog memuat 15 profesi dengan foto lokal. Verifikasi dan status kerja tercatat di `docs/03`, `docs/04`, `docs/05`, `docs/06`, dan `docs/14`.
 
 **Prototipe acuan:** [`karvia_career_vision_action.html`](karvia_career_vision_action.html)
 File tersebut jangan diubah atau dihapus.

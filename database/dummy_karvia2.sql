@@ -1,7 +1,7 @@
 -- =====================================================================
 -- KARVIA — dummy_karvia2.sql
 -- Data tambahan 3 sekolah Bandar Lampung, tanpa menghapus data yang sudah ada.
--- Isi: 3 sekolah, masing-masing 1 Admin, 3 Guru BK, 30 siswa, 1 artikel.
+-- Isi: 3 sekolah, masing-masing 1 Admin, 3 Guru BK, 30 siswa, 1 artikel, 11 foto/katalog profesi tambahan.
 -- Semua nama, NPSN, akun, alamat, dan konten contoh bersifat fiktif.
 -- Jalankan sesudah database/database.sql dan database/dummy_karvia.sql.
 -- Idempotent: sekolah/username tidak diduplikasi; akun fixture diselaraskan namanya.
@@ -12,6 +12,23 @@ SET time_zone = '+07:00';
 USE `karvia_db`;
 
 START TRANSACTION;
+
+-- Profesi lanjutan untuk katalog Jelajah Profesi (11 tambahan; aman diimpor ulang).
+INSERT INTO `profesi`
+  (`id`, `nama`, `gambar`, `kategori`, `deskripsi`, `kemampuan`, `jalur_pendidikan`, `sumber`, `urutan`, `status`, `dibuat_pada`, `diperbarui_pada`)
+VALUES
+  (5, 'Perawat', 'assets/img/profesi/perawat.jpg', 'kesehatan', 'Memberikan asuhan keperawatan, memantau kondisi pasien, dan bekerja bersama tim kesehatan.', 'Empati, komunikasi, ketelitian, kerja sama, dan kesiapan belajar prosedur klinis.', 'D3 atau S1 Keperawatan; persyaratan praktik mengikuti ketentuan profesi yang berlaku.', 'Katalog KARVIA', 5, 'aktif', '2026-11-21 08:00:00', NULL),
+  (6, 'Apoteker', 'assets/img/profesi/apoteker.jpg', 'kesehatan', 'Mempelajari obat, membantu memastikan penggunaan obat yang aman, dan memberi informasi kepada pasien.', 'Ketelitian, dasar kimia dan biologi, komunikasi, tanggung jawab.', 'S1 Farmasi dilanjutkan pendidikan profesi apoteker; cek persyaratan kampus dan regulasi terbaru.', 'Katalog KARVIA', 6, 'aktif', '2026-11-21 08:00:00', NULL),
+  (7, 'Psikolog', 'assets/img/profesi/psikolog.jpg', 'kesehatan', 'Mempelajari perilaku dan proses mental manusia serta membantu layanan psikologi sesuai kompetensi.', 'Empati, mendengarkan, analisis, etika, dan menjaga kerahasiaan.', 'S1 Psikologi dilanjutkan pendidikan profesi psikolog sesuai aturan yang berlaku.', 'Katalog KARVIA', 7, 'aktif', '2026-11-21 08:00:00', NULL),
+  (8, 'Arsitek', 'assets/img/profesi/arsitek.jpg', 'teknologi', 'Merancang ruang dan bangunan dengan mempertimbangkan fungsi, keselamatan, lingkungan, dan kebutuhan pengguna.', 'Kreativitas, visualisasi ruang, komunikasi, ketelitian, dan dasar matematika.', 'Pendidikan arsitektur dan tahapan profesi/registrasi sesuai ketentuan yang berlaku.', 'Katalog KARVIA', 8, 'aktif', '2026-11-21 08:00:00', NULL),
+  (9, 'Insinyur Sipil', 'assets/img/profesi/insinyur-sipil.jpg', 'teknologi', 'Merancang dan mengawasi infrastruktur seperti jalan, jembatan, gedung, dan sistem air.', 'Matematika, fisika, pemecahan masalah, kerja tim, dan perhatian pada keselamatan.', 'S1 Teknik Sipil; jalur profesi dan sertifikasi bergantung pada jenis pekerjaan.', 'Katalog KARVIA', 9, 'aktif', '2026-11-21 08:00:00', NULL),
+  (10, 'Analis Data', 'assets/img/profesi/analis-data.jpg', 'teknologi', 'Mengolah data, mencari pola, lalu menyampaikan temuan untuk membantu pengambilan keputusan.', 'Matematika dasar, berpikir kritis, ketelitian, komunikasi, dan literasi data.', 'Beragam jurusan seperti Statistika, Matematika, Sistem Informasi, atau bidang terkait; portofolio dan keterampilan alat data juga penting.', 'Katalog KARVIA', 10, 'aktif', '2026-11-21 08:00:00', NULL),
+  (11, 'Desainer UI/UX', 'assets/img/profesi/desainer-ui-ux.jpg', 'teknologi', 'Meneliti kebutuhan pengguna dan merancang alur serta tampilan produk digital agar mudah digunakan.', 'Empati, riset, komunikasi, kreativitas, dan pemahaman desain digital.', 'Desain Komunikasi Visual, Sistem Informasi, atau bidang terkait; portofolio proyek dapat membantu.', 'Katalog KARVIA', 11, 'aktif', '2026-11-21 08:00:00', NULL),
+  (12, 'Akuntan', 'assets/img/profesi/akuntan.jpg', 'bisnis', 'Mencatat dan menganalisis informasi keuangan serta membantu organisasi menyusun laporan.', 'Ketelitian, integritas, numerasi, analisis, dan komunikasi.', 'D3/S1 Akuntansi; sertifikasi profesi bersifat lanjutan dan mengikuti ketentuan masing-masing.', 'Katalog KARVIA', 12, 'aktif', '2026-11-21 08:00:00', NULL),
+  (13, 'Manajer Pemasaran', 'assets/img/profesi/manajer-pemasaran.jpg', 'bisnis', 'Membantu merancang strategi agar produk atau layanan menjangkau orang yang tepat.', 'Komunikasi, kreativitas, analisis pasar, kerja sama, dan pemahaman pelanggan.', 'Beragam jurusan seperti Manajemen, Pemasaran, Komunikasi, atau bidang terkait.', 'Katalog KARVIA', 13, 'aktif', '2026-11-21 08:00:00', NULL),
+  (14, 'Jurnalis', 'assets/img/profesi/jurnalis.jpg', 'lainnya', 'Mencari, memeriksa, dan menyampaikan informasi kepada publik melalui berbagai media.', 'Rasa ingin tahu, menulis, wawancara, verifikasi fakta, dan etika.', 'Beragam jurusan termasuk Jurnalistik, Ilmu Komunikasi, atau bidang terkait; pengalaman liputan dan portofolio membantu.', 'Katalog KARVIA', 14, 'aktif', '2026-11-21 08:00:00', NULL),
+  (15, 'Desainer Grafis', 'assets/img/profesi/desainer-grafis.jpg', 'lainnya', 'Menyampaikan pesan melalui tata letak, ilustrasi, tipografi, dan karya visual.', 'Kreativitas, komunikasi visual, ketelitian, keterbukaan pada masukan, dan penggunaan alat desain.', 'Desain Komunikasi Visual atau jalur belajar lain dengan latihan dan portofolio.', 'Katalog KARVIA', 15, 'aktif', '2026-11-21 08:00:00', NULL)
+ON DUPLICATE KEY UPDATE nama = VALUES(nama), gambar = VALUES(gambar), kategori = VALUES(kategori), deskripsi = VALUES(deskripsi), kemampuan = VALUES(kemampuan), jalur_pendidikan = VALUES(jalur_pendidikan), sumber = VALUES(sumber), urutan = VALUES(urutan), status = VALUES(status);
 
 INSERT INTO `sekolah` (`id`, `nama`, `npsn`, `jenjang`, `alamat`, `kota`, `provinsi`, `status`, `dibuat_pada`, `diperbarui_pada`)
 SELECT x.id, x.nama, x.npsn, x.jenjang, x.alamat, x.kota, x.provinsi, 'aktif', NOW(), NULL

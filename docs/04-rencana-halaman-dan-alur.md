@@ -404,19 +404,21 @@ Jika siswa belum mengisi sebagian data, tampilkan “Belum diisi”, bukan halam
 
 ### 5.1 Beranda (`siswa/index.php`)
 
-Status implementasi: sapaan, disclaimer, pintasan lima langkah, dan indikator berdasarkan
-keberadaan data DB tersedia. Ringkasan minat/rencana dan status berbagi belum tampil.
+Status implementasi: beranda merangkum progres dari data DB, memilih langkah eksplorasi pertama yang belum terisi, dan menampilkan status berbagi catatan tanpa membuka isi pribadi.
 
-- Sapaan: “Halo, [Nama] — [Kelas]”.
-- Penjelasan singkat KARVIA dan disclaimer “bukan tes psikologis”.
-- Lima kartu langkah dengan status “Sudah diisi / Belum”.
-- Pintasan ke Konsultasi.
-- Ringkasan kecil: minat terakhir, rencana terakhir, status berbagi.
+- Sapaan personal dan pengantar suportif; tidak memberi skor atau label psikologis.
+- Progres 0–5 langkah memakai keberadaan data tersimpan: Kenali Diriku, Jelajah Profesi, Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi.
+- Tombol utama melanjutkan langkah pertama yang belum memiliki data; jika semua terisi, arahkan ke ringkasan konsultasi.
+- Kartu langkah menunjukkan status dan tautan untuk mulai, melihat, atau memperbarui.
+- Status konsultasi menunjukkan belum dibagikan atau status terbaru (`baru`, `dibaca`, `ditindaklanjuti`) dan waktu berbagi.
+- Tegaskan catatan tetap privat sampai siswa memilih membagikannya; akses menuju `siswa/konsultasi.php` untuk meninjau ringkasan.
 
 ### 5.2 Kenali Diriku (`siswa/kenali_diri.php`)
 
 Status implementasi: formulir tersimpan dengan upsert per siswa, pilihan tervalidasi
-terhadap allowlist, catatan dibatasi 5.000 karakter, dan output di-escape.
+terhadap allowlist, catatan dibatasi 5.000 karakter, dan output di-escape. Tampilan
+menyertakan prompt refleksi, kontrol pilihan interaktif, keterangan privasi, status
+isian tersimpan, dan tautan ke langkah berikutnya; tidak memberi skor/label psikologis.
 
 Field:
 
@@ -454,15 +456,21 @@ POST+CSRF tersedia.
 
 ### 5.4 Jalur Setelah Lulus (`siswa/jalur.php`)
 
-Status implementasi: halaman informasi statis sudah tersedia.
+Status implementasi: halaman informasi statis dengan kartu ringkas lima jalur
+(perguruan tinggi, vokasi, pelatihan/sertifikasi, bekerja, wirausaha), rincian
+"Coba pertimbangkan bila", daftar hal yang perlu dicek, satu langkah kecil per
+jalur, panduan membandingkan, dan pengingat memeriksa sumber resmi.
 
 Konten statis dari prototipe (PTU/PTKIN, vokasi, kerja, wirausaha, sertifikasi).
-Tidak perlu database pada MVP.
+Tidak perlu database pada MVP. Tidak menampilkan angka biaya, daya tampung, atau
+peluang kerja yang tidak dapat dipastikan.
 
 ### 5.5 Bandingkan (`siswa/bandingkan.php`)
 
-Status implementasi: dua pilihan, catatan, kriteria allowlist, validasi panjang, dan
-upsert per siswa tersedia. Prefill opsi A dari profesi tersedia.
+Status implementasi: form dua pilihan dengan catatan dan kriteria allowlist tersimpan
+lewat upsert per siswa. Tampilan kini memakai dua kartu responsif, prompt refleksi,
+status data tersimpan, tautan lanjut ke rencana, dan pengingat bahwa sistem tidak
+menilai atau menetapkan pilihan.
 
 Field:
 
@@ -476,29 +484,35 @@ pendidikannya. Simpan → upsert `pilihan_banding` → flash → arahkan ke Renc
 ### 5.6 Rencana Langkahku (`siswa/rencana.php`)
 
 Status implementasi: tujuan dan dua langkah wajib divalidasi, dibatasi 255 karakter,
-dan disimpan dengan upsert per siswa.
+dan disimpan dengan upsert per siswa. Tampilan memberi panduan memecah arah menjadi
+tindakan realistis, contoh pertanyaan, pengingat dukungan BK, status tersimpan,
+dan tautan ke Jurnal; tanpa checklist palsu karena skema belum menyimpan progres
+per langkah.
 
-- Tujuan sementara.
-- Langkah kecil 1.
-- Langkah kecil 2.
-- Simpan → upsert `rencana_karier` → flash → arahkan ke Jurnal.
+- Tujuan sementara berupa jurusan, bidang, keterampilan, atau pertanyaan untuk dijelajahi.
+- Langkah kecil pertama dan langkah berikutnya; siswa boleh mengubah rencana kapan saja.
+- Simpan → upsert `rencana_karier` → flash → tetap di halaman; tombol lanjut tersedia menuju Jurnal.
 
 ### 5.7 Jurnal (`siswa/jurnal.php`)
 
-Status implementasi: form append dan riwayat pribadi terbaru tersedia; minimal satu
-bagian wajib terisi, tanpa edit/hapus.
+Status implementasi: jurnal pribadi memakai form append dan riwayat terbaru di atas.
+Tampilan menjelaskan privasi, memberi prompt refleksi, menghitung entri tersimpan,
+dan menautkan ke Konsultasi; minimal satu bagian wajib terisi. CSRF, batas panjang,
+prepared statement, dan escaping tetap aktif.
 
 - Form: hal baru, hambatan, dukungan.
 - Simpan → **insert** baris baru di `jurnal_refleksi`.
-- Di bawah form: daftar jurnal sebelumnya (tanggal + ringkasan), terbaru di atas.
-- Minimal satu field terisi.
-- Tidak ada edit/hapus pada MVP; jika perlu, tambahkan sebagai keputusan baru.
+- Riwayat berisi tanggal dan bagian yang diisi, terbaru di atas.
+- Jurnal tidak terlihat oleh Guru BK sebelum siswa membagikan catatan; Admin tidak dapat membaca isi.
+- Tidak ada edit/hapus pada MVP; entri baru menambahkan catatan, bukan mengganti catatan lama.
 
 ### 5.8 Konsultasi (`siswa/konsultasi.php`)
 
 Status implementasi: ringkasan data eksplorasi/jurnal dari DB, status berbagi,
-bagikan ulang, pesan opsional, CSRF, dan cetak `window.print()` tersedia. Uji HTTP
-menyimpan berbagi pada sekolah siswa dan Guru BK sekolah tersebut dapat membuka isi;
+bagikan ulang, pesan opsional, CSRF, dan cetak `window.print()` tersedia. Tampilan
+memuat identitas konsultasi, ringkasan per bagian dengan tautan pembaruan, dan
+pengingat bahwa seluruh riwayat jurnal yang tampil ikut terlihat Guru BK saat siswa
+membagikan catatan. Data bersama tetap mengikuti isi terbaru saat Guru BK membuka;
 output teks di-escape.
 
 - Ringkasan dari database:
@@ -521,8 +535,12 @@ output teks di-escape.
 
 ### 5.9 Tips (`siswa/tips.php`)
 
-Implementasi konten edukasi statis dasar tersedia, termasuk panduan informasi karier,
-diskusi dengan orang dewasa tepercaya, dan disclaimer bahwa KARVIA bukan tes psikologis.
+Status implementasi: lima tips ringkas dengan tindakan kecil dan tautan ke halaman
+refleksi/jalur/konsultasi tersedia. Artikel edukasi yang diterbitkan Guru BK dimuat
+dari tabel `artikel` (maksimal 6 terbaru) dalam carousel scroll-snap yang responsif,
+dilengkapi tombol sebelumnya/berikutnya, indikator posisi, sampul, penulis, tanggal,
+dan tautan baca. Empty state tampil jika belum ada artikel; disclaimer bahwa KARVIA
+bukan tes psikologis tetap ada.
 
 
 ### 5.10 Profil (`profil.php`)

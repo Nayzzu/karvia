@@ -58,18 +58,26 @@ $sql .= ' ORDER BY p.urutan, p.nama';
 $stmt = $pdo->prepare($sql);
 $stmt->execute($parameter);
 $profesi = $stmt->fetchAll();
+$stmt = $pdo->prepare('SELECT COUNT(*) FROM profesi_disimpan WHERE siswa_id = :siswa_id');
+$stmt->execute(['siswa_id' => $siswa_id]);
+$jumlah_tersimpan = (int) $stmt->fetchColumn();
 ?>
 
-<!-- Header Halaman -->
-<div class="flex flex-col gap-1">
-  <h2 class="text-xl font-bold tracking-tight text-[#203628]">Eksplorasi Katalog Profesi</h2>
-  <p class="text-xs text-slate-500">Kenali tugas harian, keterampilan yang dibutuhkan, dan jalur pendidikan tinggi untuk berbagai karier masa depan.</p>
-</div>
+<section class="overflow-hidden rounded-3xl bg-gradient-to-br from-karvia-900 to-emerald-700 p-6 text-white sm:p-8">
+  <p class="text-xs font-bold uppercase tracking-[.16em] text-emerald-100">Langkah 2 dari 5 · Jelajahi pilihan</p>
+  <h2 class="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">Profesi apa yang membuatmu penasaran?</h2>
+  <p class="mt-2 max-w-2xl text-sm leading-relaxed text-emerald-50">Kenali gambaran pekerjaan dan jalur belajarnya. Kamu tidak perlu langsung memilih; simpan beberapa yang ingin kamu cari tahu lebih jauh.</p>
+  <p class="mt-4 text-sm font-semibold text-white"><?= count($profesi) ?> profesi ditampilkan · <?= $jumlah_tersimpan ?> tersimpan</p>
+</section>
 
-<!-- Filter Kategori Attendara Style -->
-<form method="get" action="<?= e(url('siswa/profesi.php')) ?>" class="rounded-2xl border border-[#dfe6de] bg-white p-4 shadow-sm sm:p-5">
+<section class="rounded-2xl border border-emerald-100 bg-white p-4 sm:p-5" aria-label="Privasi pilihan profesi">
+  <p class="text-sm leading-relaxed text-slate-700"><strong class="text-karvia-800">Pilihanmu tidak mengunci masa depan.</strong> Katalog ini bahan eksplorasi, bukan tes atau rekomendasi otomatis. Jalur pendidikan dapat berbeda antar kampus; periksa informasi resmi saat mempertimbangkan pilihan.</p>
+</section>
+
+<!-- Filter Kategori -->
+<nav aria-label="Filter kategori profesi" class="rounded-2xl border border-[#dfe6de] bg-white p-4 shadow-sm sm:p-5">
   <div class="flex flex-wrap items-center gap-2">
-    <span class="mr-2 text-xs font-bold text-slate-700">Filter Kategori:</span>
+    <span class="mr-2 text-xs font-bold text-slate-700">Jelajahi bidang:</span>
     <a href="<?= e(url('siswa/profesi.php')) ?>" class="rounded-xl px-3.5 py-1.5 text-xs font-semibold transition <?= $kategori === '' ? 'bg-[#224f35] text-white' : 'border border-[#dfe6de] bg-[#fcfdfc] text-slate-700 hover:bg-[#f2f6f2]' ?>">
       Semua Kategori
     </a>
@@ -79,7 +87,7 @@ $profesi = $stmt->fetchAll();
       </a>
     <?php endforeach; ?>
   </div>
-</form>
+</nav>
 
 <!-- Grid Katalog Profesi -->
 <?php if (!$profesi): ?>
@@ -87,7 +95,7 @@ $profesi = $stmt->fetchAll();
     Belum ada profesi pada kategori ini.
   </div>
 <?php else: ?>
-  <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-2">
+  <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
     <?php foreach ($profesi as $item): ?>
       <article class="flex flex-col justify-between overflow-hidden rounded-2xl border border-[#dfe6de] bg-white shadow-sm transition duration-200 hover:border-[#ccd9cb] hover:shadow-md">
         <div>

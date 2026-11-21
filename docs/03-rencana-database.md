@@ -406,7 +406,7 @@ sebelum pemakaian nyata.
 Fixture setelah impor ketiga file SQL terdiri dari:
 - 5 sekolah: SMAN 1 Bandung, MAN 2 Yogyakarta, SMAN 1 Bandar Lampung, SMAN 9 Bandar Lampung, MAN 1 Bandar Lampung.
 - 6 akun Admin (termasuk Admin global), 15 Guru BK, dan 150 siswa.
-- 4 profesi, 13 artikel (12 awal + satu artikel untuk SMAN 1 Bandar Lampung).
+- 15 profesi katalog (4 awal + 11 tambahan untuk ragam studi lanjut); semua profesi memiliki foto lokal di `assets/img/profesi/`. Ada 13 artikel (12 awal + satu artikel untuk SMAN 1 Bandar Lampung).
 - Data eksplorasi siswa awal tersedia sesuai fixture `dummy_karvia.sql`; tambahan siswa baru tidak memiliki aktivitas/catatan fiktif.
 
 Dummy tambahan telah diuji pada DB lokal: import berulang tetap menghasilkan 5 sekolah, 171 pengguna, dan 13 artikel; nama lengkap roster akun Bandar Lampung terselaraskan ke nama fiktif natural; heartbeat akun lama tidak berubah.
