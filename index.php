@@ -155,7 +155,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
 
               <div class="mt-3 rounded-2xl bg-gradient-to-r from-[#102819] to-emerald-700 p-4 text-white sm:p-5">
                 <span class="inline-block rounded-full border border-emerald-400/30 bg-emerald-500/30 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-emerald-100">KARVIA · Langkah Karierku</span>
-                <p class="mt-2 text-base font-extrabold sm:text-lg">Halo, Nadia!</p>
+                <p class="mt-2 text-base font-extrabold sm:text-lg">Halo, Chindy!</p>
                 <p class="mt-1 max-w-md text-[11px] leading-relaxed text-emerald-100">Kenali dirimu, jelajahi pilihan, dan rancang langkah berikutnya bersama Guru BK.</p>
                 <span class="mt-3 inline-flex items-center rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold text-[#173a24]">Mulai Eksplorasi <?php karvia_icon('arrow-right', 'ml-1.5 h-3 w-3'); ?></span>
               </div>
