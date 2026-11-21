@@ -144,84 +144,74 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
         <p class="hero-masuk hero-masuk-4 mt-5 text-sm text-slate-500">Bukan tes untuk menentukan masa depan—ini ruang untuk mengenal pilihanmu.</p>
       </div>
 
-      <div class="hero-masuk hero-masuk-4 relative mx-auto mt-16 max-w-5xl sm:mt-20" aria-label="Ilustrasi ringkasan proses eksplorasi KARVIA">
+      <div class="hero-masuk hero-masuk-4 relative mx-auto mt-16 max-w-5xl sm:mt-20" aria-label="Ilustrasi Beranda Siswa KARVIA">
         <div class="karvia-dashboard overflow-hidden rounded-[1.5rem] border border-[#dfe6de] bg-white text-left sm:rounded-[2rem]">
           <div class="flex items-center justify-between border-b border-[#eef2ed] bg-[#fbfdfb] px-4 py-3 sm:px-6 sm:py-4">
-            <div class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-rose-300"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span></div>
-            <span class="text-[10px] font-semibold tracking-wide text-slate-400 sm:text-xs">PERJALANAN EKSPLORASIKU</span>
+            <div class="flex items-center gap-2" aria-hidden="true"><span class="h-2.5 w-2.5 rounded-full bg-rose-300"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span></div>
+            <span class="text-[10px] font-semibold tracking-wide text-slate-400 sm:text-xs">BERANDA SISWA · KARVIA</span>
             <span class="w-10"></span>
           </div>
           <div class="grid md:grid-cols-[230px_1fr] lg:grid-cols-[250px_1fr]">
-            <!-- Sidebar tiruan dashboard siswa -->
-            <div class="hidden bg-[#224f35] p-5 md:block lg:p-6">
+            <aside class="hidden bg-[#224f35] p-5 md:block lg:p-6" aria-label="Menu siswa">
               <div class="flex items-center gap-3">
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-white"><?php karvia_icon('compass', 'h-5 w-5'); ?></span>
                 <span><span class="block text-sm font-extrabold text-white">KARVIA</span><span class="text-[11px] text-white/75">Langkah Karierku</span></span>
               </div>
               <p class="mt-7 px-1 text-[10px] font-bold uppercase tracking-[.14em] text-white/50">Menu Utama</p>
-              <div class="mt-2 space-y-1">
-                <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-[#f2f6f2] bg-[#e8f0e9] px-3 py-2.5 text-xs font-semibold text-[#1b3d2b] shadow-sm"><?php karvia_icon('users', 'h-4 w-4'); ?> Kenali Diriku</div>
+              <nav class="mt-2 space-y-1" aria-label="Menu mockup">
+                <div aria-current="page" class="flex items-center gap-3 rounded-lg border-l-[3px] border-[#f2f6f2] bg-[#e8f0e9] px-3 py-2.5 text-xs font-semibold text-[#1b3d2b] shadow-sm"><?php karvia_icon('home', 'h-4 w-4'); ?> Beranda</div>
+                <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('users', 'h-4 w-4 text-white/70'); ?> Kenali Diriku</div>
                 <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('compass', 'h-4 w-4 text-white/70'); ?> Jelajah Profesi</div>
                 <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('chart', 'h-4 w-4 text-white/70'); ?> Bandingkan Pilihan</div>
                 <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('calendar', 'h-4 w-4 text-white/70'); ?> Rencana Langkahku</div>
                 <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('book', 'h-4 w-4 text-white/70'); ?> Jurnal Refleksi</div>
-              </div>
-            </div>
-            <!-- Konten tiruan dashboard siswa -->
-            <div class="bg-[#f6f8f5] p-4 sm:p-5 lg:p-6">
+                <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('message', 'h-4 w-4 text-white/70'); ?> Ruang Konsultasi</div>
+                <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('map', 'h-4 w-4 text-white/70'); ?> Jalur Setelah Lulus</div>
+                <div class="flex items-center gap-3 rounded-lg border-l-[3px] border-transparent px-3 py-2.5 text-xs text-white/85"><?php karvia_icon('lightbulb', 'h-4 w-4 text-white/70'); ?> Tips & Edukasi</div>
+              </nav>
+            </aside>
+
+            <div class="min-w-0 bg-[#f6f8f5] p-3 sm:p-5 lg:p-6">
               <div class="flex items-center justify-between rounded-xl border border-[#dfe6de] bg-white px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-                <div>
-                  <p class="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#55785f]">Siswa</p>
-                  <p class="text-sm font-bold text-[#203628]">Beranda Siswa</p>
-                </div>
+                <div><p class="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#55785f]">Siswa</p><p class="text-sm font-bold text-[#203628]">Beranda Siswa</p></div>
                 <span class="inline-flex items-center gap-1.5 rounded-full bg-[#edf3ed] px-2.5 py-1 text-[10px] font-semibold text-[#245938]"><?php karvia_icon('school', 'h-3 w-3 text-[#55785f]'); ?> SMAN 1 Bandung</span>
               </div>
 
-              <div class="mt-3 rounded-2xl bg-gradient-to-r from-[#102819] to-emerald-700 p-4 text-white sm:p-5">
-                <span class="inline-block rounded-full border border-emerald-400/30 bg-emerald-500/30 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-emerald-100">KARVIA · Langkah Karierku</span>
-                <p class="mt-2 text-base font-extrabold sm:text-lg">Halo, Chindy!</p>
-                <p class="mt-1 max-w-md text-[11px] leading-relaxed text-emerald-100">Kenali dirimu, jelajahi pilihan, dan rancang langkah berikutnya bersama Guru BK.</p>
-                <span class="mt-3 inline-flex items-center rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold text-[#173a24]">Mulai Eksplorasi <?php karvia_icon('arrow-right', 'ml-1.5 h-3 w-3'); ?></span>
-              </div>
+              <section class="mt-3 rounded-2xl bg-gradient-to-br from-[#173a24] via-[#224f35] to-emerald-700 p-4 text-white sm:p-6" aria-label="Sapaan dan progres eksplorasi">
+                <p class="mb-2 text-[9px] font-bold uppercase tracking-[.16em] text-emerald-100">Perjalanan Karierku</p>
+                <p class="text-lg font-extrabold tracking-tight sm:text-2xl">Halo, Chindy.</p>
+                <p class="mt-2 max-w-xl text-[10px] leading-relaxed text-emerald-50 sm:text-xs">Kamu tidak harus punya semua jawaban sekarang. Kenali dirimu, jelajahi pilihan, lalu tentukan satu langkah yang terasa mungkin.</p>
+                <div class="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div class="w-full max-w-sm"><div class="mb-2 flex items-center justify-between text-[9px] font-semibold text-emerald-50 sm:text-[10px]"><span>Progres eksplorasi</span><span>2 dari 5 langkah</span></div><div class="h-1.5 overflow-hidden rounded-full bg-white/20" role="progressbar" aria-label="Ilustrasi progres eksplorasi karier, dua dari lima langkah" aria-valuemin="0" aria-valuemax="5" aria-valuenow="2"><div class="h-full w-2/5 rounded-full bg-emerald-200"></div></div></div>
+                  <span class="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2 text-[10px] font-bold text-[#173a24] shadow-sm">Lanjutkan: Bandingkan Pilihan <?php karvia_icon('arrow-right', 'h-3.5 w-3.5'); ?></span>
+                </div>
+              </section>
 
-              <div class="mt-3 rounded-xl border-l-4 border-amber-500 bg-amber-50 px-3 py-2">
-                <p class="text-[10px] font-bold text-amber-900">Tentang KARVIA</p>
-                <p class="mt-0.5 text-[10px] leading-relaxed text-amber-800">Media pendukung bimbingan karier, bukan tes psikologis atau penentu pilihan otomatis.</p>
-              </div>
+              <section class="mt-3 flex items-start gap-2.5 rounded-xl border border-emerald-100 bg-white p-3 shadow-sm" aria-label="Status Ruang Konsultasi BK">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-[#224f35]"><?php karvia_icon('message', 'h-4 w-4'); ?></span>
+                <div class="min-w-0 flex-1"><p class="text-[10px] font-bold text-[#203628]">Ruang Konsultasi BK</p><p class="mt-1 text-[9px] text-slate-600">Catatanmu belum dibagikan. Kamu yang menentukan kapan siap dibahas.</p><p class="mt-1 text-[8px] text-slate-500">Isi eksplorasi tetap pribadi sampai kamu memilih untuk membagikannya.</p></div>
+                <span class="hidden shrink-0 rounded-lg border border-emerald-200 px-2.5 py-2 text-[9px] font-semibold text-[#224f35] sm:inline-flex">Siapkan konsultasi →</span>
+              </section>
 
-              <div class="mt-4 flex items-end justify-between gap-2">
-                <p class="text-xs font-extrabold text-[#203628]">Langkah Eksplorasi Karier</p>
-                <span class="text-[10px] text-slate-500">2 dari 5 langkah</span>
-              </div>
-              <div class="mt-2 grid gap-2 sm:grid-cols-3">
-                <div class="rounded-xl border border-[#dfe6de] bg-white p-3">
-                  <div class="flex items-start justify-between gap-2"><span class="text-[11px] font-bold text-[#203628]">Kenali Diriku</span><span class="shrink-0 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-800">Terisi</span></div>
-                  <p class="mt-1.5 text-[10px] leading-relaxed text-slate-500">Refleksi minat dan kekuatan.</p>
-                </div>
-                <div class="rounded-xl border border-[#dfe6de] bg-white p-3">
-                  <div class="flex items-start justify-between gap-2"><span class="text-[11px] font-bold text-[#203628]">Jelajah Profesi</span><span class="shrink-0 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-800">Terisi</span></div>
-                  <p class="mt-1.5 text-[10px] leading-relaxed text-slate-500">Profesi yang kamu simpan.</p>
-                </div>
-                <div class="rounded-xl border border-[#dfe6de] bg-white p-3">
-                  <div class="flex items-start justify-between gap-2"><span class="text-[11px] font-bold text-[#203628]">Bandingkan</span><span class="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[9px] font-semibold text-slate-500">Belum</span></div>
-                  <p class="mt-1.5 text-[10px] leading-relaxed text-slate-500">Pertimbangkan dua pilihan.</p>
-                </div>
-              </div>
+              <section class="mt-3 rounded-xl border-l-4 border-amber-500 bg-amber-50 px-3 py-2.5" aria-label="Pengingat tentang KARVIA">
+                <p class="text-[10px] font-bold text-amber-900">Ingat, ini perjalananmu</p>
+                <p class="mt-1 text-[9px] leading-relaxed text-amber-800">KARVIA adalah media pendukung bimbingan karier, bukan tes psikologis atau penentu pilihan otomatis.</p>
+              </section>
+
+              <section class="mt-4" aria-label="Langkah eksplorasi karier">
+                <div class="mb-2"><h3 class="text-xs font-extrabold text-[#203628] sm:text-sm">Langkah eksplorasi karier</h3><p class="mt-1 text-[9px] text-slate-500">Pilih langkah untuk mulai atau melanjutkan. Progres berdasarkan data yang tersimpan.</p></div>
+                <ol class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                  <li class="rounded-xl border border-[#dfe6de] bg-white p-3"><div class="flex items-center justify-between gap-2"><span class="font-bold text-[10px] text-slate-900">01 · Kenali Diriku</span><span class="rounded-full bg-emerald-100 px-2 py-1 text-[8px] font-semibold text-emerald-800">Sudah ada data</span></div><p class="mt-1.5 text-[9px] leading-relaxed text-slate-500">Mulai dari minat, kekuatan, dan hal yang penting bagimu.</p><p class="mt-2 text-[8px] font-semibold text-[#224f35]">Lihat atau perbarui →</p></li>
+                  <li class="rounded-xl border border-[#dfe6de] bg-white p-3"><div class="flex items-center justify-between gap-2"><span class="font-bold text-[10px] text-slate-900">02 · Jelajah Profesi</span><span class="rounded-full bg-emerald-100 px-2 py-1 text-[8px] font-semibold text-emerald-800">Sudah ada data</span></div><p class="mt-1.5 text-[9px] leading-relaxed text-slate-500">Cari tahu profesi yang membuatmu penasaran dan simpan pilihanmu.</p><p class="mt-2 text-[8px] font-semibold text-[#224f35]">Lihat atau perbarui →</p></li>
+                  <li class="rounded-xl border border-[#dfe6de] bg-white p-3"><div class="flex items-center justify-between gap-2"><span class="font-bold text-[10px] text-slate-900">03 · Bandingkan Pilihan</span><span class="rounded-full bg-slate-100 px-2 py-1 text-[8px] font-semibold text-slate-500">Belum dimulai</span></div><p class="mt-1.5 text-[9px] leading-relaxed text-slate-500">Timbang dua pilihan dengan alasan dan kriteria versimu.</p><p class="mt-2 text-[8px] font-semibold text-[#224f35]">Mulai langkah →</p></li>
+                  <li class="rounded-xl border border-[#dfe6de] bg-white p-3"><div class="flex items-center justify-between gap-2"><span class="font-bold text-[10px] text-slate-900">04 · Rencana Langkahku</span><span class="rounded-full bg-slate-100 px-2 py-1 text-[8px] font-semibold text-slate-500">Belum dimulai</span></div><p class="mt-1.5 text-[9px] leading-relaxed text-slate-500">Ubah tujuan menjadi dua langkah kecil yang bisa dicoba.</p><p class="mt-2 text-[8px] font-semibold text-[#224f35]">Mulai langkah →</p></li>
+                  <li class="rounded-xl border border-[#dfe6de] bg-white p-3"><div class="flex items-center justify-between gap-2"><span class="font-bold text-[10px] text-slate-900">05 · Jurnal Refleksi</span><span class="rounded-full bg-slate-100 px-2 py-1 text-[8px] font-semibold text-slate-500">Belum dimulai</span></div><p class="mt-1.5 text-[9px] font-semibold text-slate-500">Catat hal baru, hambatan, dan dukungan yang kamu butuhkan.</p><p class="mt-2 text-[8px] font-semibold text-[#224f35]">Mulai langkah →</p></li>
+                </ol>
+              </section>
             </div>
           </div>
         </div>
-
-        <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
-          <span class="inline-flex items-center gap-2 rounded-xl border border-[#dfe6de] bg-white px-3.5 py-2 text-[11px] shadow-sm">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#e5efe7] text-[#224f35]"><?php karvia_icon('users', 'h-3.5 w-3.5'); ?></span>
-            <span><span class="block text-[9px] font-semibold uppercase tracking-wider text-slate-400">Mulai dari</span><span class="block font-bold text-[#203628]">Mengenali diri</span></span>
-          </span>
-          <span class="inline-flex items-center gap-2 rounded-xl border border-amber-200 bg-white px-3.5 py-2 text-[11px] shadow-sm">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-amber-700"><?php karvia_icon('map', 'h-3.5 w-3.5'); ?></span>
-            <span><span class="block text-[9px] font-semibold uppercase tracking-wider text-slate-400">Lanjutkan dengan</span><span class="block font-bold text-[#203628]">Satu langkah kecil</span></span>
-          </span>
-        </div>
-        <p class="mt-3 text-center text-[11px] text-slate-400">Ilustrasi pengalaman KARVIA · Bukan hasil tes atau rekomendasi otomatis</p>
+        <p class="mt-3 text-center text-[10px] text-slate-400">Ilustrasi Beranda Siswa KARVIA · Isi contoh, bukan data pengguna nyata</p>
       </div>
     </section>
 
