@@ -6,12 +6,13 @@ ubah status menjadi **Disetujui** dan catat tanggalnya di bagian akhir.
 
 ---
 
-## Keputusan disetujui: revisi mobile landing
+## Keputusan disetujui: revisi landing
 
 | Tanggal | Keputusan | Rincian |
 |---|---|---|
 | 21 Nov 2026 | Navbar mobile | Baris logo + tombol menu bulat; saat dibuka overlay layar penuh, tautan vertikal, tombol tutup, CTA Masuk/Daftar Siswa; palet hijau-krem KARVIA. Desktop tidak berubah. |
-| 21 Nov 2026 | Artikel mobile | Carousel horizontal clean/editorial, CSS scroll-snap, kartu berikutnya terlihat sebagian, kontrol aksesibel, tanpa autoplay; desktop tetap grid. |
+| 21 Nov 2026 | Carousel artikel | Carousel clean/editorial pada mobile dan desktop; kartu berikutnya tampak, kontrol aksesibel, tanpa autoplay. |
+| 21 Nov 2026 | Hero | Hapus label kecil “Langkah Karierku · Untuk siswa SMA/MA”; animasi masuk halus saat load, hormati reduced-motion. |
 
 ## 1. Enam pertanyaan prioritas untuk Cindy
 

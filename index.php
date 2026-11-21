@@ -74,6 +74,10 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     .artikel-track{scrollbar-width:none;scroll-behavior:smooth}
     .artikel-track::-webkit-scrollbar{display:none}
     .menu-mobile::backdrop{background:#173a24}
+    @keyframes hero-masuk{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .hero-masuk{animation:hero-masuk .65s cubic-bezier(.2,.7,.2,1) both}
+    .hero-masuk-1{animation-delay:.08s}.hero-masuk-2{animation-delay:.18s}.hero-masuk-3{animation-delay:.28s}.hero-masuk-4{animation-delay:.38s}
+    @media(prefers-reduced-motion:reduce){.hero-masuk{animation:none}}
     @media(min-width:768px){.artikel-track{scrollbar-width:auto}.artikel-track::-webkit-scrollbar{display:block;height:8px}.artikel-track::-webkit-scrollbar-thumb{border-radius:999px;background:#cce0d1}.artikel-track::-webkit-scrollbar-track{background:transparent}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
@@ -131,17 +135,16 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
       <div class="pointer-events-none absolute left-[8%] top-20 h-48 w-48 rounded-full bg-[#e5efe7]/70 blur-3xl" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[8%] top-44 h-56 w-56 rounded-full bg-amber-100/70 blur-3xl" aria-hidden="true"></div>
       <div class="relative mx-auto max-w-5xl text-center">
-        <span class="mb-7 inline-flex items-center gap-2 rounded-full border border-[#cce0d1] bg-white/85 px-4 py-2 text-xs font-bold uppercase tracking-[.16em] text-[#224f35] shadow-sm"><?php karvia_icon('lightbulb', 'h-4 w-4 text-amber-500'); ?>Langkah Karierku · Untuk siswa SMA/MA</span>
-        <h1 id="judul-hero" class="mx-auto max-w-5xl text-4xl font-extrabold leading-[1.08] tracking-tight text-[#173a24] sm:text-6xl lg:text-7xl">Kenali dirimu.<br class="hidden sm:block"> Temukan arah yang <span class="text-[#2d6a45]">bermakna.</span></h1>
-        <p class="mx-auto mt-7 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">Jelajahi potensi dan pilihan kariermu, lalu rencanakan langkah kecil berikutnya. KARVIA mendukung proses refleksi dan ruang diskusi bersama Guru BK.</p>
-        <div class="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+        <h1 id="judul-hero" class="hero-masuk hero-masuk-1 mx-auto max-w-5xl text-4xl font-extrabold leading-[1.08] tracking-tight text-[#173a24] sm:text-6xl lg:text-7xl">Kenali dirimu.<br class="hidden sm:block"> Temukan arah yang <span class="text-[#2d6a45]">bermakna.</span></h1>
+        <p class="hero-masuk hero-masuk-2 mx-auto mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:mt-7 sm:text-lg">Jelajahi potensi dan pilihan kariermu, lalu rencanakan langkah kecil berikutnya. KARVIA mendukung proses refleksi dan ruang diskusi bersama Guru BK.</p>
+        <div class="hero-masuk hero-masuk-3 mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
           <a href="login.php" class="inline-flex items-center justify-center rounded-xl bg-[#224f35] px-7 py-3.5 font-bold text-white shadow-md shadow-[#173a24]/10 transition hover:-translate-y-0.5 hover:bg-[#1d482d] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2">Masuk ke KARVIA <?php karvia_icon('arrow-right', 'ml-2 h-4 w-4'); ?></a>
           <a href="#tahapan" class="inline-flex items-center justify-center rounded-xl border border-[#dfe6de] bg-white px-7 py-3.5 font-bold text-slate-700 transition hover:-translate-y-0.5 hover:border-[#c3d8c8] hover:text-[#224f35] focus:outline-none focus:ring-2 focus:ring-[#2d6a45] focus:ring-offset-2">Kenali Tahapannya <?php karvia_icon('arrow-down', 'ml-2 h-4 w-4 text-[#2d6a45]'); ?></a>
         </div>
-        <p class="mt-5 text-sm text-slate-500">Bukan tes untuk menentukan masa depan—ini ruang untuk mengenal pilihanmu.</p>
+        <p class="hero-masuk hero-masuk-4 mt-5 text-sm text-slate-500">Bukan tes untuk menentukan masa depan—ini ruang untuk mengenal pilihanmu.</p>
       </div>
 
-      <div class="relative mx-auto mt-16 max-w-5xl sm:mt-20" aria-label="Ilustrasi ringkasan proses eksplorasi KARVIA">
+      <div class="hero-masuk hero-masuk-4 relative mx-auto mt-16 max-w-5xl sm:mt-20" aria-label="Ilustrasi ringkasan proses eksplorasi KARVIA">
         <div class="karvia-dashboard overflow-hidden rounded-[1.5rem] border border-[#dfe6de] bg-white text-left sm:rounded-[2rem]">
           <div class="flex items-center justify-between border-b border-[#eef2ed] bg-[#fbfdfb] px-4 py-3 sm:px-6 sm:py-4">
             <div class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-rose-300"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span></div>

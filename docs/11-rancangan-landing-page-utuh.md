@@ -193,7 +193,11 @@ Pada commit `23bdd0c` di branch `feat/landing-teal`:
 - Pengguna yang sudah login tetap diarahkan ke dashboard sesuai peran.
 - Tidak ada pendaftaran palsu, tombol mati, atau tautan ke halaman fitur yang belum tersedia.
 
-## 11. Revisi mobile disetujui
+## 11. Revisi hero dan mobile disetujui
+
+Hero dibersihkan dengan menghapus label kecil “Langkah Karierku · Untuk siswa SMA/MA” di atas judul. Judul, deskripsi, CTA, disclaimer, dan mockup dipertahankan. Tambahkan animasi masuk singkat (opacity + gerak vertikal kecil) saat load, tanpa loop dan hormati `prefers-reduced-motion`.
+
+## 12. Revisi navigasi dan artikel disetujui
 
 Navbar mobile mengikuti referensi pengguna: logo dan tombol menu bulat saat tertutup; overlay layar penuh saat dibuka dengan tautan vertikal besar, tombol tutup, serta CTA. Gunakan palet KARVIA hijau-krem, bukan warna marun pada referensi.
 

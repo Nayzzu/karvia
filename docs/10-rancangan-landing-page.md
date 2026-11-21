@@ -121,7 +121,14 @@ Deskripsi tidak menyatakan bahwa seluruh fitur sudah tersedia bila implementasin
 - Jangan mengubah, memindahkan, atau menghapus `karvia_career_vision_action.html`.
 - Jangan menganggap rancangan halaman sebagai bukti bahwa fitur siswa atau Guru BK telah selesai.
 
-## 9. Revisi mobile navbar dan artikel
+## 9. Revisi hero: bersih dan animasi masuk
+
+- Hapus label kecil “Langkah Karierku · Untuk siswa SMA/MA” di atas judul hero.
+- Pertahankan judul, deskripsi, CTA, disclaimer, dan mockup dashboard; rapikan ruang vertikal setelah label dihapus.
+- Saat halaman dimuat, judul/deskripsi/tombol/mockup tampil dengan animasi masuk halus (opacity + sedikit gerak ke atas, bertahap).
+- Animasi hanya berjalan saat load, tanpa loop/parallax/dependensi. Hormati `prefers-reduced-motion`.
+
+## 10. Revisi mobile navbar dan artikel
 
 ### Navbar
 - Pada mobile, header tertutup hanya menampilkan identitas KARVIA dan tombol menu bulat, supaya baris navigasi tidak padat.
@@ -140,6 +147,8 @@ Deskripsi tidak menyatakan bahwa seluruh fitur sudah tersedia bila implementasin
 
 ### Kriteria penerimaan
 - Pengunjung memahami tujuan KARVIA dan batasannya.
+- Label kecil di atas judul hero dihilangkan; hero tetap punya hierarki dan jarak rapi.
+- Animasi masuk halus berjalan saat load dan nonaktif saat `prefers-reduced-motion`.
 - Navbar mobile tertutup ringkas; overlay berfungsi dengan sentuh dan keyboard, tertutup setelah anchor dipilih atau Escape.
 - Carousel pada mobile dan desktop menampung sampai 6 artikel tanpa menumpuk semua kartu; semua kartu dapat dicapai dengan geser dan kontrol aksesibel.
 - Gambar, judul, ringkasan, dan tautan tiap artikel tetap benar; artikel kosong tetap memakai empty state.
