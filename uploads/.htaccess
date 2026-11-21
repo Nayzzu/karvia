@@ -1,2 +1,5 @@
 Options -Indexes
-Require all denied
+# Berkas unggahan boleh dibaca publik (gambar artikel), tetapi skrip tidak boleh dieksekusi.
+<FilesMatch "\.(php[0-9]?|phtml|phar|cgi|pl|py|sh)$">
+  Require all denied
+</FilesMatch>
