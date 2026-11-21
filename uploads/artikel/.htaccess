@@ -1,0 +1,6 @@
+Options -Indexes
+# Paksa semua unggahan disajikan sebagai berkas statis, bukan dieksekusi.
+SetHandler default-handler
+<FilesMatch "\.(php[0-9]?|phtml|phar|cgi|pl|py|sh)$">
+  Require all denied
+</FilesMatch>
