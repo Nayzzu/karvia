@@ -94,9 +94,8 @@ di-zip; boleh diabaikan.
 
 ## 3. Rencana isi file
 
-Bagian ini menjelaskan fungsi file sesuai target aplikasi. Landing, autentikasi,
-layout bersama, dan dashboard awal kini sudah tersambung ke backend. Halaman fitur
-peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
+Bagian ini merangkum struktur dan fungsi halaman yang berjalan saat ini. Untuk
+status verifikasi dan batas QA tiap fitur, lihat checklist `docs/05`.
 
 ### 3.1 File di akar
 
@@ -112,9 +111,7 @@ peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
 
 ### 3.2 Halaman per peran
 
-Dashboard tiap peran sudah menggunakan autentikasi dan data database dasar.
-Halaman artikel Guru BK dan publik sedang ditambahkan pada branch `feat/guru-articles`;
-fitur lain dibangun bertahap sesuai urutan pada `docs/05`.
+Dashboard tiap peran, artikel Guru BK/publik, dan alur utama sudah tersedia dengan autentikasi serta data database. Status fitur, batas QA, dan pekerjaan tersisa dicatat di `docs/05`; tabel berikut merangkum struktur aktual halaman.
 
 | Folder | Rencana file | Keterangan |
 |--------|--------------|------------|
@@ -130,16 +127,16 @@ fitur lain dibangun bertahap sesuai urutan pada `docs/05`.
 | | `catatan_detail.php` | Detail catatan + tindak lanjut + cetak |
 | | `artikel.php` | Daftar artikel milik Guru BK + aksi ubah/hapus |
 | | `artikel_form.php` | Tambah/ubah artikel + unggah gambar |
-| `siswa/` | `index.php` | Beranda + status lima langkah |
+| `siswa/` | `index.php` | Beranda + progres lima langkah eksplorasi |
 | | `kenali_diri.php` | Langkah 1 |
-| | `profesi.php` | Langkah 2 + filter + bookmark |
-| | `jalur.php` | Jalur setelah lulus (statis) |
+| | `profesi.php` | Langkah 2, katalog 15 foto, filter + bookmark |
+| | `jalur.php` | Jalur setelah lulus (informasi statis) |
 | | `bandingkan.php` | Langkah 3 |
 | | `rencana.php` | Langkah 4 |
 | | `jurnal.php` | Langkah 5 + riwayat |
-| | `konsultasi.php` | Ringkasan + bagikan ke Guru BK + cetak |
-| | `tips.php` | Tips & edukasi (statis) |
-| Akar (semua peran) | `profil.php` | Kerangka profil + ganti password; fitur perubahan belum tersedia |
+| | `konsultasi.php` | Ruang Konsultasi + ringkasan + bagikan + status + cetak |
+| | `tips.php` | Tips & edukasi + enam artikel terbaru dari DB |
+| Akar (semua peran) | `profil.php` | Lihat/ubah nama dan telepon; ganti password dengan verifikasi password lama |
 
 Aturan:
 
@@ -236,7 +233,7 @@ Untuk form (mis. simpan tindak lanjut):
 POST ke file yang sama → validasi → CSRF → simpan → flash → redirect (GET)
 ```
 
-Tidak ada JavaScript yang menyimpan data penting. JavaScript hanya mempercantik.
+JavaScript tidak menjadi tempat penyimpanan data penting; data aplikasi disimpan di database. JavaScript mendukung interaksi antarmuka, sedangkan pengiriman dan validasi utama tetap dilakukan server-side.
 
 ---
 

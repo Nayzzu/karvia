@@ -3,7 +3,7 @@
 Database: **`karvia_db`** (MySQL/MariaDB, InnoDB, `utf8mb4`, `utf8mb4_unicode_ci`).
 Semua waktu memakai zona **Asia/Jakarta**.
 
-`database/database.sql` berisi struktur tabel, `database/dummy_karvia.sql` berisi data awal 2 sekolah, dan `database/dummy_karvia2.sql` menambahkan 3 sekolah fiktif di Bandar Lampung beserta akun demo tanpa menghapus data lama. Struktur terdiri dari 12 tabel. File struktur dirancang untuk database kosong; file dummy awal mengosongkan tabel, sedangkan `dummy_karvia2.sql` bersifat tambahan/idempotent. Setiap perubahan skema **wajib** memperbarui dokumen ini.
+`database/database.sql` berisi struktur tabel, `database/dummy_karvia.sql` berisi data awal 2 sekolah, dan `database/dummy_karvia2.sql` menambahkan 3 sekolah fiktif di Bandar Lampung beserta akun demo tanpa menghapus data lama. Struktur terdiri dari 12 tabel. File struktur memilih database `karvia_db` dan dirancang untuk database kosong; file dummy awal mengosongkan tabel, sedangkan `dummy_karvia2.sql` bersifat tambahan/idempotent. Setiap perubahan skema **wajib** memperbarui dokumen ini.
 
 ---
 
@@ -120,7 +120,7 @@ Index: `status`, `nama`.
 
 Index: `sekolah_id`, `role`, `status`, `last_login_at`, `terakhir_aktif_pada`.
 Aturan aplikasi: `role = admin` → `sekolah_id` NULL; selain admin → wajib terisi.
-Aturan aplikasi: username hanya huruf kecil, angka, titik, garis bawah (3–50 karakter).
+Aturan aplikasi: username 3–50 karakter; hanya huruf kecil, angka, titik, garis bawah, dan tanda hubung (`a-z`, `0-9`, `.`, `_`, `-`).
 
 ### 4.3 `refleksi_diri` (satu baris per siswa)
 
@@ -336,7 +336,9 @@ menjadi file SQL di folder `database/`:
 | `database/backup_YYYY-MM-DD.sql` | Salinan database saat backup | Hanya sebelum demo/perubahan besar |
 
 Struktur terpisah dari data. File tambahan Bandar Lampung memakai `INSERT` bersyarat
-agar tidak menggandakan username/NPSN saat dijalankan ulang.
+agar tidak menggandakan username/NPSN saat dijalankan ulang. Untuk terminal, pilih
+database target saat menjalankan kedua fixture: `mysql -u root karvia_db < database/dummy_karvia.sql`
+dan `mysql -u root karvia_db < database/dummy_karvia2.sql`.
 
 Urutan pembuatan tabel di `database.sql` (agar foreign key valid):
 

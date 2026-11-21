@@ -9,7 +9,7 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Fondasi login, session, PDO, CSRF, role | Selesai lokal | Login semua peran/role guard sudah diuji sebelumnya; uji akhir wajib diulang |
 | Admin P0 | Selesai lokal | Dashboard, sekolah, pengguna, reset, rekap, pemantauan online/aktif 5 menit, redesign sidebar & shell Attendara, uji HTTP |
 | Guru BK P0 | Selesai lokal | Catatan, isolasi sekolah, tindak lanjut transaksi, uji HTTP sebelumnya |
-| Siswa P0 | Beranda + Kenali Diriku + Jelajah Profesi + Bandingkan + Rencana + Jurnal + Konsultasi + Jalur + Tips diperbarui | Beranda: progres DB/status berbagi; Kenali Diriku: prompt dan privasi; Jelajah Profesi: 15 pilihan dengan foto; Bandingkan: dua kartu responsif dan prompt; Rencana: tujuan dan dua tindakan realistis; Jurnal: prompt refleksi, privasi, riwayat; Konsultasi: identitas, ringkasan per bagian, privasi jurnal, status berbagi, pesan opsional, gaya cetak; Jalur: lima pilihan dan panduan; Tips: lima langkah edukasi dan enam artikel terbaru Guru BK dalam carousel responsif dengan tombol, posisi, dan swipe/scroll; PHP lint serta diff check lulus, smoke GET 200 |
+| Siswa P0 | Sembilan halaman diperbarui dan smoke-tested | Beranda: progres DB/status berbagi; Kenali Diriku: prompt dan privasi; Jelajah Profesi: 15 pilihan dengan foto; Bandingkan: dua kartu responsif dan prompt; Rencana: tujuan dan dua tindakan realistis; Jurnal: prompt refleksi, privasi, riwayat; Ruang Konsultasi: identitas, ringkasan per bagian, privasi jurnal, status berbagi berlabel, pesan opsional, gaya cetak; Jalur: lima pilihan dan panduan; Tips: lima langkah edukasi dan enam artikel terbaru Guru BK dalam carousel responsif; seluruh sembilan GET 200, lint sembilan file siswa, diff check lulus; cetak/browser visual belum diuji |
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |
 | Registrasi siswa & username | Implementasi lokal | `daftar.php` membatasi role siswa; login/daftar memakai layout responsif KARVIA dan CSS terlingkup `assets/css/auth.css`; backend, CSRF, validasi, username di profil tetap server-side |
 | Data tambahan Bandar Lampung | Diimpor lokal | `dummy_karvia2.sql`: 3 sekolah, 3 admin sekolah, 9 Guru BK, 90 siswa, 1 artikel; nama lengkap fiktif natural, username tetap bernomor; import ulang menyelaraskan nama tanpa mengubah heartbeat |
@@ -17,7 +17,7 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
 | Keamanan server Apache | Lokal terverifikasi | Aturan `.htaccess` menolak akses ke `docs/`, `database/`, `config/`, `includes/`, root file sensitif, dan direktori upload (403) |
 | Dokumentasi/panduan | Diperbarui | Setup lokal di `docs/12`; spesifikasi dan kriteria mobile landing di `docs/10`/`docs/11`; keputusan UI di `docs/08` |
-| Rilis/commit | Dikerjakan di `staging` | Registrasi siswa dan data Bandar Lampung ada di `ee7abe4`; revisi mobile landing navbar/carousel sedang dikerjakan, belum dirilis |
+| Rilis/commit | `staging` terbarui | Alur siswa dan dokumentasi awal ada di `0954a11` pada `origin/staging`. Pembaruan dokumentasi yang sedang dikerjakan belum di-commit/push. |
 
 Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs/karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
 
@@ -27,7 +27,7 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 2. Satu halaman = satu file; halaman peran hanya dalam `admin/`, `guru_bk/`, `siswa/`.
 3. Semua query memakai prepared statement; output HTML di-escape dengan `e()`; POST memakai CSRF.
 4. Otorisasi server-side dan filter `sekolah_id`/`siswa_id` wajib.
-5. Admin tidak membaca isi jurnal; Guru BK hanya membaca data siswa sekolahnya setelah dibagikan.
+5. Admin tidak membaca isi jurnal; Guru BK hanya membaca data siswa sekolahnya setelah dibagikan. Pembagian saat ini menampilkan seluruh entri jurnal dalam ringkasan; siswa diberi tahu sebelum berbagi.
 6. Akun dinonaktifkan, bukan dihapus. Password tidak pernah disimpan/dicatat sebagai teks biasa.
 7. Perubahan skema wajib memperbarui `docs/03-rencana-database.md`; struktur dan file dummy terpisah.
 8. Jangan buang atau menimpa perubahan lokal yang belum jelas pemiliknya. Jangan commit tanpa pemeriksaan diff.
@@ -49,13 +49,13 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 ### Revisi landing
 - [x] Navbar mobile menampilkan logo + tombol; dialog memuat tautan section dan CTA daftar siswa.
 - [x] Artikel memakai carousel scroll-snap dan kontrol sebelumnya/berikutnya pada mobile dan desktop; desktop menampilkan beberapa kartu per langkah.
-- [ ] Hero tanpa label kecil; animasi load bertahap dan hormati reduced-motion.
+- [x] Hero tanpa label kecil; animasi load bertahap dan menghormati reduced-motion.
 - [ ] Verifikasi manual viewport sempit/lebar, keyboard Escape/fokus, dan swipe/scroll pada browser.
 
 ### Artikel D-29
 - [x] Guru BK membuat artikel uji dengan PNG valid ukuran <2 MB.
 - [x] MIME palsu dan CSRF invalid ditolak.
-- [ ] File rusak, format selain JPG/PNG/WebP, dan oversize ditolak (belum diuji).
+- [ ] File rusak, format selain JPG/PNG/WebP, dan oversize: validasi ada; uji negatif belum dilakukan.
 - [x] Edit pemilik mempertahankan gambar tanpa upload; gambar pengganti menghapus lama.
 - [x] Guru lain mendapat 404 saat edit/hapus ID.
 - [x] Hapus artikel memakai POST+CSRF dan menghapus row serta gambar.
@@ -69,19 +69,20 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 - [x] IDOR lintas sekolah: guru sekolah 1 tidak bisa baca catatan siswa sekolah 2 (404).
 - [x] Peran silang: siswa/guru/admin masing-masing diblokir dari halaman peran lain (403).
 - [x] Admin rekap tidak mengandung isi jurnal.
-- [ ] Uji tindak lanjut, status dibaca/ditindaklanjuti, dashboard DB (hasil integrasi ada di sesi ini, uji gabungan ulang opsional).
-- [ ] Uji desktop/mobile dan cetak ringkasan.
+- [x] Alur siswa → Guru BK diuji: bagikan, detail berubah `baru` → `dibaca`, tindak lanjut mengubah status menjadi `ditindaklanjuti`, siswa melihat status; guru sekolah lain mendapat 404; data uji dibersihkan.
+- [ ] Uji visual desktop/mobile dan cetak ringkasan di browser.
 - [ ] Uji restart Laragon dan persistensi data lintas tabel.
 - [x] Uji akses HTTP ke `AGENTS.md`, `docs/`, `database/`, `config/`, `includes/`, `.env`, dan direktori upload; Apache lokal mengembalikan 403. Upload PHP juga ditolak oleh `uploads/artikel/.htaccess` (uji runtime PHP upload belum dilakukan).
 - [ ] Pastikan log error tidak menampilkan ke pengguna dan tidak ada kredensial nyata.
 
 ### Data demo dan rilis
 - [ ] Backup database ke lokasi privat sebelum demo.
-- [ ] Bersihkan hanya data uji, pertahankan fixture demo yang disepakati.
+- [x] Data uji berbagi/tindak lanjut dibersihkan; fixture demo dipertahankan.
 - [x] Review `git status`, diff tiap file; biarkan landing `teal-treasury-landing/` belum siap terpisah.
 - [x] Perbarui `docs/04` dan status dokumen ini berdasarkan tes nyata.
-- [x] Perubahan rilis terdahulu sudah berada di `staging`; pekerjaan revisi saat ini akan dicatat pada commit baru.
-- [x] Jalankan smoke test lagi setelah commit (14/14 lulus).
+- [x] Alur siswa diperbarui pada commit `0954a11` dan sudah ada di `origin/staging`.
+- [x] Sembilan halaman siswa merespons HTTP 200; lint sembilan file siswa dan `git diff --check` lulus.
+- [x] Uji berbagi → dibaca → tindak lanjut lulus; akses guru beda sekolah menghasilkan 404; data uji dibersihkan.
 
 ## 4. Jalankan proyek
 
@@ -96,6 +97,6 @@ Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs
 
 ## 5. Progres historis
 
-- Fase fondasi, Admin, Guru BK, Siswa P0 dan alur siswa → Guru BK pernah lolos pengujian HTTP lokal.
-- Pengujian profil dan password dilakukan pada sesi terakhir; test lama/salah CSRF serta login password baru berhasil. Akun demo harus dipastikan kembali ke fixture SQL.
-- Fitur artikel belum diuji end-to-end. Jangan menyatakan rilis final sebelum checklist artikel dan QA keamanan selesai.
+- Commit `0954a11` di `origin/staging` memuat revisi alur siswa; sembilan halaman siswa smoke-tested dan alur berbagi hingga tindak lanjut diverifikasi lokal.
+- Uji visual browser untuk mobile, desktop, dan cetak ringkasan masih terbuka.
+- Checklist keamanan/artikel dan sisa pemeriksaan rilis tercatat di bagian 3; jangan menyatakan QA final sebelum item terbuka selesai.

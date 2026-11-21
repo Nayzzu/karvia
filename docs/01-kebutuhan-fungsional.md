@@ -32,12 +32,12 @@ bagaimana kita tahu fitur itu sudah jadi.**
 | Reset password pengguna | ✅ | ❌ | ❌ |
 | Lihat jumlah siswa/guru per sekolah | ✅ | ✅ sekolah sendiri | ❌ |
 | Lihat daftar siswa | ✅ (data akun saja) | ✅ hanya yang membagikan catatan | ❌ |
-| Lihat isi refleksi/jurnal siswa | ❌ (default) | ✅ hanya yang dibagikan | ✅ milik sendiri |
+| Lihat isi refleksi/jurnal siswa | ❌ | ✅ seluruh jurnal siswa yang membagikan catatan | ✅ milik sendiri |
 | Isi/ubah data eksplorasi | ❌ | ❌ | ✅ milik sendiri |
 | Bagikan catatan ke Guru BK | ❌ | ❌ | ✅ milik sendiri |
 | Tandai catatan dibaca | ❌ | ✅ sekolah sendiri | ❌ |
 | Beri catatan tindak lanjut | ❌ | ✅ sekolah sendiri | ❌ |
-| Cetak ringkasan | ✅ rekap | ✅ catatan siswa | ✅ milik sendiri |
+| Cetak ringkasan | ❌ | ✅ catatan siswa | ✅ milik sendiri |
 
 **Catatan privasi:** Admin **tidak** membaca isi jurnal/refleksi siswa secara default.
 Admin hanya melihat data akun, sekolah, dan angka agregat. Jika suatu saat perlu
@@ -65,7 +65,7 @@ bantuan teknis, akses isi catatan harus menjadi keputusan terpisah dan tercatat.
 | AUTH-06 | Session diperbarui saat login (`session_regenerate_id`) | P0 |
 | AUTH-07 | Logout menghapus session dan kembali ke halaman login | P0 |
 | AUTH-08 | Setiap halaman internal memeriksa login dan peran | P0 |
-| AUTH-09 | Pengguna dapat mengganti password sendiri | P1 |
+| AUTH-09 | Pengguna dapat mengganti password sendiri setelah verifikasi password saat ini | P0 |
 | AUTH-10 | Catat `last_login_at` dan `login_count` setiap login berhasil | P0 |
 | AUTH-11 | Siswa dapat mendaftar sendiri pada sekolah aktif; role dipatok `siswa` di server | P1 |
 | AUTH-12 | Siswa dapat mengubah username sendiri setelah verifikasi password saat ini | P1 |
@@ -116,12 +116,12 @@ sekolah dapat menonaktifkan akun yang tidak sesuai; form publik tidak menerima r
 | USR-08 | Username unik; validasi duplikat dengan pesan jelas | P0 |
 | USR-09 | Admin tidak dapat menonaktifkan akunnya sendiri | P0 |
 | USR-10 | “Keluarkan pengguna” memakai konfirmasi; default nonaktif, bukan hapus | P0 |
-| USR-11 | Hapus permanen hanya untuk akun tanpa data & dengan konfirmasi ganda | P2 |
+| USR-11 | Penghapusan akun permanen tidak tersedia; nonaktifkan akun untuk mencabut akses dan mempertahankan riwayat | Di luar MVP |
 | USR-12 | Ekspor daftar pengguna ke CSV | P1 |
 
-**Kebijakan “keluarkan orang dari web” (usulan default):**
-nonaktifkan akun. Data tetap tersimpan, riwayat konseling tidak hilang, dan Admin
-bisa mengaktifkan kembali. Hapus permanen tidak ditawarkan pada MVP.
+**Kebijakan akun:** “keluarkan orang dari web” berarti menonaktifkan akun. Data dan
+riwayat tetap tersimpan, Admin dapat mengaktifkan kembali, dan penghapusan permanen
+tidak tersedia pada MVP.
 
 ### 3.4 Rekap
 
@@ -173,20 +173,22 @@ menyesatkan. Diganti dengan metrik yang benar-benar dihitung.
 | SIS-05 | Bandingkan Pilihan: opsi A, opsi B, catatan kriteria; tersimpan | P0 |
 | SIS-06 | Rencana Langkahku: tujuan + dua langkah kecil; tersimpan | P0 |
 | SIS-07 | Jurnal Refleksi: hal baru, hambatan, dukungan; tersimpan sebagai entri baru | P0 |
-| SIS-08 | Ringkasan Konsultasi menampilkan data terbaru dari database | P0 |
+| SIS-08 | Ruang Konsultasi menampilkan identitas, data eksplorasi, status berbagi, dan seluruh jurnal dari database | P0 |
 | SIS-09 | Tombol “Bagikan ke Guru BK” benar-benar menyimpan data berbagi | P0 |
-| SIS-10 | Status berbagi terlihat (“Terakhir dibagikan …”, status baca/tindak lanjut) | P1 |
+| SIS-10 | Status berbagi terlihat dengan tanggal dan status baru/dibaca/ditindaklanjuti | P0 |
 | SIS-11 | Cetak ringkasan konsultasi | P0 |
-| SIS-12 | Ubah password sendiri | P1 |
+| SIS-12 | Ubah password sendiri dengan verifikasi password saat ini | P0 |
 | SIS-13 | Data tetap ada setelah logout/refresh | P0 |
 | SIS-14 | Indikator langkah mana yang sudah diisi | P1 |
 
 **Aturan berbagi:**
-- Sebelum menekan bagikan, Guru BK **tidak** melihat isi catatan siswa.
-- Saat bagikan, sistem menyimpan satu baris `berbagi_catatan` berisi siswa,
-  sekolah, waktu, dan pesan opsional.
-- Siswa boleh membagikan ulang; daftar Guru BK memakai data berbagi terbaru.
-- Data yang terlihat Guru BK adalah data terkini milik siswa, bukan salinan beku.
+- Sebelum menekan bagikan, Guru BK tidak melihat ringkasan atau jurnal siswa.
+- Saat siswa membagikan, sistem menyimpan satu baris `berbagi_catatan` berisi
+  siswa, sekolah, waktu, dan pesan opsional.
+- Siswa diberi tahu bahwa seluruh entri jurnal yang tampil di Ruang Konsultasi
+  ikut terlihat Guru BK setelah berbagi.
+- Siswa boleh membagikan ulang; data yang terlihat Guru BK mengikuti data terbaru,
+  bukan salinan beku.
 
 ---
 
@@ -254,15 +256,11 @@ menyesatkan. Diganti dengan metrik yang benar-benar dihitung.
 
 ---
 
-## 8. Pertanyaan yang masih perlu diputuskan
+## 8. Keputusan dan hal yang masih terbuka
 
-Rincian dan usulan default ada di [`08-keputusan-terbuka.md`](08-keputusan-terbuka.md).
-Yang paling memengaruhi pekerjaan:
-
-1. Apakah akun hanya dibuat Admin, atau Guru BK boleh menambah siswa?
-2. “Keluarkan pengguna” = nonaktif (disarankan) atau hapus permanen?
-3. Login memakai username (disarankan) atau email?
-4. Apakah Admin boleh membaca isi jurnal siswa? (disarankan: tidak)
-5. Apakah Guru BK boleh melihat **semua** siswa sekolahnya, atau hanya yang dibagikan?
-   (disarankan: hanya yang dibagikan)
-6. Apakah perlu ekspor CSV/Excel pada MVP?
+Keputusan produk yang sudah diterapkan: pendaftaran mandiri hanya untuk siswa;
+Admin membuat akun Admin/Guru BK; akun dinonaktifkan, bukan dihapus; login memakai
+username; Admin tidak membaca isi jurnal; Guru BK hanya melihat catatan yang
+dibagikan siswa sekolahnya, termasuk seluruh entri jurnal yang tampil pada ringkasan.
+Rincian keputusan dan hal yang benar-benar masih terbuka ada di
+[`08-keputusan-terbuka.md`](08-keputusan-terbuka.md).

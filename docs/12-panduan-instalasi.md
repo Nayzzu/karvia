@@ -19,8 +19,8 @@ Lewat terminal:
 
 ```text
 mysql -u root < database/database.sql
-mysql -u root < database/dummy_karvia.sql
-mysql -u root < database/dummy_karvia2.sql
+mysql -u root karvia_db < database/dummy_karvia.sql
+mysql -u root karvia_db < database/dummy_karvia2.sql
 ```
 
 ## Akun demo

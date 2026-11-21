@@ -52,14 +52,15 @@ Membangun aplikasi KARVIA yang:
    reset password, keluarkan pengguna).
 6. Menyimpan data eksplorasi siswa secara **persisten** dan menghubungkannya ke
    Guru BK di sekolah yang sama ketika siswa membagikan catatan.
-7. Menjaga pengalaman siswa yang sudah ada: Kenali Diriku, Jelajah Profesi,
-   Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Konsultasi BK.
+7. Menyediakan pengalaman eksplorasi siswa: Beranda, Kenali Diriku, Jelajah Profesi,
+   Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Ruang Konsultasi,
+   Jalur Setelah Lulus, dan Tips & Edukasi Karier.
 
 ---
 
 ## 4. Ruang lingkup MVP
 
-### Termasuk (P0 — wajib untuk demo Rabu)
+### Termasuk (fitur inti saat ini)
 
 - Login/logout dengan username + password, peran otomatis dari akun.
 - Tiga peran dan pembatasan akses.
@@ -77,10 +78,10 @@ Membangun aplikasi KARVIA yang:
   - detail catatan siswa;
   - tandai sudah dibaca / beri catatan tindak lanjut.
 - Siswa:
-  - lima langkah eksplorasi yang tersimpan di database;
-  - simpan profesi (bookmark);
-  - bagikan catatan ke Guru BK (benar-benar tersimpan);
-  - cetak ringkasan konsultasi.
+  - alur eksplorasi lima langkah tersimpan di database, ditambah halaman informasi Jalur Setelah Lulus dan Tips & Edukasi Karier;
+  - katalog 15 profesi dengan foto lokal dan bookmark;
+  - tinjau lalu bagikan ringkasan serta seluruh jurnal yang tampil kepada Guru BK sekolah sendiri;
+  - lihat status dibaca/tindak lanjut dan cetak ringkasan melalui dialog cetak browser.
 - Data contoh: 5 sekolah, akun admin/guru/siswa; data tambahan Bandar Lampung ada di `database/dummy_karvia2.sql`.
 - Dokumentasi cara menjalankan dan penjelasan alur data untuk Cindy.
 
@@ -91,7 +92,7 @@ Membangun aplikasi KARVIA yang:
 - Tes psikologis tervalidasi atau skoring otomatis.
 - Chat real-time, video konseling, atau notifikasi WhatsApp/email.
 - Pembayaran/langganan.
-- Pengelolaan konten profesi oleh Admin (profesi diisi dari data contoh `database.sql`, bukan CRUD).
+- Pengelolaan konten profesi oleh Admin (katalog 15 profesi dikelola melalui fixture SQL, bukan CRUD; 4 profesi awal ada di `dummy_karvia.sql`, 11 tambahan di `dummy_karvia2.sql`).
 - Multi-admin per sekolah, hak akses granular, dan audit forensik lanjutan.
 - Import Excel massal (bisa ditambahkan setelah MVP).
 
@@ -129,10 +130,10 @@ MVP dianggap berhasil jika skenario berikut berjalan tanpa edit manual database:
 2. Admin membuat akun Guru BK baru di salah satu sekolah.
 3. Admin menonaktifkan akun siswa; siswa tersebut tidak bisa login.
 4. Guru BK login dan hanya melihat siswa dari sekolahnya.
-5. Siswa login, mengisi Kenali Diriku, menyimpan profesi, membuat perbandingan,
-   mengisi rencana dan jurnal, lalu menekan “Bagikan ke Guru BK”.
+5. Siswa login, mengisi langkah eksplorasi, meninjau Ruang Konsultasi, lalu memilih
+   membagikan ringkasan dan seluruh jurnal yang tampil kepada Guru BK.
 6. Data siswa tersebut muncul di dashboard Guru BK sekolahnya setelah dibagikan.
-7. Guru BK membuka detail dan menambahkan catatan tindak lanjut.
+7. Guru BK membuka detail, membaca ringkasan dan jurnal siswa yang dibagikan, lalu menambahkan tindak lanjut.
 8. Semua data tetap ada setelah logout, refresh, dan server dijalankan ulang.
 9. Angka di dashboard Admin dan Guru BK berasal dari database, bukan hardcoded.
 10. Cindy dapat mengikuti panduan menjalankan aplikasi dan menjelaskan alur dasarnya.
@@ -161,8 +162,8 @@ MVP dianggap berhasil jika skenario berikut berjalan tanpa edit manual database:
 
 1. **Data nyata lebih penting daripada animasi.**
 2. **Satu sumber kebenaran:** semua angka dihitung dari database.
-3. **Privasi siswa:** jurnal dan refleksi tidak terlihat Guru BK sebelum siswa membagikan.
+3. **Privasi siswa:** jurnal dan refleksi tidak terlihat Guru BK sebelum siswa membagikan; saat dibagikan, seluruh entri jurnal pada ringkasan ikut terlihat.
 4. **“Keluarkan pengguna” = nonaktifkan** secara default; riwayat tetap aman.
 5. **Sederhana untuk dipelajari:** sedikit file, penamaan jelas, komentar Indonesia.
 6. **Jangan merusak yang sudah bagus:** pertahankan nuansa visual hijau KARVIA,
-   Inter, kartu lembut, dan alur lima langkah.
+   Inter, kartu lembut, dan alur eksplorasi siswa.

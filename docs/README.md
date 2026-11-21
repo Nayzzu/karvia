@@ -4,7 +4,7 @@ Folder ini adalah sumber konteks utama untuk pengembangan KARVIA. Aturan produk,
 rencana database, dan urutan pengerjaan dicatat di sini agar pekerjaan dapat
 dilanjutkan bertahap.
 
-**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri, lima sekolah demo, dan artikel Guru BK. Login/daftar memakai layout responsif KARVIA. Pengalaman siswa bertahap diperbarui pada beranda, Kenali Diriku, Jelajah Profesi, Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Ringkasan Konsultasi, Jalur Setelah Lulus, dan Tips & Edukasi Karier; katalog memuat 15 profesi dengan foto lokal. Verifikasi dan status kerja tercatat di `docs/03`, `docs/04`, `docs/05`, `docs/06`, dan `docs/14`.
+**Status:** aplikasi PHP native + MySQL berjalan dengan alur Admin, Guru BK, dan Siswa; tersedia pendaftaran siswa, lima sekolah demo, pengelolaan artikel Guru BK, dan login/daftar responsif. Pengalaman siswa mencakup beranda, Kenali Diriku, Jelajah Profesi, Bandingkan Pilihan, Rencana Langkahku, Jurnal Refleksi, Ruang Konsultasi, Jalur Setelah Lulus, serta Tips & Edukasi Karier. Katalog memuat 15 profesi dengan foto lokal. Uji alur berbagi hingga tindak lanjut lintas peran, isolasi sekolah, seluruh sembilan halaman siswa, PHP lint, dan diff check lulus; pemeriksaan visual mobile dan cetak browser masih terbuka. Status serta rincian sistem ada di `docs/03`, `docs/04`, `docs/05`, `docs/06`, dan `docs/14`.
 
 **Prototipe acuan:** [`karvia_career_vision_action.html`](karvia_career_vision_action.html)
 File tersebut jangan diubah atau dihapus.
@@ -39,7 +39,7 @@ mengelola akun/sekolah dan melihat rekap, bukan isi jurnal pribadi.
 
 ## Aturan kerja
 
-1. Dokumen `00`–`09` adalah acuan; selesaikan perbedaan kode/dokumen sebelum lanjut.
+1. `00`–`09` memuat ringkasan, kebutuhan, arsitektur, dan rencana; sebagian berasal dari tahap perencanaan. Untuk status implementasi terkini, utamakan bukti kode dan checklist `05`, lalu selaraskan dokumen terkait sebelum pekerjaan berikutnya.
 2. Jangan menambah fitur di luar MVP tanpa persetujuan dan pencatatan di `08`.
 3. Jangan mengubah file HTML prototipe.
 4. Perubahan skema wajib memperbarui `03`; SQL tetap di `database/` (struktur +

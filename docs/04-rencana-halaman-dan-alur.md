@@ -167,9 +167,8 @@ untuk mulai.” Jangan menampilkan angka palsu.
 
 ### 3.2 Daftar sekolah (`admin/sekolah.php`)
 
-Status implementasi per 20 November 2026: daftar, pencarian, jumlah akun, ubah
-status aktif/nonaktif (POST + CSRF + konfirmasi), dan tautan ke form/detail sudah
-dibuat pada branch `feat/admin-schools`.
+Status implementasi: daftar sekolah, pencarian, jumlah akun, ubah status aktif/nonaktif
+(POST + CSRF + konfirmasi), dan tautan ke form/detail tersedia pada `admin/sekolah.php`.
 
 Kolom tabel:
 
@@ -190,9 +189,9 @@ Fitur:
 
 ### 3.3 Form sekolah (`admin/sekolah_form.php`)
 
-Status implementasi per 20 November 2026: tambah/ubah dengan validasi server,
-pemeriksaan NPSN unik, CSRF, prepared statement, flash, dan Post/Redirect/Get
-sudah dibuat pada branch `feat/admin-schools`.
+Status implementasi: tambah/ubah dengan validasi server, pemeriksaan NPSN unik,
+CSRF, prepared statement, flash, dan Post/Redirect/Get tersedia pada
+`admin/sekolah_form.php`.
 
 Field:
 
@@ -211,8 +210,8 @@ Ubah sekolah tidak boleh mengubah data historis siswa.
 
 ### 3.4 Detail sekolah (`admin/sekolah_detail.php`)
 
-Status implementasi per 20 November 2026: profil, jumlah siswa/Guru BK/catatan,
-dan daftar akun terkait tanpa isi jurnal sudah dibuat pada branch `feat/admin-schools`.
+Status implementasi: profil sekolah, jumlah siswa/Guru BK/catatan, dan daftar akun
+terkait tanpa isi jurnal tersedia pada `admin/sekolah_detail.php`.
 
 - Kartu profil sekolah.
 - Tiga angka: siswa, Guru BK, catatan dibagikan.
@@ -508,28 +507,30 @@ prepared statement, dan escaping tetap aktif.
 
 ### 5.8 Konsultasi (`siswa/konsultasi.php`)
 
-Status implementasi: ringkasan data eksplorasi/jurnal dari DB, status berbagi,
-bagikan ulang, pesan opsional, CSRF, dan cetak `window.print()` tersedia. Tampilan
-memuat identitas konsultasi, ringkasan per bagian dengan tautan pembaruan, dan
-pengingat bahwa seluruh riwayat jurnal yang tampil ikut terlihat Guru BK saat siswa
-membagikan catatan. Data bersama tetap mengikuti isi terbaru saat Guru BK membuka;
-output teks di-escape.
+Status implementasi: halaman **Ruang Konsultasi** merangkum data eksplorasi dan
+seluruh jurnal dari DB, menampilkan identitas serta status berbagi dengan label yang
+mudah dipahami, dan menyediakan tautan pembaruan tiap bagian. Siswa dapat membagikan
+ulang dengan pesan opsional melalui POST + CSRF; ringkasan dan seluruh jurnal yang
+tampil ikut dibagikan, dan Guru BK melihat isi terbaru saat membuka catatan. Tombol
+cetak memanggil `window.print()` dengan gaya cetak khusus; uji visual/cetak browser
+belum dilakukan. Output teks di-escape.
 
 - Ringkasan dari database:
   - Nama, kelas, sekolah
-  - Minat/kekuatan
-  - Perbandingan
-  - Rencana
-  - Jumlah jurnal
+  - Minat/kekuatan dan catatan minat
+  - Profesi yang disimpan
+  - Perbandingan dan kriteria
+  - Tujuan serta dua langkah rencana
+  - Seluruh entri jurnal yang tersimpan (terbaru lebih dulu)
 - Kotak status berbagi:
   - Belum pernah dibagikan.
   - Terakhir dibagikan [tanggal], status [baru/dibaca/ditindaklanjuti].
 - Pesan opsional untuk Guru BK (textarea).
-- Tombol “Bagikan Catatan ke Dashboard Guru BK”:
-  - konfirmasi;
+- Tombol “Bagikan catatan ke Guru BK” / “Bagikan ulang ringkasan”:
+  - konfirmasi yang menyebut ringkasan dan seluruh jurnal yang tampil;
+  - pesan opsional, maksimum 2.000 karakter;
   - POST + CSRF;
-  - upsert `berbagi_catatan`;
-  - flash “Catatan berhasil dibagikan ke Guru BK [nama sekolah].”
+  - upsert `berbagi_catatan` dan redirect setelah berhasil.
 - Tombol “Cetak / Simpan PDF” → `window.print()` dengan CSS cetak.
 - Jangan pernah menampilkan modal sukses tanpa benar-benar menyimpan.
 
@@ -651,7 +652,7 @@ Semua validasi diulang di server meskipun HTML sudah memakai `required`.
 
 Halaman yang perlu gaya cetak:
 
-1. Ringkasan Konsultasi Siswa.
+1. Ruang Konsultasi Siswa.
 2. Detail Catatan Siswa (Guru BK).
 3. Rekap Admin (P2).
 
