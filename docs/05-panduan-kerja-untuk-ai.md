@@ -13,10 +13,10 @@ Dokumen status kerja dan checklist rilis KARVIA. Jangan menandai ceklis tanpa bu
 | Profil/password | Terverifikasi lokal | GET semua peran, ubah profil/escape, CSRF, password lama salah, password baru login diuji; fixture demo dipulihkan |
 | Artikel D-29 | Terverifikasi alur inti lokal | Buat PNG, tolak MIME palsu, owner/non-owner, CSRF hapus, edit pertahankan/ganti gambar, hapus row/file, landing/public/XSS diuji; oversize/file rusak/DB failure belum diuji |
 | Keamanan server Apache | Lokal terverifikasi | Aturan `.htaccess` menolak akses ke `docs/`, `database/`, `config/`, `includes/`, root file sensitif, dan direktori upload (403) |
-| Dokumentasi/panduan | Diperbarui | `README.md` berisi setup lokal, akun demo, backup dan peringatan |
+| Dokumentasi/panduan | Diperbarui | `docs/12-panduan-instalasi.md` berisi setup lokal, akun demo, backup dan peringatan |
 | Rilis/commit | Selesai pada branch fitur | Commit `2e1e0ce` mencakup alur Admin, Guru BK, Siswa, profil, artikel, dan `.htaccess`. Folder `teal-treasury-landing/` sengaja ditinggal terpisah |
 
-Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
+Artikel edukasi Guru BK disetujui sebagai tambahan melalui D-29. Prototipe `docs/karvia_career_vision_action.html` tetap utuh dan tidak boleh diubah.
 
 ## 2. Aturan wajib
 

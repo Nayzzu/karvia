@@ -113,13 +113,13 @@ di prototipe dan bisa dikerjakan paralel setelah fondasi tersedia.
 
 | Area | File |
 |------|------|
-| Database | `database/database.sql`, `database/backup_*.sql` |
+| Database | `database/database.sql`, `database/dummy_karvia.sql`, `database/backup_*.sql` |
 | Config | `config/koneksi.php` |
 | Includes | `includes/function.php`, `includes/header.php`, `includes/footer.php` |
-| Akar | `index.php`, `login.php`, `logout.php`, `profil.php`, `.htaccess`, `README.md` |
+| Akar | `index.php`, `login.php`, `logout.php`, `profil.php`, `.htaccess`, `AGENTS.md` |
 | Admin | seluruh `admin/*` |
 | Aset | tidak memiliki `assets/*` (milik B) |
-| Dokumen | `docs/02`, `docs/03`, `docs/05`, `docs/07`, `docs/08`, `AGENTS.md` |
+| Dokumen | `docs/02`, `docs/03`, `docs/05`, `docs/07`, `docs/08`, `docs/12`, `docs/13` |
 
 ---
 

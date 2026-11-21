@@ -8,8 +8,8 @@ dilanjutkan bertahap.
 lihat `docs/05` untuk status verifikasi terkini. Artikel Guru BK disetujui melalui
 D-29 dan perlu lulus uji pemilik/upload/publik sebelum dianggap siap rilis.
 
-**Prototipe acuan:** [`../karvia_career_vision_action.html`](../karvia_career_vision_action.html)
-File tersebut jangan diubah, dipindah, atau dihapus.
+**Prototipe acuan:** [`karvia_career_vision_action.html`](karvia_career_vision_action.html)
+File tersebut jangan diubah atau dihapus.
 
 ## Urutan membaca dokumen
 
@@ -27,6 +27,8 @@ File tersebut jangan diubah, dipindah, atau dihapus.
 | 10 | [`09-pembagian-tugas-2-orang.md`](09-pembagian-tugas-2-orang.md) | Pembagian kepemilikan file |
 | 11 | [`10-rancangan-landing-page.md`](10-rancangan-landing-page.md) | Konteks, isi, dan rancangan UI landing page |
 | 12 | [`11-rancangan-landing-page-utuh.md`](11-rancangan-landing-page-utuh.md) | Konteks, susunan aktual, verifikasi, dan rencana perubahan landing page |
+| 13 | [`12-panduan-instalasi.md`](12-panduan-instalasi.md) | Cara menjalankan lokal, akun demo, backup |
+| 14 | [`13-konteks-proyek-untuk-ai.md`](13-konteks-proyek-untuk-ai.md) | Konteks proyek dan aturan kerja untuk AI |
 
 ## Ringkasan produk
 
@@ -41,7 +43,8 @@ mengelola akun/sekolah dan melihat rekap, bukan isi jurnal pribadi.
 1. Dokumen `00`–`09` adalah acuan; selesaikan perbedaan kode/dokumen sebelum lanjut.
 2. Jangan menambah fitur di luar MVP tanpa persetujuan dan pencatatan di `08`.
 3. Jangan mengubah file HTML prototipe.
-4. Perubahan skema wajib memperbarui `03`; SQL tetap di satu file.
+4. Perubahan skema wajib memperbarui `03`; SQL tetap di `database/` (struktur +
+   data contoh).
 5. Gunakan PHP native, PDO prepared statement, escape output, CSRF untuk POST,
    dan pemeriksaan akses server-side.
 6. Antarmuka berbahasa Indonesia dan memakai istilah sederhana.
@@ -51,16 +54,18 @@ mengelola akun/sekolah dan melihat rekap, bukan isi jurnal pribadi.
 ```text
 karvia/
 ├── admin/
-├── assets/{css,js,images}/
+├── assets/img/profesi/
 ├── config/koneksi.php
-├── database/database.sql
+├── database/{database,dummy_karvia}.sql
 ├── docs/
 ├── guru_bk/
 ├── includes/{header,footer,function}.php
 ├── siswa/
+├── uploads/artikel/
 ├── index.php
 ├── login.php
-└── logout.php
+├── logout.php
+└── profil.php
 ```
 
 Jika alamat lokal berubah, sesuaikan `BASE_URL` di `config/koneksi.php`. Database

@@ -56,15 +56,18 @@ karvia/                          ← root aplikasi (nama folder bebas)
 ├── siswa/
 │   └── index.php                ← beranda Siswa
 │
-├── docs/                        ← dokumentasi ini
+├── docs/                        ← dokumentasi, prototipe acuan, dan referensi desain
 │
 ├── index.php                    ← landing page + artikel terbaru → login / dashboard
 ├── artikel.php                  ← baca artikel publik
 ├── login.php                    ← form + proses login
 ├── logout.php                   ← mengakhiri sesi
-├── README.md                    ← petunjuk singkat proyek
-└── karvia_career_vision_action.html   ← prototipe acuan, JANGAN DIUBAH
+├── profil.php                   ← ubah profil dan kata sandi
+└── AGENTS.md                    ← stub penunjuk ke docs/13
 ```
+
+Dokumen, prototipe (`docs/karvia_career_vision_action.html`), dan referensi
+desain (`docs/teal-treasury-landing/`) disimpan di `docs/`.
 
 **Catatan lokasi.** Struktur ini **tidak terikat pada satu path**. Contoh
 penataan bertingkat saat pengumpulan tugas:
@@ -100,7 +103,8 @@ peran lainnya dibangun bertahap sesuai urutan pada `docs/05`.
 | `artikel.php` | Artikel publik lengkap berdasarkan ID (`?id=`); isi teks di-escape, artikel hanya yang terbit ditampilkan. |
 | `login.php` | Form dan proses login username/password, CSRF, pesan gagal, serta pengalihan sesuai peran. |
 | `logout.php` | Menghapus session, menghancurkan cookie, kembali ke login |
-| `README.md` | Petunjuk singkat struktur dan cara menjalankan |
+| `profil.php` | Ubah profil dan kata sandi pengguna yang sedang masuk |
+| `AGENTS.md` | Stub penunjuk konteks proyek untuk AI di `docs/13` |
 | `.htaccess` | *(tambahan, dibuat saat fase keamanan)* melindungi folder sensitif dan mematikan daftar folder |
 
 ### 3.2 Halaman per peran
