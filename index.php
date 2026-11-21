@@ -64,7 +64,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     html{scroll-behavior:smooth;scroll-padding-top:5.5rem}
     body{font-family:Inter,sans-serif}
     .karvia-grain{background-image:radial-gradient(#173a2410 .7px,transparent .7px);background-size:8px 8px}
-    .karvia-progress{height:2px;transform:scaleX(0);transform-origin:left;background:var(--karvia-green);transition:transform .08s linear}
+    .karvia-progress{height:2px;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#71875c,#c2a052);transition:transform .08s linear}
     .karvia-dashboard{box-shadow:0 36px 90px -45px #173a2455,0 12px 35px -25px #172a1b66}
     .artikel-isi{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
     .karvia-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
@@ -79,6 +79,54 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     .hero-masuk-1{animation-delay:.08s}.hero-masuk-2{animation-delay:.18s}.hero-masuk-3{animation-delay:.28s}.hero-masuk-4{animation-delay:.38s}
     @media(prefers-reduced-motion:reduce){.hero-masuk{animation:none}}
     @media(min-width:768px){.artikel-track{scrollbar-width:auto}.artikel-track::-webkit-scrollbar{display:block;height:8px}.artikel-track::-webkit-scrollbar-thumb{border-radius:999px;background:#cce0d1}.artikel-track::-webkit-scrollbar-track{background:transparent}}
+    #atas{transition:background-color .3s,box-shadow .3s}
+    #atas.scrolled{background:#fbfcf8ef;box-shadow:0 1px 0 #dfe6de;backdrop-filter:blur(14px)}
+    #atas #scroll-progress{will-change:transform}
+    #konten>section:first-child{isolation:isolate;padding-top:clamp(4rem,8vw,7rem);padding-bottom:clamp(4.5rem,9vw,8rem)}
+    #konten>section:first-child>.karvia-grain,#konten>section:first-child>.pointer-events-none{display:none}
+    #konten>section:first-child>.hero-orbit{opacity:.35}
+    #konten>section:first-child h1{max-width:900px;font-size:clamp(2.65rem,6.8vw,6.25rem);letter-spacing:-.065em;line-height:.98}
+    #konten>section:first-child h1 span{color:#a78643;background:linear-gradient(110deg,#7b925e,#bd9951);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    #konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]{max-width:1120px;margin-top:clamp(3rem,6vw,5rem);perspective:1600px}
+    #konten>section:first-child .karvia-dashboard{transform:rotateX(var(--mockup-tilt,2deg));transform-origin:center top;transition:transform .25s ease-out;box-shadow:0 55px 110px -65px #173a2470,0 18px 45px -28px #173a2440}
+    #konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::before,#konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::after{position:absolute;z-index:2;display:block;pointer-events:none;border:1px solid #ffffffd9;background:#fffdf4ed;box-shadow:0 18px 45px -25px #173a2466;backdrop-filter:blur(12px);content:""}
+    #konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::before{content:"Kenali dirimu  ·  Jelajahi pilihan";top:16%;left:-3%;padding:13px 17px;border-radius:14px;color:#315d3d;font-size:11px;font-weight:700;letter-spacing:.02em;animation:karvia-float 6s ease-in-out infinite}
+    #konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::after{content:"Satu langkah kecil hari ini";right:-3%;bottom:17%;padding:13px 17px;border-radius:14px;color:#826b3e;font-size:11px;font-weight:700;animation:karvia-float 7s ease-in-out -2s infinite}
+    @keyframes karvia-float{50%{translate:0 -9px}}
+    @keyframes karvia-dashboard-scroll{from{transform:rotateX(3deg) translateY(12px)}to{transform:rotateX(0) translateY(0)}}
+    @supports(animation-timeline:view()){#konten>section:first-child .karvia-dashboard{animation:karvia-dashboard-scroll linear both;animation-timeline:view();animation-range:entry 0% entry 75%}}
+    .motion-ready .karvia-reveal{opacity:0;transform:translateY(24px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
+    .motion-ready .karvia-reveal.is-visible{opacity:1;transform:translateY(0)}
+    .hero-typography{position:absolute;right:3%;top:clamp(8rem,23vw,18rem);z-index:0;color:#224f3508;font-size:clamp(7rem,23vw,21rem);font-weight:800;letter-spacing:-.12em;line-height:.75;white-space:nowrap;pointer-events:none;user-select:none;transform:translate3d(0,var(--hero-drift,0),0)}
+    #konten>section:first-child>.relative{z-index:1}
+    .hero-orbit{position:absolute;top:12%;left:50%;z-index:0;width:min(78vw,920px);aspect-ratio:1;border:1px solid #224f350e;border-radius:50%;pointer-events:none;transform:translateX(-50%) scale(var(--orbit-scale,1));}
+    .hero-orbit::before,.hero-orbit::after{position:absolute;border:1px solid #224f350d;border-radius:50%;content:""}
+    .hero-orbit::before{inset:11%}.hero-orbit::after{inset:23%}
+    @media(prefers-reduced-motion:reduce){.karvia-float,.karvia-dashboard{animation:none!important;transform:none!important}.hero-typography{transform:none}}
+    #konten>section:nth-child(2){max-width:100%;padding:clamp(4rem,8vw,7rem) max(1rem,calc((100vw - 1200px)/2));background:#173a24;color:#f7f6ed}
+    #konten>section:nth-child(2)>div:first-child{border-color:#ffffff2b}
+    #konten>section:nth-child(2) h2,#konten>section:nth-child(2) h3{color:#f7f6ed}
+    #konten>section:nth-child(2) p{color:#d6dfd3}
+    #konten>section:nth-child(2) article{border-color:#ffffff24;background:#ffffff0a;box-shadow:none}
+    #konten>section:nth-child(2) article>span{color:#e4cd8e}
+    #konten>section:nth-child(3)>div{border-color:#d9e1d5;background:linear-gradient(130deg,#e9efe6,#f5f2e4)}
+    #konten>section:nth-child(5){background:#f2f3eb}
+    #konten>section:nth-child(5) ol{gap:1px;border:1px solid #dfe6de;border-radius:24px;overflow:hidden;background:#dfe6de}
+    #konten>section:nth-child(5) li{position:relative;min-height:205px;border:0;border-radius:0;background:#fbfcf8;padding:clamp(1.2rem,3vw,2rem);transition:background .25s,transform .25s}
+    #konten>section:nth-child(5) li:hover{z-index:1;transform:translateY(-3px);background:#fff}
+    #konten>section:nth-child(5) li>span:first-child{border-radius:50%;background:#e9eddd;color:#476847}
+    #konten>section:nth-child(6)>div>div{border:0;background:linear-gradient(125deg,#e9efe6,#f7f6ed);box-shadow:0 24px 65px -45px #173a2455}
+    #konten>section:nth-child(7){background:#f4f5ef}
+    #konten>section:nth-child(7) article{border-color:#e5e7dd;background:#fff;box-shadow:0 20px 45px -38px #173a2455}
+    #konten>section:nth-child(8){background:#fbfcf8}
+    #konten>section:nth-child(8) details{border-color:#e5e7dd}
+    #konten>section:nth-child(9){background:#f4f5ef}
+    #konten>section:nth-child(9)>div>div{position:relative;overflow:hidden;border:1px solid #ffffff20;background:radial-gradient(ellipse at 85% 0%,#78936380,transparent 38%),linear-gradient(125deg,#173a24,#224f35 72%,#496b46);box-shadow:0 35px 75px -48px #173a2480}
+    #konten>section:nth-child(9)>div>div::after{position:absolute;right:-8%;bottom:-95%;width:55vw;height:55vw;max-width:520px;max-height:520px;border:1px solid #ffffff1c;border-radius:50%;box-shadow:0 0 0 32px #ffffff08,0 0 0 64px #ffffff06;content:"";pointer-events:none}
+    #konten>section:nth-child(9)>div>div h2,#konten>section:nth-child(9)>div>div p,#konten>section:nth-child(9)>div>div a{position:relative;z-index:1}
+    #konten>section:nth-child(6)>div{border-top:1px solid #dfe6de;border-bottom:1px solid #dfe6de;border-radius:0;background:transparent;box-shadow:none}
+    footer>div:last-child{color:#173a2409;line-height:.76;letter-spacing:-.1em}
+    @media(max-width:767px){#konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::before{top:-22px;left:4px;padding:9px 11px;font-size:9px}#konten>section:first-child>div[aria-label="Ilustrasi Beranda Siswa KARVIA"]::after{right:4px;bottom:-21px;padding:9px 11px;font-size:9px}#konten>section:nth-child(5) li{min-height:0}#konten>section:nth-child(2){padding-left:1rem;padding-right:1rem}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -134,6 +182,8 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
       <div class="karvia-grain absolute inset-0 -z-10 opacity-40" aria-hidden="true"></div>
       <div class="pointer-events-none absolute left-[8%] top-20 h-48 w-48 rounded-full bg-[#e5efe7]/70 blur-3xl" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[8%] top-44 h-56 w-56 rounded-full bg-amber-100/70 blur-3xl" aria-hidden="true"></div>
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="hero-typography" aria-hidden="true">ARAH</div>
       <div class="relative mx-auto max-w-5xl text-center">
         <h1 id="judul-hero" class="hero-masuk hero-masuk-1 mx-auto max-w-5xl text-4xl font-extrabold leading-[1.08] tracking-tight text-[#173a24] sm:text-6xl lg:text-7xl">Kenali dirimu.<br class="hidden sm:block"> Temukan arah yang <span class="text-[#2d6a45]">bermakna.</span></h1>
         <p class="hero-masuk hero-masuk-2 mx-auto mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:mt-7 sm:text-lg">Jelajahi potensi dan pilihan kariermu, lalu rencanakan langkah kecil berikutnya. KARVIA mendukung proses refleksi dan ruang diskusi bersama Guru BK.</p>
@@ -211,7 +261,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
             </div>
           </div>
         </div>
-        <p class="mt-3 text-center text-[10px] text-slate-400">Ilustrasi Beranda Siswa KARVIA · Isi contoh, bukan data pengguna nyata</p>
+        <p class="mt-3 text-center text-[10px] font-medium tracking-wide text-slate-500">Ruang eksplorasi untuk mengenali diri, menjajaki pilihan, dan merencanakan langkahmu.</p>
       </div>
     </section>
 
@@ -288,8 +338,8 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
       <div class="grid items-center gap-8 rounded-3xl border border-[#dfe6de] bg-white p-6 shadow-sm sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-10">
         <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#e5efe7] text-[#224f35] lg:mx-0"><?php karvia_icon('message', 'h-7 w-7'); ?></span>
         <div class="text-center lg:text-left">
-          <h2 id="judul-guru-bk" class="text-2xl font-extrabold tracking-tight text-[#173a24] sm:text-3xl">Ruang untuk berdiskusi bersama Guru BK.</h2>
-          <p class="mt-3 max-w-3xl leading-relaxed text-slate-600">Saat ingin berdiskusi, siswa dapat membagikan ringkasan eksplorasinya. Guru BK membantu meninjau pilihan dan langkah berikutnya; keputusan tetap berada pada siswa dengan dukungan orang dewasa yang dipercaya. Catatan pribadi tidak otomatis dibagikan.</p>
+          <h2 id="judul-guru-bk" class="text-2xl font-extrabold tracking-tight text-[#173a24] sm:text-3xl">Perjalananmu lebih bermakna saat bisa dibicarakan.</h2>
+          <p class="mt-3 max-w-3xl leading-relaxed text-slate-600">Bagikan ringkasan eksplorasimu kepada Guru BK saat siap berdiskusi. Tinjau pilihan dan langkah berikutnya bersama—keputusan tetap milikmu.</p>
         </div>
       </div>
     </section>
@@ -368,12 +418,15 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
   </footer>
   <script>
     (() => {
+      document.documentElement.classList.add('motion-ready');
       const progress = document.getElementById('scroll-progress');
       if (!progress) return;
       let scheduled = false;
+      const header = document.getElementById('atas');
       const update = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+        header.classList.toggle('scrolled', window.scrollY > 12);
         scheduled = false;
       };
       window.addEventListener('scroll', () => {
@@ -385,6 +438,51 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
       window.addEventListener('resize', update, { passive: true });
       update();
     })();
+
+    const heroMockup = document.querySelector('#konten>section:first-child .karvia-dashboard');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (heroMockup && !reducedMotion) {
+      const heroSection = heroMockup.closest('section');
+      const heroType = document.querySelector('.hero-typography');
+      let scheduled = false;
+      let paused = document.visibilityState !== 'visible';
+      const tiltMockup = () => {
+        if (paused) return;
+        const rect = heroSection.getBoundingClientRect();
+        const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+        heroMockup.style.setProperty('--mockup-tilt', `${2.5 * (1 - progress)}deg`);
+        if (heroType) heroType.style.setProperty('--hero-drift', `${progress * 36 - 18}px`);
+        scheduled = false;
+      };
+      const scheduleTilt = () => {
+        if (paused || scheduled) return;
+        scheduled = true;
+        window.requestAnimationFrame(tiltMockup);
+      };
+      document.addEventListener('visibilitychange', () => {
+        paused = document.visibilityState !== 'visible';
+        if (!paused) scheduleTilt();
+      });
+      window.addEventListener('scroll', scheduleTilt, { passive: true });
+      window.addEventListener('resize', scheduleTilt, { passive: true });
+      tiltMockup();
+    }
+
+    const revealTargets = document.querySelectorAll('#konten>section:not(:first-child) h2, #konten>section:not(:first-child) article, #konten>section:not(:first-child) li, #konten>section:not(:first-child) details, #konten>section:not(:first-child) [aria-label="Progres eksplorasi mockup"]');
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      revealTargets.forEach((element, index) => {
+        element.classList.add('karvia-reveal');
+        element.style.setProperty('--reveal-delay', `${Math.min(index % 5, 3) * 70}ms`);
+        revealObserver.observe(element);
+      });
+    }
 
     const menu = document.getElementById('menu-mobile');
     const tombolMenu = document.getElementById('menu-buka');
