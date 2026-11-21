@@ -13,7 +13,7 @@
 
 ## Data contoh Bandar Lampung
 
-`database/dummy_karvia2.sql` menambahkan tanpa menghapus data yang ada:
+`database/dummy_karvia2.sql` menambahkan tanpa menghapus data yang ada. Nama lengkap admin, Guru BK, dan siswa memakai nama fiktif natural, bukan label seperti “Siswa Demo 061”. Username berurutan tetap dipakai untuk memudahkan login lokal.
 
 | Sekolah | Jenjang | Admin sekolah | Akun Guru BK | Akun Siswa |
 |---|---|---|---|---|
@@ -23,6 +23,8 @@
 
 Akun demo memakai password bersama sesuai peran: admin `admin`, guru `guru`, siswa `siswa`. Semua akun dan identitas fiktif. NPSN pada file SQL adalah placeholder dummy, bukan klaim data resmi. Satu artikel ditambahkan untuk sekolah pertama saja, dengan gambar `artikel-01.jpg` yang sudah tersedia.
 
+Username siswa tetap `siswa61`–`siswa150`; permintaan perubahan hanya untuk kolom nama lengkap. Tidak mengubah username existing karena berdampak pada panduan login dan identitas akun.
+
 ### Impor
 
 Jalankan `dummy_karvia2.sql` **setelah** struktur dan `dummy_karvia.sql`:
@@ -31,7 +33,9 @@ Jalankan `dummy_karvia2.sql` **setelah** struktur dan `dummy_karvia.sql`:
 mysql -u root karvia_db < database/dummy_karvia2.sql
 ```
 
-File menggunakan transaksi dan insert bersyarat untuk mencegah duplikasi sekolah/username/artikel saat diulang. File tidak mengosongkan tabel dan tidak mengubah status online akun lama. Backup database sebelum menjalankan pada data yang penting.
+File memakai transaksi dan insert bersyarat agar bisa dijalankan ulang tanpa menggandakan sekolah/username/artikel; konflik username fixture menyelaraskan `nama_lengkap` ke roster di file SQL. File tidak mengosongkan tabel atau mengubah status online. Backup database sebelum menjalankan pada data penting.
+
+Untuk memperbarui DB lokal yang sudah diisi, backup dahulu lalu jalankan ulang `dummy_karvia2.sql`; konflik username fixture memperbarui `nama_lengkap` tanpa mengubah role, password, sekolah, status, atau waktu aktivitas. Tidak perlu mengimpor ulang file `dummy_karvia.sql` yang bersifat `TRUNCATE`.
 
 ## Pemeriksaan penerimaan
 
@@ -41,7 +45,7 @@ File menggunakan transaksi dan insert bersyarat untuk mencegah duplikasi sekolah
 - [x] CSRF salah ditolak; Admin tidak mendapat form ubah username (HTTP lokal).
 - [x] Username berubah dengan password benar; password salah ditolak (HTTP lokal).
 - [x] Daftar sekolah berasal dari sekolah aktif; akun uji terikat pada sekolah pilihan.
-- [x] SQL tambahan dijalankan dua kali tanpa duplikasi: 5 sekolah, 6 admin termasuk global, 15 Guru BK, 150 siswa; 1 artikel tambahan.
+- [x] `dummy_karvia2.sql` dijalankan ulang: tetap 5 sekolah, 171 akun, 13 artikel; roster nama fixture diselaraskan, duplikasi tidak dibuat.
 - [x] Akun lama mempertahankan `terakhir_aktif_pada`; akun tambahan punya nilai `NULL` setelah import.
 - [ ] Uji akun lintas sekolah memastikan Guru BK hanya melihat catatan siswa yang dibagikan di sekolahnya.
 

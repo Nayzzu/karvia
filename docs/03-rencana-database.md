@@ -332,7 +332,7 @@ menjadi file SQL di folder `database/`:
 |------|-----|------------------|
 | `database/database.sql` | Struktur semua tabel, index, dan foreign key | Sekali, saat database masih kosong |
 | `database/dummy_karvia.sql` | Data contoh awal 2 sekolah; destructive (`TRUNCATE`), database lokal/demo saja | Setelah struktur, hanya jika memang boleh mengganti seluruh data |
-| `database/dummy_karvia2.sql` | Tambahan 3 sekolah Bandar Lampung, 3 admin, 9 Guru BK, 90 siswa, dan 1 artikel; tidak menghapus data lama | Setelah `dummy_karvia.sql`; aman dijalankan ulang untuk baris yang sama |
+| `database/dummy_karvia2.sql` | Tambahan 3 sekolah Bandar Lampung, 3 admin, 9 Guru BK, 90 siswa, dan 1 artikel; nama akun fixture diselaraskan ke data natural; tidak menghapus data lama | Setelah `dummy_karvia.sql`; aman dijalankan ulang |
 | `database/backup_YYYY-MM-DD.sql` | Salinan database saat backup | Hanya sebelum demo/perubahan besar |
 
 Struktur terpisah dari data. File tambahan Bandar Lampung memakai `INSERT` bersyarat
@@ -399,7 +399,9 @@ untuk kebutuhan uji lokal; bukan klaim afiliasi atau NPSN resmi:
 `guru1`–`guru6` dengan password `guru`, dan `siswa1`–`siswa60` dengan password
 `siswa`. `dummy_karvia2.sql` menambahkan `admin3`–`admin5` (password `admin`),
 `guru7`–`guru15` (password `guru`), dan `siswa61`–`siswa150` (password `siswa`).
-Semua adalah akun fiktif untuk demo lokal; ganti password sebelum pemakaian nyata.
+Nama lengkap akun tambahan memakai nama Indonesia fiktif natural, sementara username
+bernomor tetap dipertahankan untuk login demo. Semua akun fiktif; ganti password
+sebelum pemakaian nyata.
 
 Fixture setelah impor ketiga file SQL terdiri dari:
 - 5 sekolah: SMAN 1 Bandung, MAN 2 Yogyakarta, SMAN 1 Bandar Lampung, SMAN 9 Bandar Lampung, MAN 1 Bandar Lampung.
@@ -407,7 +409,7 @@ Fixture setelah impor ketiga file SQL terdiri dari:
 - 4 profesi, 13 artikel (12 awal + satu artikel untuk SMAN 1 Bandar Lampung).
 - Data eksplorasi siswa awal tersedia sesuai fixture `dummy_karvia.sql`; tambahan siswa baru tidak memiliki aktivitas/catatan fiktif.
 
-Dummy tambahan telah diuji pada DB lokal: import dua kali tetap menghasilkan 5 sekolah, 171 pengguna, dan 13 artikel; heartbeat akun lama tidak berubah.
+Dummy tambahan telah diuji pada DB lokal: import berulang tetap menghasilkan 5 sekolah, 171 pengguna, dan 13 artikel; nama lengkap roster akun Bandar Lampung terselaraskan ke nama fiktif natural; heartbeat akun lama tidak berubah.
 
 Bagian B harus dijalankan pada database kosong setelah bagian A. File SQL tidak
 menjalankan `TRUNCATE` atau menghapus data yang sudah ada. Untuk memperbarui

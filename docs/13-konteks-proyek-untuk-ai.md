@@ -24,7 +24,7 @@ Database: `database/database.sql` (struktur), `database/dummy_karvia.sql` (data 
 7. `docs/05-panduan-kerja-untuk-ai.md`
 8. `docs/09-pembagian-tugas-2-orang.md` (jobdesk 2 pengembang)
 
-Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa tersedia; siswa dapat daftar mandiri; data demo lima sekolah tersedia. Revisi landing: navbar mobile, carousel artikel lintas layar, dan hero bersih dengan animasi load disetujui; pengerjaan berlangsung. Rincian status ada di `docs/05`, `docs/10`, `docs/11`, dan `docs/14`.
+Status saat ini: **aplikasi berjalan** — alur Admin, Guru BK, dan Siswa tersedia; siswa dapat daftar mandiri; data demo lima sekolah tersedia. Nama lengkap pada data dummy Bandar Lampung diperbarui menjadi nama fiktif natural; username demo dipertahankan. Rincian data ada di `docs/03`, `docs/12`, dan `docs/14`.
 
 ## Aturan utama
 

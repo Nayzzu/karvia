@@ -4,7 +4,7 @@ Folder ini adalah sumber konteks utama untuk pengembangan KARVIA. Aturan produk,
 rencana database, dan urutan pengerjaan dicatat di sini agar pekerjaan dapat
 dilanjutkan bertahap.
 
-**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri siswa, lima sekolah demo, dan artikel Guru BK. Verifikasi dan sisa uji tercatat di `docs/05` dan `docs/14`.
+**Status:** aplikasi PHP native memiliki alur Admin, Guru BK, Siswa, pendaftaran mandiri siswa, lima sekolah demo, dan artikel Guru BK. Nama dummy akun Bandar Lampung diperbarui menjadi nama lengkap fiktif natural; username demo tetap berurutan. Verifikasi dan sisa uji tercatat di `docs/05` dan `docs/14`.
 
 **Prototipe acuan:** [`karvia_career_vision_action.html`](karvia_career_vision_action.html)
 File tersebut jangan diubah atau dihapus.

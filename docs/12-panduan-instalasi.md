@@ -33,8 +33,9 @@ mysql -u root < database/dummy_karvia2.sql
 | Siswa (150 akun) | `siswa1` … `siswa150` | `siswa` |
 
 Setiap sekolah memiliki 30 akun siswa. Akun `admin3`–`admin5`, `guru7`–`guru15`,
-dan `siswa61`–`siswa150` ditambahkan oleh `dummy_karvia2.sql`. Artikel tambahan
-untuk data baru hanya dibuat pada SMAN 1 Bandar Lampung.
+dan `siswa61`–`siswa150` ditambahkan oleh `dummy_karvia2.sql`; nama lengkap tampil
+natural dan fiktif, username tetap bernomor. Jalankan ulang file untuk menyelaraskan
+nama akun Bandar Lampung yang sudah ada. Artikel tambahan hanya dibuat pada SMAN 1 Bandar Lampung.
 
 Akun demo hanya untuk lokal. Jangan gunakan kredensial demo atau konfigurasi
 database bawaan untuk penggunaan nyata. Buat akun Admin baru dan ganti password
