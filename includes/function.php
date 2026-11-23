@@ -323,6 +323,12 @@ function tanggal_id(?string $tanggal, bool $dengan_waktu = false): string
     return date($dengan_waktu ? 'd-m-Y H:i' : 'd-m-Y', $waktu);
 }
 
+/** Validasi format username standar KARVIA (3–50 karakter alfanumerik, titik, underscore, strip). */
+function username_valid(string $username): bool
+{
+    return (bool) preg_match('/^[a-z0-9._-]{3,50}$/', $username);
+}
+
 /** Render SVG icon standar aplikasi. */
 function karvia_icon(string $name, string $class = 'h-5 w-5'): void
 {

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mb_strlen($nilai['nama']) < 2 || mb_strlen($nilai['nama']) > 150) $errors[] = 'Nama lengkap wajib diisi (2–150 karakter).';
     if (!ctype_digit($nilai['sekolah_id']) || (int) $nilai['sekolah_id'] < 1) $errors[] = 'Pilih sekolah yang tersedia.';
     if (mb_strlen($nilai['kelas']) < 1 || mb_strlen($nilai['kelas']) > 20) $errors[] = 'Kelas wajib diisi (maksimal 20 karakter).';
-    if (!preg_match('/^[a-z0-9._-]{3,50}$/', $nilai['username'])) $errors[] = 'Username harus 3–50 karakter: huruf kecil, angka, titik, garis bawah, atau tanda hubung.';
+    if (!username_valid($nilai['username'])) $errors[] = 'Username harus 3–50 karakter: huruf kecil, angka, titik, garis bawah, atau tanda hubung.';
     if (strlen($password) < 8 || strlen($password) > 72) $errors[] = 'Password harus 8–72 karakter.';
     if (!hash_equals($password, $konfirmasi)) $errors[] = 'Konfirmasi password tidak sama.';
 
