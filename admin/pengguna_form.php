@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
     $sekolah_id = filter_var($data['sekolah_id'], FILTER_VALIDATE_INT) ?: null;
     if (mb_strlen($data['nama_lengkap']) < 2 || mb_strlen($data['nama_lengkap']) > 150) $errors[] = 'Nama lengkap wajib diisi (2–150 karakter).';
-    if (!preg_match('/^[a-z0-9._]{3,50}$/', $data['username'])) $errors[] = 'Username harus 3–50 karakter: huruf kecil, angka, titik, atau garis bawah.';
+    if (!username_valid($data['username'])) $errors[] = 'Username harus 3–50 karakter: huruf kecil, angka, titik, garis bawah, atau tanda hubung.';
     if (!in_array($data['role'], ['admin', 'guru_bk', 'siswa'], true)) $errors[] = 'Peran tidak valid.';
     if ($data['role'] !== 'admin' && !$sekolah_id) $errors[] = 'Pilih sekolah untuk Guru BK atau Siswa.';
     if ($id && $data['role'] !== 'admin' && !$errors) {
@@ -136,7 +136,7 @@ $sekolah = $pdo->query("SELECT id, nama FROM sekolah WHERE status = 'aktif' ORDE
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
       <label for="username" class="mb-1 block text-xs font-bold text-slate-700">Username *</label>
-      <input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-z0-9._]+" value="<?= e($data['username']) ?>" placeholder="huruf kecil, angka, titik, garis bawah" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
+      <input id="username" name="username" required minlength="3" maxlength="50" pattern="[a-z0-9._-]+" value="<?= e($data['username']) ?>" placeholder="huruf kecil, angka, titik, strip" class="w-full rounded-xl border border-[#dfe6de] bg-[#fcfdfc] px-3.5 py-2.5 text-xs text-slate-800 focus:border-[#224f35] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#224f35]">
     </div>
     <div>
       <label for="role" class="mb-1 block text-xs font-bold text-slate-700">Peran Akun *</label>
