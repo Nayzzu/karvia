@@ -229,7 +229,7 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
 
               <section class="mt-3 rounded-2xl bg-gradient-to-br from-[#173a24] via-[#224f35] to-emerald-700 p-4 text-white sm:p-6" aria-label="Sapaan dan progres eksplorasi">
                 <p class="mb-2 text-[9px] font-bold uppercase tracking-[.16em] text-emerald-100">Perjalanan Karierku</p>
-                <p class="text-lg font-extrabold tracking-tight sm:text-2xl">Halo, Chindy.</p>
+                <p class="text-lg font-extrabold tracking-tight sm:text-2xl">Halo, Chindy Theresia.</p>
                 <p class="mt-2 max-w-xl text-[10px] leading-relaxed text-emerald-50 sm:text-xs">Kamu tidak harus punya semua jawaban sekarang. Kenali dirimu, jelajahi pilihan, lalu tentukan satu langkah yang terasa mungkin.</p>
                 <div class="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div class="w-full max-w-sm"><div class="mb-2 flex items-center justify-between text-[9px] font-semibold text-emerald-50 sm:text-[10px]"><span>Progres eksplorasi</span><span>2 dari 5 langkah</span></div><div class="h-1.5 overflow-hidden rounded-full bg-white/20" role="progressbar" aria-label="Ilustrasi progres eksplorasi karier, dua dari lima langkah" aria-valuemin="0" aria-valuemax="5" aria-valuenow="2"><div class="h-full w-2/5 rounded-full bg-emerald-200"></div></div></div>
@@ -399,20 +399,50 @@ $alamat_absolut = $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url(
     </section>
   </main>
 
-  <footer class="overflow-hidden border-t border-[#dfe6de] bg-white">
-    <div class="mx-auto max-w-7xl px-4 pb-5 pt-9 sm:px-6 lg:px-8">
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+  <footer class="overflow-hidden border-t border-[#dfe6de] bg-gradient-to-b from-white to-[#f6f8f5]">
+    <div class="mx-auto max-w-7xl px-4 pb-5 pt-12 sm:px-6 sm:pt-14 lg:px-8">
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <a href="#atas" class="inline-flex items-center gap-3" aria-label="KARVIA, kembali ke atas"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#224f35] text-white"><?php karvia_icon('compass', 'h-5 w-5'); ?></span><span class="font-extrabold tracking-tight text-[#203628]">KARVIA</span></a>
           <p class="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">Ruang eksplorasi karier untuk mengenali diri, menjajaki pilihan, dan merencanakan langkah berikutnya.</p>
-          <p class="mt-3 text-xs text-slate-400">UIN Raden Intan Lampung</p>
+          <p class="mt-3 text-xs text-slate-400">UIN Raden Intan Lampung · Chindy Theresia (2411080092)</p>
         </div>
-        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Jelajahi</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="hover:text-[#224f35]" href="#tentang">Tentang KARVIA</a></li><li><a class="hover:text-[#224f35]" href="#tahapan">Tahapan eksplorasi</a></li><li><a class="hover:text-[#224f35]" href="#artikel">Artikel terbaru</a></li></ul></div>
-        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Pendampingan</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="hover:text-[#224f35]" href="#pendampingan">Bersama Guru BK</a></li><li><a class="hover:text-[#224f35]" href="#privasi">Privasi catatan</a></li><li><a class="hover:text-[#224f35]" href="#faq">Pertanyaan umum</a></li></ul></div>
-        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Akun</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="hover:text-[#224f35]" href="login.php">Masuk ke KARVIA</a></li><li><a class="hover:text-[#224f35]" href="#atas">Kembali ke atas</a></li></ul></div>
+        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Jelajahi</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="transition hover:text-[#224f35]" href="#tentang">Tentang KARVIA</a></li><li><a class="transition hover:text-[#224f35]" href="#tahapan">Tahapan eksplorasi</a></li><li><a class="transition hover:text-[#224f35]" href="#artikel">Artikel terbaru</a></li></ul></div>
+        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Pendampingan</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="transition hover:text-[#224f35]" href="#pendampingan">Bersama Guru BK</a></li><li><a class="transition hover:text-[#224f35]" href="#privasi">Privasi catatan</a></li><li><a class="transition hover:text-[#224f35]" href="#faq">Pertanyaan umum</a></li></ul></div>
+        <div><h2 class="text-xs font-bold uppercase tracking-[.14em] text-slate-400">Akun</h2><ul class="mt-4 space-y-3 text-sm text-slate-600"><li><a class="transition hover:text-[#224f35]" href="login.php">Masuk ke KARVIA</a></li><li><a class="transition hover:text-[#224f35]" href="#atas">Kembali ke atas</a></li></ul></div>
       </div>
-      <div class="mt-9 h-px bg-[#dfe6de]"></div>
-      <div class="flex flex-col gap-2 py-4 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between"><span>KARVIA — Career Vision &amp; Action</span><a class="hover:text-[#224f35]" href="#faq">Pertanyaan umum</a><span>Media pendukung bimbingan karier siswa SMA/MA.</span></div>
+
+      <div class="mt-10 rounded-2xl border border-[#dfe6de] bg-[#fbfcf8] px-5 py-4 shadow-[0_18px_40px_-32px_rgba(23,58,36,0.45)] sm:px-6">
+        <div class="flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-[#224f35] to-[#71875c] text-white" aria-hidden="true">
+              <?php karvia_icon('compass', 'h-3.5 w-3.5'); ?>
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-[.2em] text-[#55785f]">Dikembangkan oleh</span>
+          </div>
+          
+          
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[#dfe6de] bg-white py-1 pl-1 pr-3.5">
+              <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#e5efe7] text-[10px] font-extrabold tracking-tight text-[#224f35]" aria-hidden="true">CT</span>
+              <span class="text-xs font-semibold tracking-tight text-[#173a24]"><a href="https://www.instagram.com/chindythrsia/">Chindy Theresia</a></span>
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-[#dfe6de] bg-white py-1 pl-1 pr-3.5">
+              <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#e5efe7] text-[10px] font-extrabold tracking-tight text-[#224f35]" aria-hidden="true">KT</span>
+              <span class="text-xs font-semibold tracking-tight text-[#173a24]"><a href="https://instagram.com/kanayatraylingga">Kanaya Traylingga Pratama</a></span>
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-[#dfe6de] bg-white py-1 pl-1 pr-3.5">
+              <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f5efe0] text-[10px] font-extrabold tracking-tight text-[#826b3e]" aria-hidden="true">RS</span>
+              <span class="text-xs font-semibold tracking-tight text-[#173a24]"><a href="https://www.instagram.com/r.eeginna/">Regina Salwa Lestari</a></span>
+            </span>
+          </div>
+
+        </div>
+        
+      </div>
+
+      <div class="mt-8 h-px bg-[#dfe6de]"></div>
+      <div class="flex flex-col gap-2 py-4 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between"><span>KARVIA — Career Vision &amp; Action</span><a class="transition hover:text-[#224f35]" href="#faq">Pertanyaan umum</a><span>Media pendukung bimbingan karier siswa SMA/MA.</span></div>
     </div>
     <div class="select-none px-2 text-center text-[16vw] font-extrabold leading-[.8] tracking-[-.09em] text-[#173a24]/[.045] sm:text-[15vw]" aria-hidden="true">KARVIA</div>
   </footer>
